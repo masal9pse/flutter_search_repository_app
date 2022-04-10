@@ -18,13 +18,13 @@ class SearchApiModelStruct {
   fieldRename: FieldRename.snake,
 )
 class Item {
-  Item(this.name,this.language,this.stargazersCount,this.watchersCount,this.forksCount,this.openIssuesCount);
+  Item(this.name,this.stargazersCount,this.watchersCount,this.language,this.forksCount,this.openIssuesCount);
   String name;
-  String language;
-  String stargazersCount;
-  String watchersCount;
-  String forksCount;
-  String openIssuesCount;
+  int stargazersCount;
+  int watchersCount;
+  String? language;
+  int forksCount;
+  int openIssuesCount;
 
   factory Item.fromJson(Map<String,dynamic> json) => _$ItemFromJson(json);
   Map<String, dynamic> toJson() => _$ItemToJson(this);

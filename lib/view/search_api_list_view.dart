@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/service/search_api_service.dart';
 
 class SearchApiListView extends StatelessWidget {
   @override
@@ -14,6 +15,10 @@ class SearchApiListView extends StatelessWidget {
             width: screenWidth * 0.8,
             padding: EdgeInsets.only(top: 10),
             child: TextField(
+              onChanged: (text) {
+                // あとでview_modelから呼び出す。
+                SearchApiService().getApiListInfo();
+              },
               decoration: InputDecoration(
                 labelText: 'キーワードを入力して完了ボタンを押してください',
                 errorMaxLines: 2,

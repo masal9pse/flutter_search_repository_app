@@ -25,19 +25,19 @@ Map<String, dynamic> _$SearchApiModelStructToJson(
 Item _$ItemFromJson(Map<String, dynamic> json) {
   return Item(
     json['name'] as String,
-    json['language'] as String,
-    json['stargazers_count'] as String,
-    json['watchers_count'] as String,
-    json['forks_count'] as String,
-    json['open_issues_count'] as String,
+    json['stargazers_count'] as int,
+    json['watchers_count'] as int,
+    json['language'] as String?,
+    json['forks_count'] as int,
+    json['open_issues_count'] as int,
   );
 }
 
 Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'name': instance.name,
-      'language': instance.language,
       'stargazers_count': instance.stargazersCount,
       'watchers_count': instance.watchersCount,
+      'language': instance.language,
       'forks_count': instance.forksCount,
       'open_issues_count': instance.openIssuesCount,
     };
