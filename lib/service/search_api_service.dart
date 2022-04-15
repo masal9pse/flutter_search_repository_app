@@ -4,9 +4,9 @@ import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:http/http.dart' as http;
 
 class SearchApiService {
-  Future<SearchApiModelStruct> getApiListInfo() async {
+  Future<SearchApiModelStruct> getApiListInfo(String input) async {
     try {
-      final url = Uri.parse('https://api.github.com/search/repositories?q=q');
+      final url = Uri.parse('https://api.github.com/search/repositories?q=$input');
       const timeOutCount = 10;
       final response = await http
           .get(url)
