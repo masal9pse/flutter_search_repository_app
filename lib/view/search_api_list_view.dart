@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/view/widgets/api_response_card.dart';
@@ -24,24 +25,18 @@ class SearchApiListView extends StatelessWidget {
                   width: screenWidth * 0.8,
                   padding: EdgeInsets.only(top: 10),
                   child: TextField(
-                    onChanged: (text) {
-                      context
-                          .read<SearchApiViewModel>()
-                          .fetchSearchApiModelStruct(text)
-                          .then((_) {
-                        final snackBar = SnackBar(
-                          content: Text(snackResponseMessage),
-                          action: SnackBarAction(
-                            label: 'Undo',
-                            onPressed: () {
-                              // Some code to undo the change.
-                            },
-                          ),
-                        );
-                        WidgetsBinding.instance!.addPostFrameCallback((_) {
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        });
-                      });
+                    onChanged: (text) async {
+                      try {
+                        await context
+                            .read<SearchApiViewModel>()
+                            .fetchSearchApiModelStruct(text);
+
+                        viewSnackBar(context, 'APIを取得できました');
+                      } on TimeoutException catch (_) {
+                        viewSnackBar(context, 'タイムアウトです');
+                      } on Exception catch (_) {
+                        viewSnackBar(context, '例外が発生しました');
+                      }
                     },
                     decoration: InputDecoration(
                       labelText: 'キーワードを入力して完了ボタンを押してください',
@@ -86,6 +81,20 @@ class SearchApiListView extends StatelessWidget {
                   : Container()
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  void viewSnackBar(BuildContext context, String responseMessage) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('例外が発生しました'),
+        action: SnackBarAction(
+          label: 'Action',
+          onPressed: () {
+            // Code to execute.
+          },
         ),
       ),
     );
