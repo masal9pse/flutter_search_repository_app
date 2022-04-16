@@ -30,6 +30,7 @@ Item _$ItemFromJson(Map<String, dynamic> json) {
     json['language'] as String?,
     json['forks_count'] as int,
     json['open_issues_count'] as int,
+    Owner.fromJson(json['owner'] as Map<String, dynamic>),
   );
 }
 
@@ -40,6 +41,7 @@ Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'language': instance.language,
       'forks_count': instance.forksCount,
       'open_issues_count': instance.openIssuesCount,
+      'owner': instance.owner,
     };
 
 Owner _$OwnerFromJson(Map<String, dynamic> json) {
