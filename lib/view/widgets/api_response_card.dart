@@ -15,7 +15,7 @@ class ApiResponseCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   ListTile(
-                    leading: Icon(Icons.album),
+                    leading: Image.network(item!.owner.avatarUrl),
                     title: Text(item!.name),
                     subtitle: Text(item!.language ?? ''),
                   ),
@@ -33,11 +33,6 @@ class ApiResponseCard extends StatelessWidget {
                       const SizedBox(width: 8),
                       Icon(Icons.report),
                       Text(item!.openIssuesCount.toString()),
-                      const SizedBox(width: 8),
-                      TextButton(
-                        child: const Text('LISTEN'),
-                        onPressed: () {/* ... */},
-                      ),
                       const SizedBox(width: 8),
                     ],
                   ),
