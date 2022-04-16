@@ -10,6 +10,8 @@ class SearchApiListView extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final searchApiModelStruct = context
         .select((SearchApiViewModel store) => store.searchApiModelStruct);
+    final snackResponseMessage = context
+        .select((SearchApiViewModel store) => store.snackResponseMessage);
     return Scaffold(
       appBar: AppBar(
         title: const Text('GithubAPI検索App'),
@@ -19,44 +21,57 @@ class SearchApiListView extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                width: screenWidth * 0.8,
-                padding: EdgeInsets.only(top: 10),
-                child: TextField(
-                  onChanged: (text) {
-                    context
-                        .read<SearchApiViewModel>()
-                        .fetchSearchApiModelStruct(text);
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'キーワードを入力して完了ボタンを押してください',
-                    errorMaxLines: 2,
-                    errorStyle: TextStyle(color: Colors.red),
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 0, horizontal: 7),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.grey,
+                  width: screenWidth * 0.8,
+                  padding: EdgeInsets.only(top: 10),
+                  child: TextField(
+                    onChanged: (text) {
+                      context
+                          .read<SearchApiViewModel>()
+                          .fetchSearchApiModelStruct(text)
+                          .then((_) {
+                        final snackBar = SnackBar(
+                          content: Text(snackResponseMessage),
+                          action: SnackBarAction(
+                            label: 'Undo',
+                            onPressed: () {
+                              // Some code to undo the change.
+                            },
+                          ),
+                        );
+                        WidgetsBinding.instance!.addPostFrameCallback((_) {
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        });
+                      });
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'キーワードを入力して完了ボタンを押してください',
+                      errorMaxLines: 2,
+                      errorStyle: TextStyle(color: Colors.red),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 7),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.blue,
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.blue,
+                        ),
                       ),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.blue,
-                      ),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.red),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+                  )),
               searchApiModelStruct != null
                   ? ListView.builder(
                       shrinkWrap: true,
