@@ -11,8 +11,6 @@ class SearchApiListView extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final searchApiModelStruct = context
         .select((SearchApiViewModel store) => store.searchApiModelStruct);
-    final snackResponseMessage = context
-        .select((SearchApiViewModel store) => store.snackResponseMessage);
     return Scaffold(
       appBar: AppBar(
         title: const Text('GithubAPI検索App'),

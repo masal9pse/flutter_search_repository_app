@@ -7,7 +7,7 @@ class SearchApiService {
   Future<SearchApiModelStruct> getApiListInfo(String input) async {
     try {
       final url = Uri.parse('https://api.github.com/search/repositories?q=$input');
-      const timeOutCount = 10;
+      const timeOutCount = 1;
       final response = await http
           .get(url)
           .timeout(const Duration(seconds: timeOutCount));
@@ -18,8 +18,10 @@ class SearchApiService {
       } else {
         throw Exception('AuthRepositoryで例外が発生しました');
       }
-    } on TimeoutException catch (_) {
-      throw TimeoutException('AuthRepositoryでタイムアウトしました。');
+    } on TimeoutException catch (e) {
+      throw TimeoutException(e.toString());
+    } on Exception catch (e) {
+      throw Exception(e.toString());
     }
   }
 }
