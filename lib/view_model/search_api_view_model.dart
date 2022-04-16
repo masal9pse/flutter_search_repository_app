@@ -3,11 +3,10 @@ import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/service/search_api_service.dart';
 
 class SearchApiViewModel with ChangeNotifier {
-  // var searchApiList = <SearchApiModelStruct>[];
-  late SearchApiModelStruct _searchApiModelStruct;
-  SearchApiModelStruct get searchApiModelStruct => _searchApiModelStruct;
+  SearchApiModelStruct? _searchApiModelStruct;
+  SearchApiModelStruct? get searchApiModelStruct => _searchApiModelStruct;
 
-  set searchApiModelStruct(SearchApiModelStruct value) {
+  set searchApiModelStruct(SearchApiModelStruct? value) {
     _searchApiModelStruct = value;
     notifyListeners();
   }
