@@ -9,7 +9,7 @@ class SearchApiService {
     try {
       final url =
           Uri.parse('https://api.github.com/search/repositories?q=$input');
-      const timeOutCount = 1;
+      const timeOutCount = 3;
       final response =
           await http.get(url).timeout(const Duration(seconds: timeOutCount));
       final decoded = json.decode(response.body) as Map<String, dynamic>;

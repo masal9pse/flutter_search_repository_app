@@ -12,6 +12,7 @@ class SearchApiListView extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final searchApiModelStruct = context
         .select((SearchApiViewModel store) => store.searchApiModelStruct);
+    var _formController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: const Text('GithubAPI検索App'),
@@ -20,63 +21,75 @@ class SearchApiListView extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              Container(
-                  width: screenWidth * 0.8,
-                  padding: EdgeInsets.only(top: 10),
-                  child: TextField(
-                    onChanged: (text) async {
-                      try {
-                        await context
-                            .read<SearchApiViewModel>()
-                            .fetchSearchApiModelStruct(text);
-                        viewSnackBar(
-                            context, ResponseMessage.successfulMessage);
-                      // エラーレスポンスに関しては手動での再現ができなかったので、APIreferenceのstatus codeを参照
-                      } on NotModifiedException catch (_) {
-                        viewSnackBar(
-                            context, ResponseMessage.notModifiedMessage);
-                      } on BadRequestException catch (_) {
-                        viewSnackBar(
-                            context, ResponseMessage.badRequestMessage);
-                      } on ServerProblemException catch (_) {
-                        viewSnackBar(
-                            context, ResponseMessage.serverProblemMessage);
-                      } on TimeoutException catch (e) {
-                        viewSnackBar(context, ResponseMessage.timeoutMessage);
-                      } on Exception catch (_) {
-                        viewSnackBar(
-                            context, ResponseMessage.otherExceptionMessage);
-                      }
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'キーワードを入力して完了ボタンを押してください',
-                      errorMaxLines: 2,
-                      errorStyle: TextStyle(color: Colors.red),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 0, horizontal: 7),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey,
+              Row(
+                children: [
+                  Container(
+                    width: screenWidth * 0.8,
+                    padding: EdgeInsets.only(top: 10),
+                    child: TextField(
+                      controller: _formController,
+                      decoration: InputDecoration(
+                        alignLabelWithHint: true,
+                        labelText: '入力後、ボタンをタップしてください',
+                        errorMaxLines: 2,
+                        hintMaxLines: 2,
+                        helperMaxLines: 2,
+                        errorStyle: TextStyle(color: Colors.red),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 0, horizontal: 7),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                          ),
                         ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.blue,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.blue,
+                          ),
                         ),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.blue),
-                      ),
-                      disabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.blue,
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.blue,
+                          ),
                         ),
                       ),
                     ),
-                  )),
+                  ),
+                  ElevatedButton(
+                      onPressed: () async {
+                        try {
+                          // await Future.delayed(Duration(seconds: 2));
+                          await context
+                              .read<SearchApiViewModel>()
+                              .fetchSearchApiModelStruct(_formController.text);
+                          viewSnackBar(
+                              context, ResponseMessage.successfulMessage);
+                          // エラーレスポンスに関しては手動での再現ができなかったので、APIreferenceのstatus codeを参照
+                        } on NotModifiedException catch (_) {
+                          viewSnackBar(
+                              context, ResponseMessage.notModifiedMessage);
+                        } on BadRequestException catch (_) {
+                          viewSnackBar(
+                              context, ResponseMessage.badRequestMessage);
+                        } on ServerProblemException catch (_) {
+                          viewSnackBar(
+                              context, ResponseMessage.serverProblemMessage);
+                        } on TimeoutException catch (e) {
+                          viewSnackBar(context, ResponseMessage.timeoutMessage);
+                        } on Exception catch (_) {
+                          viewSnackBar(
+                              context, ResponseMessage.otherExceptionMessage);
+                        }
+                      },
+                      child: Text('検索')),
+                ],
+              ),
               searchApiModelStruct != null
                   ? ListView.builder(
                       shrinkWrap: true,
