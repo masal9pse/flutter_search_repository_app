@@ -85,7 +85,7 @@ class SearchApiListView extends StatelessWidget {
                           } on ServerProblemException catch (_) {
                             viewSnackBar(
                                 context, ResponseMessage.serverProblemMessage);
-                          } on TimeoutException catch (e) {
+                          } on TimeoutException catch (_) {
                             viewSnackBar(
                                 context, ResponseMessage.timeoutMessage);
                           } on Exception catch (_) {

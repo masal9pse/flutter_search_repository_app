@@ -15,7 +15,7 @@ class ApiResponseCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   ListTile(
-                    leading: Image.network(item!.owner.avatarUrl),
+                    // leading: Image.network(item!.owner.avatarUrl),
                     title: Text(item!.name),
                     subtitle: Text(item!.language ?? ''),
                   ),
