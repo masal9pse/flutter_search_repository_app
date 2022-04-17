@@ -6,6 +6,8 @@ import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/service/search_api_service.dart';
 
 class SearchApiViewModel with ChangeNotifier {
+  SearchApiViewModel(this.searchApiService);
+  final SearchApiService searchApiService;
   SearchApiModelStruct? _searchApiModelStruct;
   SearchApiModelStruct? get searchApiModelStruct => _searchApiModelStruct;
   bool _isEnabled = true;
@@ -25,7 +27,7 @@ class SearchApiViewModel with ChangeNotifier {
   Future<SearchApiModelStruct?> fetchSearchApiModelStruct(String text) async {
     try {
       isEnabled = false;
-      final fetchInfo = await SearchApiService().getApiListInfo(text);
+      final fetchInfo = await searchApiService.getApiListInfo(text);
       searchApiModelStruct = fetchInfo;
       return fetchInfo;
     } on NotModifiedException catch (_) {
