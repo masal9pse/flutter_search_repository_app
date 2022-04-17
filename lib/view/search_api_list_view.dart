@@ -29,6 +29,7 @@ class SearchApiListView extends StatelessWidget {
                     width: screenWidth * 0.8,
                     padding: EdgeInsets.only(top: 10),
                     child: TextField(
+                      key: Key('search_text_field'),
                       controller: _formController,
                       decoration: InputDecoration(
                         alignLabelWithHint: true,
@@ -64,6 +65,7 @@ class SearchApiListView extends StatelessWidget {
                     ),
                   ),
                   ElevatedButton(
+                      key: Key('search_elevated_button'),
                       onPressed: () async {
                         if (isEnabled) {
                           try {
