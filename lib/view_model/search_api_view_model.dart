@@ -8,6 +8,13 @@ import 'package:flutter_engineer_codecheck/service/search_api_service.dart';
 class SearchApiViewModel with ChangeNotifier {
   SearchApiModelStruct? _searchApiModelStruct;
   SearchApiModelStruct? get searchApiModelStruct => _searchApiModelStruct;
+  bool _isEnabled = true;
+  bool get isEnabled => _isEnabled;
+
+  set isEnabled(bool value) {
+    _isEnabled = value;
+    notifyListeners();
+  }
 
   set searchApiModelStruct(SearchApiModelStruct? value) {
     _searchApiModelStruct = value;
@@ -17,6 +24,7 @@ class SearchApiViewModel with ChangeNotifier {
   /// API 通信 と View層への通知
   Future<SearchApiModelStruct?> fetchSearchApiModelStruct(String text) async {
     try {
+      isEnabled = false;
       final fetchInfo = await SearchApiService().getApiListInfo(text);
       searchApiModelStruct = fetchInfo;
       return fetchInfo;
@@ -30,6 +38,8 @@ class SearchApiViewModel with ChangeNotifier {
       throw TimeoutException(e.toString());
     } on Exception catch (e) {
       throw Exception(e.toString());
+    } finally {
+      isEnabled = true;
     }
   }
 }
