@@ -1,16 +1,43 @@
-# flutter_engineer_codecheck
+## アピールポイント
 
-A new Flutter project.
+1. MVVM+Serviceのアーキテクチャを採用しました。
+2. 例外処理をAPIReferenceを参照しながら細かく定義しました。
+3. mockを使用したWidgetTestを実装しました。
+  - 新卒採用だとどちらかといえば機能数で勝負になると思ったので、差別化のためにあえて機能数よりもコードの可読性と素早く提出することを目標にしました。その結果複雑なロジックを書く場面が減り、UnitTest記載する必要がなくなりました。
 
-## Getting Started
+# 環境構築
+本課題に当たって提示された環境と２点異なることをしています。
+1. fvmを使用してflutterのバージョンを管理
+- 普段、アルバイト先で使っているflutterバージョンと素早く切り替えたいので、fvmを使用しました。
+またfvm_config.json を使用することで、Flutter SDKバージョンを明示してチームで統一できます。
 
-This project is a starting point for a Flutter application.
+2. Android Studioではなくvscodeを使用
+- シンプルに開発効率を上げるために使用しています。
 
-A few resources to get you started if this is your first Flutter project:
+1. fvmをインストール(すでにインストールできている場合は飛ばして大丈夫です。)
+```
+dart pub global activate fvm
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+fvm --version # -> インストールしたfvmのバージョンが表示されればOK👌
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2. fvmのパスを通す。
+
+```.zshrc
+
+export PATH="$PATH:$HOME/.pub-cache/bin"
+
+```
+
+3. fvmのflutterのバージョンを使用する。
+
+```
+cd このプロジェクトのディレクトリ
+
+fvm install
+
+fvm flutter --version
+2.8.1となっていれば正しく動作しています。
+```
+
+もちろんすでに課題の環境が用意されていればこの手順に合わせなくても動作するはずです。
