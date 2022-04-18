@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -15,7 +14,7 @@ import '../test_data/api_mock_test_data.dart';
 class MockSearchApiService extends Mock implements SearchApiService {}
 
 void main() {
-  // setUpAll(() => HttpOverrides.global = null);
+  setUpAll(() => HttpOverrides.global = null);
   group('API一覧ページのテスト', () {
     final mockSearchApiService = MockSearchApiService();
 
@@ -25,6 +24,14 @@ void main() {
             create: (context) => SearchApiViewModel(mockSearchApiService),
             child: SearchApiListView()),
       );
+    }
+
+    void expectTextData({required WidgetTester tester, required String data}) {
+      expect(
+          ((tester.widget(find.byKey(Key('snack_bar'))) as SnackBar).content
+                  as Text)
+              .data,
+          data);
     }
 
     group('正常系', () {
@@ -50,44 +57,26 @@ void main() {
         expect(find.text('rep2'), findsOneWidget);
         expect(find.text('Cddddddd'), findsOneWidget);
         expect(find.byKey(Key('snack_bar')), findsOneWidget);
-        // verifyを使用
         expectTextData(tester: tester, data: ResponseMessage.successfulMessage);
       });
     });
 
     group('異常系', () {
-      testWidgets('検索フォームに入力して、検索ボタンをタップするとエラーをスローする。', (WidgetTester tester) async {
+      testWidgets('検索フォームに入力して、検索ボタンをタップする例外をスローする。',
+          (WidgetTester tester) async {
         await tester.pumpWidget(testMainViewWidget());
         final input = 'testです';
-        // when(mockSearchApiService.getApiListInfo(input))
-        //     .thenThrow((_) => TimeoutException('タイムアウトが発生しました'));
-        // when(mockSearchApiService.getApiListInfo(input))
-        //     .thenThrow((_) => Exception('タイムアウトが発生しました'));
-        // when(mockSearchApiService.getApiListInfo(input)).thenThrow(Exception);
-        when(mockSearchApiService.getApiListInfo(input)).thenAnswer((_) => throw Exception());
+        when(mockSearchApiService.getApiListInfo(input))
+            .thenAnswer((_) => throw Exception());
 
-        expect(() => mockSearchApiService.getApiListInfo(input), throwsException);
-        // await tester.enterText(find.byKey(Key('search_text_field')), input);
-        // try {
-        // await tester.tap(find.byKey(Key('search_elevated_button')));
-        // await tester.pump(Duration(seconds: 1));
-        // } on Exception catch (e) {
-        //   expect(e, Exception());
-        // }
-        // expect(find.text('rep2'), findsOneWidget);
-        // expect(find.text('Cddddddd'), findsOneWidget);
-        // expect(() =>  matcher)
-        // expect(find.byKey(Key('snack_bar')), findsOneWidget);
-        // expectTextData(tester: tester, data: ResponseMessage.timeoutMessage);
+        expect(
+            () => mockSearchApiService.getApiListInfo(input), throwsException);
+        await tester.enterText(find.byKey(Key('search_text_field')), input);
+        await tester.tap(find.byKey(Key('search_elevated_button')));
+        await tester.pump(Duration(seconds: 1));
+        expectTextData(
+            tester: tester, data: ResponseMessage.otherExceptionMessage);
       });
     });
   });
-}
-
-void expectTextData({required WidgetTester tester, required String data}) {
-  expect(
-      ((tester.widget(find.byKey(Key('snack_bar'))) as SnackBar).content
-              as Text)
-          .data,
-      data);
 }
