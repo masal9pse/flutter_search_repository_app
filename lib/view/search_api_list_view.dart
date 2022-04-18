@@ -16,108 +16,104 @@ class SearchApiListView extends StatelessWidget {
         context.select((SearchApiViewModel store) => store.isEnabled);
     final formController =
         context.select((SearchApiViewModel store) => store.formController);
-    
     return Scaffold(
       appBar: AppBar(
         title: const Text('GithubAPI検索App'),
       ),
       body: SingleChildScrollView(
         child: Center(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: screenWidth * 0.8,
-                    padding: EdgeInsets.only(top: 10),
-                    child: TextField(
-                      key: Key('search_text_field'),
-                      controller: formController,
-                      decoration: InputDecoration(
-                        alignLabelWithHint: true,
-                        labelText: '入力後、ボタンをタップしてください',
-                        errorMaxLines: 2,
-                        hintMaxLines: 2,
-                        helperMaxLines: 2,
-                        errorStyle: TextStyle(color: Colors.red),
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 0, horizontal: 7),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.grey,
+          child: Container(
+            width: screenWidth * 0.8,
+            padding: EdgeInsets.only(top: 15),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: screenWidth * 0.6,
+                      child: TextField(
+                        key: Key('search_text_field'),
+                        controller: formController,
+                        decoration: InputDecoration(
+                          errorStyle: TextStyle(color: Colors.red),
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 7),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
                           ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.blue,
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
                           ),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue),
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.blue,
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  ElevatedButton(
-                      key: Key('search_elevated_button'),
-                      onPressed: () async {
-                        if (isEnabled) {
-                          try {
-                            // await context
-                            //     .read<SearchApiViewModel>()
-                            //     .fetchSearchApiModelStruct(
-                            //         _formController.text);
-                            await context
-                                .read<SearchApiViewModel>()
-                                .fetchSearchApiModelStruct(
-                                    formController.text);
-                            viewSnackBar(
-                                context, ResponseMessage.successfulMessage);
-                            // エラーレスポンスに関しては手動での再現ができなかったので、APIreferenceのstatus codeを参照
-                          } on NotModifiedException catch (_) {
-                            viewSnackBar(
-                                context, ResponseMessage.notModifiedMessage);
-                          } on BadRequestException catch (_) {
-                            viewSnackBar(
-                                context, ResponseMessage.badRequestMessage);
-                          } on ServerProblemException catch (_) {
-                            viewSnackBar(
-                                context, ResponseMessage.serverProblemMessage);
-                          } on TimeoutException catch (_) {
-                            viewSnackBar(
-                                context, ResponseMessage.timeoutMessage);
-                          } on Exception catch (_) {
-                            viewSnackBar(
-                                context, ResponseMessage.otherExceptionMessage);
-                          }
-                        } else {
-                          return null;
-                        }
-                      },
-                      child: Text('検索')),
-                ],
-              ),
-              searchApiModelStruct != null
-                  ? ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: searchApiModelStruct.items.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          child: ApiResponseCard(
-                              item: searchApiModelStruct.items[index]),
-                        );
-                      })
-                  : Container()
-            ],
+                    Container(
+                      width: screenWidth * 0.2,
+                      child: ElevatedButton(
+                          key: Key('search_elevated_button'),
+                          onPressed: () async {
+                            if (isEnabled) {
+                              try {
+                                await context
+                                    .read<SearchApiViewModel>()
+                                    .fetchSearchApiModelStruct(
+                                        formController.text);
+                                viewSnackBar(
+                                    context, ResponseMessage.successfulMessage);
+                                // エラーレスポンスに関しては手動での再現ができなかったので、APIreferenceのstatus codeを参照
+                              } on NotModifiedException catch (_) {
+                                viewSnackBar(context,
+                                    ResponseMessage.notModifiedMessage);
+                              } on BadRequestException catch (_) {
+                                viewSnackBar(
+                                    context, ResponseMessage.badRequestMessage);
+                              } on ServerProblemException catch (_) {
+                                viewSnackBar(context,
+                                    ResponseMessage.serverProblemMessage);
+                              } on TimeoutException catch (_) {
+                                viewSnackBar(
+                                    context, ResponseMessage.timeoutMessage);
+                              } on Exception catch (_) {
+                                viewSnackBar(context,
+                                    ResponseMessage.otherExceptionMessage);
+                              }
+                            } else {
+                              return null;
+                            }
+                          },
+                          child: Text('検索')),
+                    ),
+                  ],
+                ),
+                searchApiModelStruct != null
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: searchApiModelStruct.items.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            child: ApiResponseCard(
+                                item: searchApiModelStruct.items[index]),
+                          );
+                        })
+                    : Container()
+              ],
+            ),
           ),
         ),
       ),
