@@ -7,6 +7,7 @@ import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart
 import 'package:provider/provider.dart';
 
 class SearchApiListView extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -21,98 +22,109 @@ class SearchApiListView extends StatelessWidget {
         title: const Text('GithubAPI検索App'),
       ),
       body: SingleChildScrollView(
-        child: Center(
-          child: Container(
-            width: screenWidth * 0.8,
-            padding: EdgeInsets.only(top: 15),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: screenWidth * 0.6,
-                      child: TextField(
-                        key: Key('search_text_field'),
-                        controller: formController,
-                        decoration: InputDecoration(
-                          errorStyle: TextStyle(color: Colors.red),
-                          contentPadding:
-                              EdgeInsets.symmetric(vertical: 0, horizontal: 7),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.grey,
+        child: Form(
+          key: _formKey,
+          child: Center(
+            child: Container(
+              width: screenWidth * 0.8,
+              padding: EdgeInsets.only(top: 15),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: screenWidth * 0.6,
+                        child: TextFormField(
+                          key: Key('search_text_field'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return '文字を入力してください。';
+                            }
+                            return null;
+                          },
+                          controller: formController,
+                          decoration: InputDecoration(
+                            errorStyle: TextStyle(color: Colors.red),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 7),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                              ),
                             ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.blue,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                              ),
                             ),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.red),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.blue,
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.red),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Container(
-                      width: screenWidth * 0.2,
-                      child: ElevatedButton(
-                          key: Key('search_elevated_button'),
-                          onPressed: () async {
-                            if (isEnabled) {
-                              try {
-                                await context
-                                    .read<SearchApiViewModel>()
-                                    .fetchSearchApiModelStruct(
-                                        formController.text);
-                                viewSnackBar(
-                                    context, ResponseMessage.successfulMessage);
-                                // エラーレスポンスに関しては手動での再現ができなかったので、APIreferenceのstatus codeを参照
-                              } on NotModifiedException catch (_) {
-                                viewSnackBar(context,
-                                    ResponseMessage.notModifiedMessage);
-                              } on BadRequestException catch (_) {
-                                viewSnackBar(
-                                    context, ResponseMessage.badRequestMessage);
-                              } on ServerProblemException catch (_) {
-                                viewSnackBar(context,
-                                    ResponseMessage.serverProblemMessage);
-                              } on TimeoutException catch (_) {
-                                viewSnackBar(
-                                    context, ResponseMessage.timeoutMessage);
-                              } on Exception catch (_) {
-                                viewSnackBar(context,
-                                    ResponseMessage.otherExceptionMessage);
+                      Container(
+                        width: screenWidth * 0.2,
+                        child: ElevatedButton(
+                            key: Key('search_elevated_button'),
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                if (isEnabled) {
+                                  try {
+                                    await context
+                                        .read<SearchApiViewModel>()
+                                        .fetchSearchApiModelStruct(
+                                            formController.text);
+                                    viewSnackBar(context,
+                                        ResponseMessage.successfulMessage);
+                                    // エラーレスポンスに関しては手動での再現ができなかったので、APIreferenceのstatus codeを参照
+                                  } on NotModifiedException catch (_) {
+                                    viewSnackBar(context,
+                                        ResponseMessage.notModifiedMessage);
+                                  } on BadRequestException catch (_) {
+                                    viewSnackBar(context,
+                                        ResponseMessage.badRequestMessage);
+                                  } on ServerProblemException catch (_) {
+                                    viewSnackBar(context,
+                                        ResponseMessage.serverProblemMessage);
+                                  } on TimeoutException catch (_) {
+                                    viewSnackBar(context,
+                                        ResponseMessage.timeoutMessage);
+                                  } on Exception catch (_) {
+                                    viewSnackBar(context,
+                                        ResponseMessage.otherExceptionMessage);
+                                  }
+                                } else {
+                                  return null;
+                                }
                               }
-                            } else {
-                              return null;
-                            }
-                          },
-                          child: Text('検索')),
-                    ),
-                  ],
-                ),
-                searchApiModelStruct != null
-                    ? ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: searchApiModelStruct.items.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            child: ApiResponseCard(
-                                item: searchApiModelStruct.items[index]),
-                          );
-                        })
-                    : Container()
-              ],
+                            },
+                            child: Text('検索')),
+                      ),
+                    ],
+                  ),
+                  searchApiModelStruct != null
+                      ? ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: searchApiModelStruct.items.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              child: ApiResponseCard(
+                                  item: searchApiModelStruct.items[index]),
+                            );
+                          })
+                      : Container()
+                ],
+              ),
             ),
           ),
         ),
