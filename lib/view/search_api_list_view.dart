@@ -14,7 +14,9 @@ class SearchApiListView extends StatelessWidget {
         .select((SearchApiViewModel store) => store.searchApiModelStruct);
     final isEnabled =
         context.select((SearchApiViewModel store) => store.isEnabled);
-    var _formController = TextEditingController();
+    final formController =
+        context.select((SearchApiViewModel store) => store.formController);
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('GithubAPI検索App'),
@@ -30,7 +32,7 @@ class SearchApiListView extends StatelessWidget {
                     padding: EdgeInsets.only(top: 10),
                     child: TextField(
                       key: Key('search_text_field'),
-                      controller: _formController,
+                      controller: formController,
                       decoration: InputDecoration(
                         alignLabelWithHint: true,
                         labelText: '入力後、ボタンをタップしてください',
@@ -69,10 +71,14 @@ class SearchApiListView extends StatelessWidget {
                       onPressed: () async {
                         if (isEnabled) {
                           try {
+                            // await context
+                            //     .read<SearchApiViewModel>()
+                            //     .fetchSearchApiModelStruct(
+                            //         _formController.text);
                             await context
                                 .read<SearchApiViewModel>()
                                 .fetchSearchApiModelStruct(
-                                    _formController.text);
+                                    formController.text);
                             viewSnackBar(
                                 context, ResponseMessage.successfulMessage);
                             // エラーレスポンスに関しては手動での再現ができなかったので、APIreferenceのstatus codeを参照

@@ -12,6 +12,7 @@ class SearchApiViewModel with ChangeNotifier {
   SearchApiModelStruct? get searchApiModelStruct => _searchApiModelStruct;
   bool _isEnabled = true;
   bool get isEnabled => _isEnabled;
+  final formController = TextEditingController();
 
   set isEnabled(bool value) {
     _isEnabled = value;
