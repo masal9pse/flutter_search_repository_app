@@ -43,6 +43,8 @@ void main() {
         await tester.tap(find.byKey(Key('search_elevated_button')));
         await tester.pump(Duration(seconds: 1));
         expect(find.text('rep2'), findsOneWidget);
+        expect(find.text('Cddddddd'), findsOneWidget); 
+        expect(find.byKey(Key('snack_bar')), findsOneWidget);
       });
     });
   });

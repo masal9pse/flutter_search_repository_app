@@ -121,6 +121,7 @@ class SearchApiListView extends StatelessWidget {
   void viewSnackBar(BuildContext context, String responseMessage) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        key: Key('snack_bar'),
         content: Text(responseMessage),
         action: SnackBarAction(
           label: 'ok',
