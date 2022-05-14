@@ -78,30 +78,34 @@ class SearchApiListView extends StatelessWidget {
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 if (isEnabled) {
-                                  try {
-                                    await context
+                                  await context
                                         .read<SearchApiViewModel>()
                                         .fetchSearchApiModelStruct(
                                             formController.text);
-                                    viewSnackBar(context,
-                                        ResponseMessage.successfulMessage);
-                                    // エラーレスポンスに関しては手動での再現ができなかったので、APIreferenceのstatus codeを参照
-                                  } on NotModifiedException catch (_) {
-                                    viewSnackBar(context,
-                                        ResponseMessage.notModifiedMessage);
-                                  } on BadRequestException catch (_) {
-                                    viewSnackBar(context,
-                                        ResponseMessage.badRequestMessage);
-                                  } on ServerProblemException catch (_) {
-                                    viewSnackBar(context,
-                                        ResponseMessage.serverProblemMessage);
-                                  } on TimeoutException catch (_) {
-                                    viewSnackBar(context,
-                                        ResponseMessage.timeoutMessage);
-                                  } on Exception catch (_) {
-                                    viewSnackBar(context,
-                                        ResponseMessage.otherExceptionMessage);
-                                  }
+                                  // try {
+                                  //   await context
+                                  //       .read<SearchApiViewModel>()
+                                  //       .fetchSearchApiModelStruct(
+                                  //           formController.text);
+                                  //   viewSnackBar(context,
+                                  //       ResponseMessage.successfulMessage);
+                                  //   // エラーレスポンスに関しては手動での再現ができなかったので、APIreferenceのstatus codeを参照
+                                  // } on NotModifiedException catch (_) {
+                                  //   viewSnackBar(context,
+                                  //       ResponseMessage.notModifiedMessage);
+                                  // } on BadRequestException catch (_) {
+                                  //   viewSnackBar(context,
+                                  //       ResponseMessage.badRequestMessage);
+                                  // } on ServerProblemException catch (_) {
+                                  //   viewSnackBar(context,
+                                  //       ResponseMessage.serverProblemMessage);
+                                  // } on TimeoutException catch (_) {
+                                  //   viewSnackBar(context,
+                                  //       ResponseMessage.timeoutMessage);
+                                  // } on Exception catch (_) {
+                                  //   viewSnackBar(context,
+                                  //       ResponseMessage.otherExceptionMessage);
+                                  // }
                                 } else {
                                   return null;
                                 }
