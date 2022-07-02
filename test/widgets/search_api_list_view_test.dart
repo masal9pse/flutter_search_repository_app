@@ -46,7 +46,7 @@ void main() {
       testWidgets('検索フォームに入力して、検索ボタンをタップすると一覧に表示される。',
           (WidgetTester tester) async {
         await tester.pumpWidget(testMainViewWidget());
-        final input = 'testです';
+        final input = 'Go language';
         final apiSuccessTestData01 = ApiMockTestData().apiSuccessTestData01;
         final convertedApiSuccessTestData01 =
             SearchApiModelStruct.fromJson(apiSuccessTestData01);
@@ -59,8 +59,8 @@ void main() {
         await tester.pump(Duration(seconds: 1));
         expect(find.text('やまもとまさと'), findsOneWidget);
         expect(find.text('鈴木大輔'), findsOneWidget);
-        // expect(find.byKey(Key('snack_bar')), findsNothing);
-        // expectTextData(tester: tester, data: SUCCESSFULMESSAGE);
+        expect(find.byKey(Key('snack_bar')), findsOneWidget);
+        expectTextData(tester: tester, data: SUCCESSFULMESSAGE);
       });
     });
 
@@ -68,16 +68,15 @@ void main() {
       testWidgets('検索フォームに入力して、検索ボタンをタップする例外をスローする。',
           (WidgetTester tester) async {
         await tester.pumpWidget(testMainViewWidget());
-        final input = 'testです';
+        final input = 'PHP';
         when(mockSearchApiService.getApiListInfo(input))
-            .thenAnswer((_) => throw Exception());
+            .thenAnswer((_) => Future.value(Failure(code: NO_INTERNET, errorResponse: NOCONNECTIONMESSAGE)));
 
-        expect(
-            () => mockSearchApiService.getApiListInfo(input), throwsException);
         await tester.enterText(find.byKey(Key('search_text_field')), input);
         await tester.tap(find.byKey(Key('search_elevated_button')));
         await tester.pump(Duration(seconds: 1));
-        expectTextData(tester: tester, data: OTHEREXCEPTIONMESSAGE);
+        expect(find.byKey(Key('snack_bar')), findsOneWidget);
+        expectTextData(tester: tester, data: NOCONNECTIONMESSAGE);
       });
     });
   });

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/model/api_error.dart';
+import 'package:flutter_engineer_codecheck/const/response_message.dart';
 import 'package:flutter_engineer_codecheck/view/widgets/api_response_card.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
 import 'package:provider/provider.dart';
@@ -11,8 +11,6 @@ class SearchApiListView extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final searchApiModelStruct = context
         .select((SearchApiViewModel store) => store.searchApiModelStruct);
-    final isEnabled =
-        context.select((SearchApiViewModel store) => store.isEnabled);
     final formController =
         context.select((SearchApiViewModel store) => store.formController);
     return Scaffold(
@@ -77,21 +75,17 @@ class SearchApiListView extends StatelessWidget {
                               key: Key('search_elevated_button'),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  if (isEnabled) {
-                                    await context
-                                        .read<SearchApiViewModel>()
-                                        .fetchSearchApiModelStruct(
-                                          formController.text,
-                                        );
+                                  await context
+                                      .read<SearchApiViewModel>()
+                                      .fetchSearchApiModelStruct(
+                                        formController.text,
+                                      );
 
-                                    if (model.apiError != null) {
-                                      viewSnackBar(context,
-                                          model.apiError?.message ?? '');
-                                    } else {
-                                      viewSnackBar(context, '登録に成功しました');
-                                    }
+                                  if (model.apiError != null) {
+                                    viewSnackBar(
+                                        context, model.apiError?.message ?? '');
                                   } else {
-                                    return null;
+                                    viewSnackBar(context, SUCCESSFULMESSAGE);
                                   }
                                 }
                               },
