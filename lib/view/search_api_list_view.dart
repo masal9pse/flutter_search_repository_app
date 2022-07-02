@@ -1,7 +1,4 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/const/response_message.dart';
-import 'package:flutter_engineer_codecheck/extention/custom_exception.dart';
 import 'package:flutter_engineer_codecheck/view/widgets/api_response_card.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
 import 'package:provider/provider.dart';
@@ -79,33 +76,10 @@ class SearchApiListView extends StatelessWidget {
                               if (_formKey.currentState!.validate()) {
                                 if (isEnabled) {
                                   await context
-                                        .read<SearchApiViewModel>()
-                                        .fetchSearchApiModelStruct(
-                                            formController.text);
-                                  // try {
-                                  //   await context
-                                  //       .read<SearchApiViewModel>()
-                                  //       .fetchSearchApiModelStruct(
-                                  //           formController.text);
-                                  //   viewSnackBar(context,
-                                  //       ResponseMessage.successfulMessage);
-                                  //   // エラーレスポンスに関しては手動での再現ができなかったので、APIreferenceのstatus codeを参照
-                                  // } on NotModifiedException catch (_) {
-                                  //   viewSnackBar(context,
-                                  //       ResponseMessage.notModifiedMessage);
-                                  // } on BadRequestException catch (_) {
-                                  //   viewSnackBar(context,
-                                  //       ResponseMessage.badRequestMessage);
-                                  // } on ServerProblemException catch (_) {
-                                  //   viewSnackBar(context,
-                                  //       ResponseMessage.serverProblemMessage);
-                                  // } on TimeoutException catch (_) {
-                                  //   viewSnackBar(context,
-                                  //       ResponseMessage.timeoutMessage);
-                                  // } on Exception catch (_) {
-                                  //   viewSnackBar(context,
-                                  //       ResponseMessage.otherExceptionMessage);
-                                  // }
+                                      .read<SearchApiViewModel>()
+                                      .fetchSearchApiModelStruct(
+                                        formController.text,
+                                      );
                                 } else {
                                   return null;
                                 }
