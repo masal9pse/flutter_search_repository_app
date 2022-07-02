@@ -3,8 +3,6 @@ import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 
 class ApiResponseCard extends StatelessWidget {
   ApiResponseCard({Key? key, this.item}) : super(key: key);
-
-  // API実行前に呼ばれてしまい、結果initializeできないのでoptionalに変更。
   final Item? item;
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/model/api_error.dart';
 import 'package:flutter_engineer_codecheck/view/widgets/api_response_card.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
 import 'package:provider/provider.dart';
@@ -68,25 +69,35 @@ class SearchApiListView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                        width: screenWidth * 0.2,
-                        child: ElevatedButton(
-                            key: Key('search_elevated_button'),
-                            onPressed: () async {
-                              if (_formKey.currentState!.validate()) {
-                                if (isEnabled) {
-                                  await context
-                                      .read<SearchApiViewModel>()
-                                      .fetchSearchApiModelStruct(
-                                        formController.text,
-                                      );
-                                } else {
-                                  return null;
+                      Consumer<SearchApiViewModel>(
+                          builder: (context, model, child) {
+                        return Container(
+                          width: screenWidth * 0.2,
+                          child: ElevatedButton(
+                              key: Key('search_elevated_button'),
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  if (isEnabled) {
+                                    await context
+                                        .read<SearchApiViewModel>()
+                                        .fetchSearchApiModelStruct(
+                                          formController.text,
+                                        );
+
+                                    if (model.apiError != null) {
+                                      viewSnackBar(context,
+                                          model.apiError?.message ?? '');
+                                    } else {
+                                      viewSnackBar(context, '登録に成功しました');
+                                    }
+                                  } else {
+                                    return null;
+                                  }
                                 }
-                              }
-                            },
-                            child: Text('検索')),
-                      ),
+                              },
+                              child: Text('検索')),
+                        );
+                      }),
                     ],
                   ),
                   searchApiModelStruct != null

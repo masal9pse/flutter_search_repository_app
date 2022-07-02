@@ -6,12 +6,6 @@ class Success {
 
 class Failure {
   int code;
-  Object errorResponse;
+  String errorResponse;
   Failure({required this.code,required this.errorResponse});
-}
-
-class SearchApiError {
-  int code;
-  String message;
-  SearchApiError({required this.code,required this.message});
 }
