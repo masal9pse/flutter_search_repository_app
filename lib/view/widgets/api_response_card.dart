@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
+import 'package:flutter_engineer_codecheck/view/show/api_show_page.dart';
 
 class ApiResponseCard extends StatelessWidget {
   ApiResponseCard({Key? key, this.item}) : super(key: key);
@@ -16,6 +17,17 @@ class ApiResponseCard extends StatelessWidget {
                     leading: Image.network(item!.owner.avatarUrl),
                     title: Text(item!.name),
                     subtitle: Text(item!.language ?? ''),
+                    onTap: () {
+                      // ここにボタンを押した時に呼ばれるコードを書く
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ApiShowPage(
+                            item: item,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
