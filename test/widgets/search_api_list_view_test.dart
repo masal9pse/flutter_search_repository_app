@@ -6,7 +6,7 @@ import 'package:flutter_engineer_codecheck/const/response_status.dart';
 import 'package:flutter_engineer_codecheck/model/api_status.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/service/search_api_service.dart';
-import 'package:flutter_engineer_codecheck/view/search_api_list_view.dart';
+import 'package:flutter_engineer_codecheck/view/search_api_list_page.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -24,7 +24,7 @@ void main() {
       return MaterialApp(
         home: ChangeNotifierProvider(
             create: (context) => SearchApiViewModel(mockSearchApiService),
-            child: SearchApiListView()),
+            child: SearchApiListPage()),
       );
     }
 
