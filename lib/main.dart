@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/service/search_api_service.dart';
 import 'package:flutter_engineer_codecheck/view/search_api_list_page.dart';
+import 'package:flutter_engineer_codecheck/view/show/api_show_page.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -28,9 +30,17 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: SearchApiListPage(),
-      initialRoute: '/',
-      routes: <String, WidgetBuilder>{},
+      routes: <String, WidgetBuilder>{
+        '/': (BuildContext context) => SearchApiListPage(),
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == '/show') {
+          return MaterialPageRoute(
+            builder: (context) => ApiShowPage(item: settings.arguments as Item?),
+          );
+        }
+        return null;
+      },
     );
   }
 }

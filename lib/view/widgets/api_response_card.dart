@@ -18,15 +18,7 @@ class ApiResponseCard extends StatelessWidget {
                     title: Text(item!.name),
                     subtitle: Text(item!.language ?? ''),
                     onTap: () {
-                      // ここにボタンを押した時に呼ばれるコードを書く
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ApiShowPage(
-                            item: item,
-                          ),
-                        ),
-                      );
+                      Navigator.of(context).pushNamed('/show', arguments: item);
                     },
                   ),
                   Row(
