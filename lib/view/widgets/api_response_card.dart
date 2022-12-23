@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
-import 'package:flutter_engineer_codecheck/view/show/api_show_page.dart';
 import 'package:go_router/go_router.dart';
 
 class ApiResponseCard extends StatelessWidget {
@@ -19,7 +18,7 @@ class ApiResponseCard extends StatelessWidget {
                     title: Text(item!.name),
                     subtitle: Text(item!.language ?? ''),
                     onTap: () {
-                      context.push('/show');
+                      context.push('/show',extra: item);
                     },
                   ),
                   Row(

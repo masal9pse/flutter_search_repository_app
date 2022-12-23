@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/service/search_api_service.dart';
 import 'package:flutter_engineer_codecheck/view/search_api_list_page.dart';
@@ -7,19 +8,23 @@ import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 
-void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider<SearchApiViewModel>(
-          create: (context) => SearchApiViewModel(
-            SearchApiService(),
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) {
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<SearchApiViewModel>(
+            create: (context) => SearchApiViewModel(
+              SearchApiService(),
+            ),
           ),
-        ),
-      ],
-      child: MyApp(),
-    ),
-  );
+        ],
+        child: MyApp(),
+      ),
+    );
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -30,9 +35,12 @@ class MyApp extends StatelessWidget {
     ),
     GoRoute(
       path: '/show',
-      builder: ((context, state) => ApiShowPage(
-            item: null,
-          )),
+      builder: ((context, state) {
+        final item = state.extra as Item?;
+        return ApiShowPage(
+          item: item,
+        );
+      }),
     ),
   ]);
   @override
