@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/const/response_message.dart';
 import 'package:flutter_engineer_codecheck/view/atoms/search_form.dart';
+import 'package:flutter_engineer_codecheck/view/molecules/search_bar.dart';
 import 'package:flutter_engineer_codecheck/view/widgets/api_response_card.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
 import 'package:provider/provider.dart';
@@ -27,13 +28,10 @@ class SearchApiListPage extends StatelessWidget {
               padding: EdgeInsets.only(top: 15),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      SearchForm(
-                        controller: formController,
-                        keyName: 'top_page_search_text_field',
-                      ),
-                    ],
+                  SearchBar(
+                    controller: formController,
+                    keyName: 'top_page_search_text_field',
+                    callback: () {},
                   ),
                   searchApiModelStruct != null
                       ? ListView.builder(
