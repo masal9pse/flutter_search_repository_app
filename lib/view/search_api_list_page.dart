@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/const/response_message.dart';
+import 'package:flutter_engineer_codecheck/view/atoms/search_form.dart';
 import 'package:flutter_engineer_codecheck/view/widgets/api_response_card.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
 import 'package:provider/provider.dart';
@@ -28,70 +29,9 @@ class SearchApiListPage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Container(
-                        width: screenWidth * 0.6,
-                        child: TextFormField(
-                          key: Key('search_text_field'),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return '文字を入力してください。';
-                            }
-                            return null;
-                          },
-                          controller: formController,
-                          decoration: InputDecoration(
-                            errorStyle: TextStyle(color: Colors.red),
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 7),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.grey,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.blue,
-                              ),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.red),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue),
-                            ),
-                            disabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Colors.blue,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Consumer<SearchApiViewModel>(
-                        builder: (context, model, child) {
-                          return Container(
-                            width: screenWidth * 0.2,
-                            child: ElevatedButton(
-                                key: Key('search_elevated_button'),
-                                onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    await context
-                                        .read<SearchApiViewModel>()
-                                        .fetchSearchApiModelStruct(
-                                          formController.text,
-                                        );
-
-                                    if (model.apiError != null) {
-                                      viewSnackBar(context,
-                                          model.apiError?.message ?? '');
-                                    } else {
-                                      viewSnackBar(context, SUCCESSFULMESSAGE);
-                                    }
-                                  }
-                                },
-                                child: Text('検索')),
-                          );
-                        },
+                      SearchForm(
+                        controller: formController,
+                        keyName: 'top_page_search_text_field',
                       ),
                     ],
                   ),
