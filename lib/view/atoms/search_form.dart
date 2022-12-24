@@ -11,13 +11,7 @@ class SearchForm extends StatelessWidget {
   final String keyName;
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      width: screenWidth * 0.8,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.red),
-        borderRadius: BorderRadius.circular(10),
-      ),
       child: TextFormField(
         key: Key(keyName),
         validator: (value) {

@@ -31,7 +31,13 @@ class SearchApiListPage extends StatelessWidget {
                   SearchBar(
                     controller: formController,
                     keyName: 'top_page_search_text_field',
-                    callback: () {},
+                    callback: () {
+                      context
+                          .read<SearchApiViewModel>()
+                          .fetchSearchApiModelStruct(
+                            formController.text,
+                          );
+                    },
                   ),
                   searchApiModelStruct != null
                       ? ListView.builder(
