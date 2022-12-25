@@ -6,35 +6,33 @@ part of 'search_api_struct.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SearchApiModelStruct _$SearchApiModelStructFromJson(Map<String, dynamic> json) {
-  return SearchApiModelStruct(
-    json['total_count'] as int,
-    (json['items'] as List<dynamic>)
-        .map((e) => Item.fromJson(e as Map<String, dynamic>))
-        .toList(),
-  );
-}
+_$_SearchApiModelStruct _$$_SearchApiModelStructFromJson(
+        Map<String, dynamic> json) =>
+    _$_SearchApiModelStruct(
+      totalCount: json['total_count'] as int,
+      items: (json['items'] as List<dynamic>)
+          .map((e) => Item.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
 
-Map<String, dynamic> _$SearchApiModelStructToJson(
-        SearchApiModelStruct instance) =>
+Map<String, dynamic> _$$_SearchApiModelStructToJson(
+        _$_SearchApiModelStruct instance) =>
     <String, dynamic>{
-      'total_count': instance.total_count,
+      'total_count': instance.totalCount,
       'items': instance.items,
     };
 
-Item _$ItemFromJson(Map<String, dynamic> json) {
-  return Item(
-    json['name'] as String,
-    json['stargazers_count'] as int,
-    json['watchers_count'] as int,
-    json['language'] as String?,
-    json['forks_count'] as int,
-    json['open_issues_count'] as int,
-    Owner.fromJson(json['owner'] as Map<String, dynamic>),
-  );
-}
+_$_Item _$$_ItemFromJson(Map<String, dynamic> json) => _$_Item(
+      name: json['name'] as String,
+      stargazersCount: json['stargazers_count'] as int?,
+      watchersCount: json['watchers_count'] as int?,
+      language: json['language'] as String?,
+      forksCount: json['forks_count'] as int?,
+      openIssuesCount: json['open_issues_count'] as int?,
+      owner: Owner.fromJson(json['owner'] as Map<String, dynamic>),
+    );
 
-Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
+Map<String, dynamic> _$$_ItemToJson(_$_Item instance) => <String, dynamic>{
       'name': instance.name,
       'stargazers_count': instance.stargazersCount,
       'watchers_count': instance.watchersCount,
@@ -44,12 +42,10 @@ Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'owner': instance.owner,
     };
 
-Owner _$OwnerFromJson(Map<String, dynamic> json) {
-  return Owner(
-    json['avatar_url'] as String,
-  );
-}
+_$_Owner _$$_OwnerFromJson(Map<String, dynamic> json) => _$_Owner(
+      avatarUrl: json['avatar_url'] as String,
+    );
 
-Map<String, dynamic> _$OwnerToJson(Owner instance) => <String, dynamic>{
+Map<String, dynamic> _$$_OwnerToJson(_$_Owner instance) => <String, dynamic>{
       'avatar_url': instance.avatarUrl,
     };
