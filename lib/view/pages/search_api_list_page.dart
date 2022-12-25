@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/const/response_message.dart';
-import 'package:flutter_engineer_codecheck/view/atoms/search_form.dart';
 import 'package:flutter_engineer_codecheck/view/molecules/search_bar.dart';
 import 'package:flutter_engineer_codecheck/view/organisms/api_response_card.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
