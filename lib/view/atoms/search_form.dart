@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/const/app_key_name.dart';
 
 class SearchForm extends StatelessWidget {
-  const SearchForm({
-    super.key,
+  const SearchForm({    
     required this.controller,
-    required this.keyName,
   });
 
   final TextEditingController controller;
-  final String keyName;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: TextFormField(
-        key: Key(keyName),
+        key: AppKeyName.topPageSearchTextField,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return '文字を入力してください。';
