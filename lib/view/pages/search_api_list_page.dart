@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/view/molecules/search_bar.dart';
-import 'package:flutter_engineer_codecheck/view/organisms/api_response_card.dart';
+import 'package:flutter_engineer_codecheck/view/organisms/response_list_view.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -37,18 +37,10 @@ class SearchApiListPage extends StatelessWidget {
                     },
                   ),
                   searchApiModelStruct != null
-                      ? ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: searchApiModelStruct.items.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              child: ApiResponseCard(
-                                item: searchApiModelStruct.items[index],
-                              ),
-                            );
-                          })
-                      : Container()
+                      ? ResponseListView(
+                          searchApiModelStruct: searchApiModelStruct,
+                        )
+                      : Container(),
                 ],
               ),
             ),
