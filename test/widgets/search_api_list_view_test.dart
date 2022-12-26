@@ -30,10 +30,15 @@ void main() {
       );
     }
 
-    void expectTextData({required WidgetTester tester, required String data}) {
+    void expectTextData({
+      required WidgetTester tester,
+      required String data,
+    }) {
       expect(
-          ((tester.widget(find.byKey(Key('snack_bar'))) as SnackBar).content
-                  as Text)
+          ((tester.widget(
+            find.byKey(AppKeyName.snackBar),
+          ) as SnackBar)
+                  .content as Text)
               .data,
           data);
     }
@@ -52,35 +57,45 @@ void main() {
         final apiSuccessTestData01 = ApiMockTestData().apiSuccessTestData01;
         final convertedApiSuccessTestData01 =
             SearchApiModelStruct.fromJson(apiSuccessTestData01);
-        when(mockSearchApiService.getApiListInfo(input)).thenAnswer((_) =>
-            Future.value(Success(
-                code: SUCCESS, response: convertedApiSuccessTestData01)));
+        when(mockSearchApiService.getApiListInfo(input)).thenAnswer(
+          (_) => Future.value(
+            Success(code: SUCCESS, response: convertedApiSuccessTestData01),
+          ),
+        );
 
         await tester.enterText(
-            find.byKey(Key('top_page_search_text_field')), input);
-        await tester.tap(find.byKey(Key('search_elevated_button')));
+            find.byKey(AppKeyName.topPageSearchTextField), input);
+        await tester.tap(
+          find.byKey(AppKeyName.searchElevatedButton),
+        );
         await tester.pump(Duration(seconds: 1));
         expect(find.text('やまもとまさと'), findsOneWidget);
         expect(find.text('鈴木大輔'), findsOneWidget);
-        expect(find.byKey(Key('snack_bar')), findsOneWidget);
+        expect(find.byKey(AppKeyName.snackBar), findsOneWidget);
         expectTextData(tester: tester, data: SUCCESSFULMESSAGE);
       });
     });
 
     group('異常系', () {
-      testWidgets('検索フォームに入力して、検索ボタンをタップする例外をスローする。',
+      testWidgets('検索ボタンをタップするとsnackbarに例外のメッセージが表示されることをテスト',
           (WidgetTester tester) async {
         await tester.pumpWidget(testMainViewWidget());
         final input = 'PHP';
-        when(mockSearchApiService.getApiListInfo(input)).thenAnswer((_) =>
-            Future.value(Failure(
-                code: NO_INTERNET, errorResponse: NOCONNECTIONMESSAGE)));
+        when(mockSearchApiService.getApiListInfo(input)).thenAnswer(
+          (_) => Future.value(
+            Failure(code: NO_INTERNET, errorResponse: NOCONNECTIONMESSAGE),
+          ),
+        );
 
         await tester.enterText(
-            find.byKey(Key('top_page_search_text_field')), input);
-        await tester.tap(find.byKey(Key('search_elevated_button')));
-        await tester.pump(Duration(seconds: 1));
-        expect(find.byKey(Key('snack_bar')), findsOneWidget);
+            find.byKey(AppKeyName.topPageSearchTextField), input);
+        await tester.tap(
+          find.byKey(AppKeyName.searchElevatedButton),
+        );
+        await tester.pump(
+          Duration(seconds: 1),
+        );
+        expect(find.byKey(AppKeyName.snackBar), findsOneWidget);
         expectTextData(tester: tester, data: NOCONNECTIONMESSAGE);
       });
     });
