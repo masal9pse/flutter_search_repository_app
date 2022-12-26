@@ -60,7 +60,7 @@ void main() {
             SearchApiModelStruct.fromJson(apiSuccessTestData01);
         when(mockSearchApiService.getApiListInfo(input)).thenAnswer(
           (_) => Future.value(
-            Success(code: SUCCESS, response: convertedApiSuccessTestData01),
+            Success(code: ResponseStatus.success, response: convertedApiSuccessTestData01),
           ),
         );
 
@@ -75,7 +75,7 @@ void main() {
         expect(find.text('やまもとまさと'), findsOneWidget);
         expect(find.text('鈴木大輔'), findsOneWidget);
         expect(find.byKey(AppKeyName.snackBar), findsOneWidget);
-        expectTextData(tester: tester, data: SUCCESSFULMESSAGE);
+        expectTextData(tester: tester, data: ResponesMessage.successfulMessage);
       });
     });
 
@@ -86,7 +86,7 @@ void main() {
         const input = 'PHP';
         when(mockSearchApiService.getApiListInfo(input)).thenAnswer(
           (_) => Future.value(
-            Failure(code: NO_INTERNET, errorResponse: NOCONNECTIONMESSAGE),
+            Failure(code: ResponseStatus.noInternet, errorResponse: ResponesMessage.noConnectionMessage),
           ),
         );
 
@@ -101,7 +101,7 @@ void main() {
           const Duration(seconds: 1),
         );
         expect(find.byKey(AppKeyName.snackBar), findsOneWidget);
-        expectTextData(tester: tester, data: NOCONNECTIONMESSAGE);
+        expectTextData(tester: tester, data: ResponesMessage.noConnectionMessage);
       });
     });
   });

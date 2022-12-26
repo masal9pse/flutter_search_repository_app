@@ -56,7 +56,7 @@ class SearchApiListPage extends StatelessWidget {
                                 model.apiError!.message ?? '',
                               );
                             } else {
-                              viewSnackBar(context, SUCCESSFULMESSAGE);
+                              viewSnackBar(context, ResponesMessage.successfulMessage);
                             }
                           }
                         },
