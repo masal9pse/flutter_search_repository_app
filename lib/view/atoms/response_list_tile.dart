@@ -6,13 +6,11 @@ class ResponseListTile extends StatelessWidget {
     required this.url,
     required this.title,
     required this.subtitle,
-    this.callback,
   });
 
   final String url;
   final String title;
   final String? subtitle;
-  final VoidCallback? callback;
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +26,6 @@ class ResponseListTile extends StatelessWidget {
       ),
       title: Text(title),
       subtitle: Text(subtitle ?? ''),
-      onTap: () {
-        if (callback == null) {
-          return;
-        }
-        callback!();
-      },
     );
   }
 }

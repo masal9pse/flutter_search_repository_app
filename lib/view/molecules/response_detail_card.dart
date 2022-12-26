@@ -13,6 +13,7 @@ class ResponseDetailCard extends StatelessWidget {
     required this.watchersCount,
     required this.forksCount,
     required this.openIssuesCount,
+    this.callback,
   });
 
   final String url;
@@ -22,28 +23,40 @@ class ResponseDetailCard extends StatelessWidget {
   final String watchersCount;
   final String forksCount;
   final String openIssuesCount;
+  final VoidCallback? callback;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ResponseListTile(url: url, title: title, subtitle: subtitle),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+    return GestureDetector(
+      onTap: () {
+        if (callback == null) {
+          return;
+        }
+        callback!();
+      },
+      child: Container(
+        child: Card(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              ResponseCount(icon: Icons.star, count: stargazersCount),
-              const SizedBox(width: 8),
-              ResponseCount(icon: Icons.remove_red_eye, count: watchersCount),
-              const SizedBox(width: 8),
-              ResponseCount(icon: Icons.food_bank_sharp, count: forksCount),
-              const SizedBox(width: 8),
-              ResponseCount(icon: Icons.report, count: openIssuesCount),
-              const SizedBox(width: 8),              
+              ResponseListTile(url: url, title: title, subtitle: subtitle),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  ResponseCount(icon: Icons.star, count: stargazersCount),
+                  const SizedBox(width: 8),
+                  ResponseCount(
+                      icon: Icons.remove_red_eye, count: watchersCount),
+                  const SizedBox(width: 8),
+                  ResponseCount(icon: Icons.food_bank_sharp, count: forksCount),
+                  const SizedBox(width: 8),
+                  ResponseCount(icon: Icons.report, count: openIssuesCount),
+                  const SizedBox(width: 8),
+                ],
+              ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }

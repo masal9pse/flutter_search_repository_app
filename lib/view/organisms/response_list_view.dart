@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/view/molecules/response_detail_card.dart';
+import 'package:go_router/go_router.dart';
 
 class ResponseListView extends StatelessWidget {
   const ResponseListView({
@@ -27,16 +28,17 @@ class ResponseListView extends StatelessWidget {
         final forksCount = item.forksCount.toString();
         final openIssuesCount = item.openIssuesCount.toString();
 
-        return Container(
-          child: ResponseDetailCard(
-            url: avatarUrl,
-            title: name,
-            subtitle: language,
-            stargazersCount: stargazersCount,
-            watchersCount: watchersCount,
-            forksCount: forksCount,
-            openIssuesCount: openIssuesCount,            
-          ),
+        return ResponseDetailCard(
+          url: avatarUrl,
+          title: name,
+          subtitle: language,
+          stargazersCount: stargazersCount,
+          watchersCount: watchersCount,
+          forksCount: forksCount,
+          openIssuesCount: openIssuesCount,
+          callback: () {
+            context.push('/show', extra: item);
+          },
         );
       },
     );
