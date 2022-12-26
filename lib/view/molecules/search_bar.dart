@@ -6,13 +6,12 @@ class SearchBar extends StatelessWidget {
   const SearchBar({
     super.key,
     required this.controller,
-    required this.keyName,
     required this.callback,
   });
 
   final TextEditingController controller;
-  final String keyName;
   final VoidCallback callback;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -21,7 +20,6 @@ class SearchBar extends StatelessWidget {
           flex: 3,
           child: SearchForm(
             controller: controller,
-            keyName: keyName,
           ),
         ),
         Container(

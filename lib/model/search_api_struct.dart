@@ -1,44 +1,47 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'search_api_struct.freezed.dart';
 part 'search_api_struct.g.dart';
 
-@JsonSerializable(
-  fieldRename: FieldRename.snake,
-)
-class SearchApiModelStruct {
-  SearchApiModelStruct(this.total_count, this.items);
-
-  int total_count;
-  List<Item> items;
+@freezed
+class SearchApiModelStruct with _$SearchApiModelStruct {
+  @JsonSerializable(
+    fieldRename: FieldRename.snake,
+  )
+  const factory SearchApiModelStruct({
+    required int totalCount,
+    required List<Item> items,
+  }) = _SearchApiModelStruct;
 
   factory SearchApiModelStruct.fromJson(Map<String, dynamic> json) =>
       _$SearchApiModelStructFromJson(json);
-  Map<String, dynamic> toJson() => _$SearchApiModelStructToJson(this);
 }
 
-@JsonSerializable(
-  fieldRename: FieldRename.snake,
-)
-class Item {
-  Item(this.name, this.stargazersCount, this.watchersCount, this.language,
-      this.forksCount, this.openIssuesCount, this.owner);
-  String name;
-  int stargazersCount;
-  int watchersCount;
-  String? language;
-  int forksCount;
-  int openIssuesCount;
-  Owner owner;
+@freezed
+class Item with _$Item {
+  @JsonSerializable(
+    fieldRename: FieldRename.snake,
+  )
+  const factory Item({
+    required String name,
+    int? stargazersCount,
+    int? watchersCount,
+    String? language,
+    int? forksCount,
+    int? openIssuesCount,
+    required Owner owner,
+  }) = _Item;
 
   factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
-  Map<String, dynamic> toJson() => _$ItemToJson(this);
 }
 
-@JsonSerializable(
-  fieldRename: FieldRename.snake,
-)
-class Owner {
-  Owner(this.avatarUrl);
-  String avatarUrl;
+@freezed
+class Owner with _$Owner{
+  @JsonSerializable(
+    fieldRename: FieldRename.snake,
+  )
+  const factory Owner({
+    required String avatarUrl,
+  }) = _Owner;
+
   factory Owner.fromJson(Map<String, dynamic> json) => _$OwnerFromJson(json);
-  Map<String, dynamic> toJson() => _$OwnerToJson(this);
 }

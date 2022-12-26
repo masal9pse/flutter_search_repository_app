@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/service/search_api_service.dart';
-import 'package:flutter_engineer_codecheck/view/search_api_list_page.dart';
-import 'package:flutter_engineer_codecheck/view/show/api_show_page.dart';
+import 'package:flutter_engineer_codecheck/view/pages/search_api_list_page.dart';
+import 'package:flutter_engineer_codecheck/view/pages/api_show_page.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
     GoRoute(
       path: '/show',
       builder: ((context, state) {
-        final item = state.extra as Item?;
+        final item = state.extra as Item;
         return ApiShowPage(
           item: item,
         );
