@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/const/app_key_name.dart';
 
 class SearchForm extends StatelessWidget {
-  const SearchForm({    
+  const SearchForm({
+    super.key,
     required this.controller,
   });
 
@@ -20,7 +21,7 @@ class SearchForm extends StatelessWidget {
           return null;
         },
         controller: controller,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           errorStyle: TextStyle(color: Colors.red),
           contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 7),
           enabledBorder: OutlineInputBorder(

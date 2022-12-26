@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 
 class SearchApiListPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+
+  SearchApiListPage({super.key});
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -28,7 +30,7 @@ class SearchApiListPage extends StatelessWidget {
           child: Center(
             child: Container(
               width: screenWidth * 0.8,
-              padding: EdgeInsets.only(top: 15),
+              padding: const EdgeInsets.only(top: 15),
               child: Column(
                 children: [
                   Consumer<SearchApiViewModel>(
@@ -50,7 +52,9 @@ class SearchApiListPage extends StatelessWidget {
                             // なぜConsumerから値を引っ張るとテストが通るのか現状わかっておりません。
                             if (model.apiError != null) {
                               viewSnackBar(
-                                  context, model.apiError!.message ?? '');
+                                context,
+                                model.apiError!.message ?? '',
+                              );
                             } else {
                               viewSnackBar(context, SUCCESSFULMESSAGE);
                             }
