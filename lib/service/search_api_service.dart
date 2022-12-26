@@ -21,7 +21,9 @@ class SearchApiService {
         return success;
       }
       return Failure(
-          code: USER_INVALID_RESPONSE, errorResponse: '無効な値が返却されました。');
+        code: USER_INVALID_RESPONSE,
+        errorResponse: '無効な値が返却されました。',
+      );
     } on HttpException {
       return Failure(code: NO_INTERNET, errorResponse: 'インターネットに接続できませんでした。');
     } on FormatException {

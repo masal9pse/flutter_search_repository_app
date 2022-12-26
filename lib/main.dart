@@ -28,21 +28,23 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final router = GoRouter(routes: [
-    GoRoute(
-      path: '/',
-      builder: ((context, state) => SearchApiListPage()),
-    ),
-    GoRoute(
-      path: '/show',
-      builder: ((context, state) {
-        final item = state.extra as Item;
-        return ApiShowPage(
-          item: item,
-        );
-      }),
-    ),
-  ]);
+  final router = GoRouter(
+    routes: [
+      GoRoute(
+        path: '/',
+        builder: ((context, state) => SearchApiListPage()),
+      ),
+      GoRoute(
+        path: '/show',
+        builder: ((context, state) {
+          final item = state.extra as Item;
+          return ApiShowPage(
+            item: item,
+          );
+        }),
+      ),
+    ],
+  );
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(

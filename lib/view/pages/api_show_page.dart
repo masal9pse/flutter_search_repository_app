@@ -21,24 +21,25 @@ class ApiShowPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('詳細ページ'),
+      appBar: AppBar(
+        title: const Text('詳細ページ'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ResponseDetailCard(
+              url: avatarUrl,
+              title: name,
+              subtitle: language,
+              stargazersCount: stargazersCount,
+              watchersCount: watchersCount,
+              forksCount: forksCount,
+              openIssuesCount: openIssuesCount,
+            ),
+          ],
         ),
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              ResponseDetailCard(
-                url: avatarUrl,
-                title: name,
-                subtitle: language,
-                stargazersCount: stargazersCount,
-                watchersCount: watchersCount,
-                forksCount: forksCount,
-                openIssuesCount: openIssuesCount,
-              ),
-            ],
-          ),
-        ));
+      ),
+    );
   }
 }
