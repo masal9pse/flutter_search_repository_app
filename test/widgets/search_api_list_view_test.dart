@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/const/app_key_name.dart';
 import 'package:flutter_engineer_codecheck/const/response_message.dart';
 import 'package:flutter_engineer_codecheck/const/response_status.dart';
-import 'package:flutter_engineer_codecheck/model/api_status.dart';
+import 'package:flutter_engineer_codecheck/model/api_error.dart';
+import 'package:flutter_engineer_codecheck/model/result.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/service/search_api_service.dart';
 import 'package:flutter_engineer_codecheck/view/pages/search_api_list_page.dart';
@@ -58,10 +59,9 @@ void main() {
         final apiSuccessTestData01 = ApiMockTestData().apiSuccessTestData01;
         final convertedApiSuccessTestData01 =
             SearchApiModelStruct.fromJson(apiSuccessTestData01);
-        when(mockSearchApiService.getApiListInfo(input)).thenAnswer(
-          (_) => Future.value(
-            Success(code: ResponseStatus.success, response: convertedApiSuccessTestData01),
-          ),
+        // なぜかgetApiListInfoの返り値をオプショナルにしたらテストが通った。
+        when(mockSearchApiService.getApiListInfo(input: input)).thenAnswer(
+          (_) => Future.value(Result.success(convertedApiSuccessTestData01)),
         );
 
         await tester.enterText(
@@ -84,9 +84,14 @@ void main() {
           (WidgetTester tester) async {
         await tester.pumpWidget(testMainViewWidget());
         const input = 'PHP';
-        when(mockSearchApiService.getApiListInfo(input)).thenAnswer(
+        when(mockSearchApiService.getApiListInfo(input: input)).thenAnswer(
           (_) => Future.value(
-            Failure(code: ResponseStatus.noInternet, errorResponse: ResponesMessage.noConnectionMessage),
+            const Result.failure(
+              ApiError(
+                code: ResponseStatus.noInternetStatus,
+                message: ResponesMessage.noConnectionMessage,
+              ),
+            ),
           ),
         );
 
@@ -101,7 +106,10 @@ void main() {
           const Duration(seconds: 1),
         );
         expect(find.byKey(AppKeyName.snackBar), findsOneWidget);
-        expectTextData(tester: tester, data: ResponesMessage.noConnectionMessage);
+        expectTextData(
+          tester: tester,
+          data: ResponesMessage.noConnectionMessage,
+        );
       });
     });
   });

@@ -1,5 +1,6 @@
 class ResponesMessage {
 static const successfulMessage = 'サーバーから情報を取得することに成功しました。';
+static const invalidMessage = '無効な値が返却されました。';
 static const noConnectionMessage = 'インターネットに接続できませんでした';
 static const formatExceptionMessage = '無効な方式です。';
 static const notModifiedMessage = '変更されていません。同じキーワードが入力されている可能性があります。';

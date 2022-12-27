@@ -3,9 +3,9 @@ class ResponseStatus {
 static const success = 200;
 
 // Errors
-static const userInvalidResponse = 100;
-static const noInternet = 101;
-static const invalidFormat = 102;
-static const timeoutError = 103;
-static const unknownError = 103;
+static const userInvalidStatus = 100;
+static const noInternetStatus = 101;
+static const invalidFormatStatus = 102;
+static const timeoutStatus = 103;
+static const unknownStatus = 103;
 }
