@@ -14,7 +14,7 @@ class SearchElevatedButton extends StatelessWidget {
     return ElevatedButton(
       key: AppKeyName.searchElevatedButton,
       onPressed: callback,
-      child: Text('検索'),
+      child: const Text('検索'),
     );
   }
 }

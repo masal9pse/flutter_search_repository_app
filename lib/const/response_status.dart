@@ -1,8 +1,11 @@
+class ResponseStatus {
 // Success
-const SUCCESS = 200;
+static const success = 200;
 
 // Errors
-const USER_INVALID_RESPONSE = 100;
-const NO_INTERNET = 101;
-const INVALID_FORMAT = 102;
-const UNKNOWN_ERROR = 103;
+static const userInvalidResponse = 100;
+static const noInternet = 101;
+static const invalidFormat = 102;
+static const timeoutError = 103;
+static const unknownError = 103;
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/const/app_key_name.dart';
 import 'package:flutter_engineer_codecheck/const/response_message.dart';
+import 'package:flutter_engineer_codecheck/view/atoms/ok_snack_bar.dart';
 import 'package:flutter_engineer_codecheck/view/molecules/search_bar.dart';
 import 'package:flutter_engineer_codecheck/view/organisms/response_list_view.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
@@ -8,6 +9,8 @@ import 'package:provider/provider.dart';
 
 class SearchApiListPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+
+  SearchApiListPage({super.key});
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -28,7 +31,7 @@ class SearchApiListPage extends StatelessWidget {
           child: Center(
             child: Container(
               width: screenWidth * 0.8,
-              padding: EdgeInsets.only(top: 15),
+              padding: const EdgeInsets.only(top: 15),
               child: Column(
                 children: [
                   Consumer<SearchApiViewModel>(
@@ -37,6 +40,8 @@ class SearchApiListPage extends StatelessWidget {
                         controller: formController,
                         callback: () async {
                           if (_formKey.currentState!.validate()) {
+                            final scaffoldMessengerState =
+                                ScaffoldMessenger.of(context);
                             await context
                                 .read<SearchApiViewModel>()
                                 .fetchSearchApiModelStruct(
@@ -50,9 +55,15 @@ class SearchApiListPage extends StatelessWidget {
                             // なぜConsumerから値を引っ張るとテストが通るのか現状わかっておりません。
                             if (model.apiError != null) {
                               viewSnackBar(
-                                  context, model.apiError!.message ?? '');
+                                scaffoldMessengerState: scaffoldMessengerState,
+                                responseMessage: model.apiError!.message ?? '',
+                              );
                             } else {
-                              viewSnackBar(context, SUCCESSFULMESSAGE);
+                              viewSnackBar(
+                                scaffoldMessengerState: scaffoldMessengerState,
+                                responseMessage:
+                                    ResponesMessage.successfulMessage,
+                              );
                             }
                           }
                         },
@@ -73,18 +84,12 @@ class SearchApiListPage extends StatelessWidget {
     );
   }
 
-  void viewSnackBar(BuildContext context, String responseMessage) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        key: AppKeyName.snackBar,
-        content: Text(responseMessage),
-        action: SnackBarAction(
-          label: 'ok',
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
+  void viewSnackBar({
+    required ScaffoldMessengerState scaffoldMessengerState,
+    required String responseMessage,
+  }) {
+    scaffoldMessengerState.showSnackBar(
+      OkSnackBar.getSnackBar(responseMessage: responseMessage),
     );
   }
 }
