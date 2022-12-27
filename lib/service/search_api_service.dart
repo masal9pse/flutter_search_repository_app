@@ -3,12 +3,15 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_engineer_codecheck/const/response_message.dart';
 import 'package:flutter_engineer_codecheck/const/response_status.dart';
-import 'package:flutter_engineer_codecheck/model/api_status.dart';
+import 'package:flutter_engineer_codecheck/model/api_error.dart';
+import 'package:flutter_engineer_codecheck/model/result.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:http/http.dart' as http;
 
 class SearchApiService {
-  Future<Object>? getApiListInfo(String input) async {
+  Future<Result<SearchApiModelStruct, ApiError>>? getApiListInfo({
+    required String input,
+  }) async {
     try {
       final url =
           Uri.parse('https://api.github.com/search/repositories?q=$input');
@@ -18,32 +21,41 @@ class SearchApiService {
       final decoded = json.decode(response.body) as Map<String, dynamic>;
       if (response.statusCode == 200) {
         final searchApiModelStruct = SearchApiModelStruct.fromJson(decoded);
-        final success = Success(code: null, response: searchApiModelStruct);
-        return success;
+        return Result.success(searchApiModelStruct);
       }
-      return Failure(
-        code: ResponseStatus.userInvalidResponse,
-        errorResponse: '無効な値が返却されました。',
+      return const Result.failure(
+        ApiError(
+          code: ResponseStatus.userInvalidStatus,
+          message: ResponesMessage.invalidMessage,
+        ),
       );
     } on HttpException {
-      return Failure(
-        code: ResponseStatus.noInternet,
-        errorResponse: ResponesMessage.noConnectionMessage,
+      return const Result.failure(
+        ApiError(
+          code: ResponseStatus.noInternetStatus,
+          message: ResponesMessage.noConnectionMessage,
+        ),
       );
     } on FormatException {
-      return Failure(
-        code: ResponseStatus.noInternet,
-        errorResponse: ResponesMessage.formatExceptionMessage,
+      return const Result.failure(
+        ApiError(
+          code: ResponseStatus.invalidFormatStatus,
+          message: ResponesMessage.invalidMessage,
+        ),
       );
     } on TimeoutException {
-      return Failure(
-        code: ResponseStatus.timeoutError,
-        errorResponse: ResponesMessage.timeoutMessage,
+      return const Result.failure(
+        ApiError(
+          code: ResponseStatus.timeoutStatus,
+          message: ResponesMessage.timeoutMessage,
+        ),
       );
-    } catch (e) {
-      return Failure(
-        code: ResponseStatus.unknownError,
-        errorResponse: ResponesMessage.otherExceptionMessage,
+    } on Exception {
+      return const Result.failure(
+        ApiError(
+          code: ResponseStatus.unknownStatus,
+          message: ResponesMessage.otherExceptionMessage,
+        ),
       );
     }
   }

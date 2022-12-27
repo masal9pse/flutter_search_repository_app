@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/const/app_key_name.dart';
 import 'package:flutter_engineer_codecheck/const/response_message.dart';
 import 'package:flutter_engineer_codecheck/view/atoms/ok_snack_bar.dart';
 import 'package:flutter_engineer_codecheck/view/molecules/search_bar.dart';
