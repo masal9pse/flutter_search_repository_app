@@ -40,6 +40,8 @@ class SearchApiListPage extends StatelessWidget {
                         controller: formController,
                         callback: () async {
                           if (_formKey.currentState!.validate()) {
+                            final scaffoldMessengerState =
+                                ScaffoldMessenger.of(context);
                             await context
                                 .read<SearchApiViewModel>()
                                 .fetchSearchApiModelStruct(
@@ -53,12 +55,15 @@ class SearchApiListPage extends StatelessWidget {
                             // なぜConsumerから値を引っ張るとテストが通るのか現状わかっておりません。
                             if (model.apiError != null) {
                               viewSnackBar(
-                                context,
-                                model.apiError!.message ?? '',
+                                scaffoldMessengerState: scaffoldMessengerState,
+                                responseMessage: model.apiError!.message ?? '',
                               );
                             } else {
                               viewSnackBar(
-                                  context, ResponesMessage.successfulMessage);
+                                scaffoldMessengerState: scaffoldMessengerState,
+                                responseMessage:
+                                    ResponesMessage.successfulMessage,
+                              );
                             }
                           }
                         },
@@ -79,8 +84,11 @@ class SearchApiListPage extends StatelessWidget {
     );
   }
 
-  void viewSnackBar(BuildContext context, String responseMessage) {
-    ScaffoldMessenger.of(context).showSnackBar(
+  void viewSnackBar({
+    required ScaffoldMessengerState scaffoldMessengerState,
+    required String responseMessage,
+  }) {
+    scaffoldMessengerState.showSnackBar(
       OkSnackBar.getSnackBar(responseMessage: responseMessage),
     );
   }
