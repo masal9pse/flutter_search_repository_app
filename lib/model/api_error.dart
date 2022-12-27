@@ -1,25 +1,13 @@
-import 'dart:convert';
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'api_error.freezed.dart';
+part 'api_error.g.dart';
 
-ApiError apiErrorFromJson(String str) => ApiError.fromJson(json.decode(str));
+@freezed
+class ApiError with _$ApiError{
+  const factory ApiError({
+    required int? code,
+    required String? message,
+  }) = _ApiError;
 
-String apiErrorToJson(ApiError data) => json.encode(data.toJson());
-
-class ApiError {
-  ApiError({
-    required this.code,
-    required this.message,
-  });
-
-  final int? code;
-  final String? message;
-
-  factory ApiError.fromJson(Map<String, dynamic> json) => ApiError(
-        code: json['code'],
-        message: json['message'],
-      );
-
-  Map<String, dynamic> toJson() => {
-        'code': code,
-        'message': message,
-      };
+  factory ApiError.fromJson(Map<String, dynamic> json) => _$ApiErrorFromJson(json);
 }
