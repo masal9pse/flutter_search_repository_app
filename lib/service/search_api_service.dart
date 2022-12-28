@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter_engineer_codecheck/const/response_message.dart';
-import 'package:flutter_engineer_codecheck/const/response_status.dart';
+import 'package:flutter_engineer_codecheck/const/enum/response_enum.dart';
 import 'package:flutter_engineer_codecheck/model/api_error.dart';
 import 'package:flutter_engineer_codecheck/model/result.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
@@ -23,38 +22,38 @@ class SearchApiService {
         final searchApiModelStruct = SearchApiModelStruct.fromJson(decoded);
         return Result.success(searchApiModelStruct);
       }
-      return const Result.failure(
+      return Result.failure(
         ApiError(
-          code: ResponseStatus.userInvalidStatus,
-          message: ResponesMessage.invalidMessage,
+          code: ResponseEnum.invalid.status,
+          message: ResponseEnum.invalid.message,
         ),
       );
     } on HttpException {
-      return const Result.failure(
+      return Result.failure(
         ApiError(
-          code: ResponseStatus.noInternetStatus,
-          message: ResponesMessage.noConnectionMessage,
+          code: ResponseEnum.noConnection.status,
+          message: ResponseEnum.noConnection.message,
         ),
       );
     } on FormatException {
-      return const Result.failure(
+      return Result.failure(
         ApiError(
-          code: ResponseStatus.invalidFormatStatus,
-          message: ResponesMessage.invalidMessage,
+          code: ResponseEnum.invalid.status,
+          message: ResponseEnum.invalid.message,
         ),
       );
     } on TimeoutException {
-      return const Result.failure(
+      return Result.failure(
         ApiError(
-          code: ResponseStatus.timeoutStatus,
-          message: ResponesMessage.timeoutMessage,
+          code: ResponseEnum.timeout.status,
+          message: ResponseEnum.timeout.message,
         ),
       );
     } on Exception {
-      return const Result.failure(
+      return Result.failure(
         ApiError(
-          code: ResponseStatus.unknownStatus,
-          message: ResponesMessage.otherExceptionMessage,
+          code: ResponseEnum.other.status,
+          message: ResponseEnum.other.message,
         ),
       );
     }

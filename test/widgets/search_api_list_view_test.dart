@@ -2,8 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/const/app_key_name.dart';
-import 'package:flutter_engineer_codecheck/const/response_message.dart';
-import 'package:flutter_engineer_codecheck/const/response_status.dart';
+import 'package:flutter_engineer_codecheck/const/enum/response_enum.dart';
 import 'package:flutter_engineer_codecheck/model/api_error.dart';
 import 'package:flutter_engineer_codecheck/model/result.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
@@ -75,7 +74,7 @@ void main() {
         expect(find.text('やまもとまさと'), findsOneWidget);
         expect(find.text('鈴木大輔'), findsOneWidget);
         expect(find.byKey(AppKeyName.snackBar), findsOneWidget);
-        expectTextData(tester: tester, data: ResponesMessage.successfulMessage);
+        expectTextData(tester: tester, data: ResponseEnum.success.message);
       });
     });
 
@@ -86,10 +85,10 @@ void main() {
         const input = 'PHP';
         when(mockSearchApiService.getApiListInfo(input: input)).thenAnswer(
           (_) => Future.value(
-            const Result.failure(
+            Result.failure(
               ApiError(
-                code: ResponseStatus.noInternetStatus,
-                message: ResponesMessage.noConnectionMessage,
+                code: ResponseEnum.noConnection.status,
+                message: ResponseEnum.noConnection.message,
               ),
             ),
           ),
@@ -108,7 +107,7 @@ void main() {
         expect(find.byKey(AppKeyName.snackBar), findsOneWidget);
         expectTextData(
           tester: tester,
-          data: ResponesMessage.noConnectionMessage,
+          data: ResponseEnum.noConnection.message,
         );
       });
     });

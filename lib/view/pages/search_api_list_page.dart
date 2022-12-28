@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/const/response_message.dart';
+import 'package:flutter_engineer_codecheck/const/enum/page_info_enum.dart';
+import 'package:flutter_engineer_codecheck/const/enum/response_enum.dart';
 import 'package:flutter_engineer_codecheck/view/atoms/ok_snack_bar.dart';
 import 'package:flutter_engineer_codecheck/view/molecules/search_bar.dart';
 import 'package:flutter_engineer_codecheck/view/organisms/response_list_view.dart';
@@ -22,7 +23,7 @@ class SearchApiListPage extends StatelessWidget {
     //     context.select((SearchApiViewModel store) => store.apiError);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('GithubAPI検索App'),
+        title: Text(PageInfoEnum.top.title),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -60,8 +61,7 @@ class SearchApiListPage extends StatelessWidget {
                             } else {
                               viewSnackBar(
                                 scaffoldMessengerState: scaffoldMessengerState,
-                                responseMessage:
-                                    ResponesMessage.successfulMessage,
+                                responseMessage: ResponseEnum.success.message,
                               );
                             }
                           }
