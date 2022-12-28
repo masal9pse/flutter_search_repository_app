@@ -27,12 +27,7 @@ class ResponseDetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        if (callback == null) {
-          return;
-        }
-        callback!();
-      },
+      onTap: callback,
       child: Card(
         child: Column(
           mainAxisSize: MainAxisSize.min,

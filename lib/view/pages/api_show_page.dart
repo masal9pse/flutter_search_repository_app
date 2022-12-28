@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
-import 'package:flutter_engineer_codecheck/view/molecules/response_detail_card.dart';
+import 'package:flutter_engineer_codecheck/view/molecules/response_show_detail.dart';
 
 class ApiShowPage extends StatelessWidget {
   ApiShowPage({
@@ -24,21 +24,14 @@ class ApiShowPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('詳細ページ'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ResponseDetailCard(
-              url: avatarUrl,
-              title: name,
-              subtitle: language,
-              stargazersCount: stargazersCount,
-              watchersCount: watchersCount,
-              forksCount: forksCount,
-              openIssuesCount: openIssuesCount,
-            ),
-          ],
-        ),
+      body: ResponseShowDetail(
+        url: avatarUrl,
+        title: name,
+        subtitle: language,
+        stargazersCount: stargazersCount,
+        watchersCount: watchersCount,
+        forksCount: forksCount,
+        openIssuesCount: openIssuesCount,
       ),
     );
   }
