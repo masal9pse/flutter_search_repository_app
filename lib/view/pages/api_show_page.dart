@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/const/enum/page_info_enum.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/view/molecules/response_show_detail.dart';
 
@@ -22,7 +23,7 @@ class ApiShowPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('詳細ページ'),
+        title: Text(PageInfoEnum.show.title),
       ),
       body: ResponseShowDetail(
         url: avatarUrl,

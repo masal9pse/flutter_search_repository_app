@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_engineer_codecheck/const/enum/page_info_enum.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/service/search_api_service.dart';
 import 'package:flutter_engineer_codecheck/view/pages/search_api_list_page.dart';
@@ -31,11 +32,11 @@ class MyApp extends StatelessWidget {
   final router = GoRouter(
     routes: [
       GoRoute(
-        path: '/',
+        path: PageInfoEnum.top.route,
         builder: ((context, state) => SearchApiListPage()),
       ),
       GoRoute(
-        path: '/show',
+        path: PageInfoEnum.show.route,
         builder: ((context, state) {
           final item = state.extra as Item;
           return ApiShowPage(
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
       routeInformationProvider: router.routeInformationProvider,
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,
-      title: 'GithubAPI検索App',
+      title: PageInfoEnum.top.title,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.white,
