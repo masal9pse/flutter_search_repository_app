@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/const/app_size_list.dart';
 
-class CircleLargeImage extends StatelessWidget {
-  const CircleLargeImage({Key? key, required this.image})
+class AngleCircleLargeImage extends StatelessWidget {
+  const AngleCircleLargeImage({Key? key, required this.image})
       : super(key: key);
   final Image image;
 

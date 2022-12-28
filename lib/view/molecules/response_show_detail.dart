@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/view/atoms/circle_large_image.dart';
+import 'package:flutter_engineer_codecheck/view/atoms/angle_circle_large_image.dart';
+import 'package:flutter_engineer_codecheck/view/atoms/base_image_network.dart';
 import 'package:flutter_engineer_codecheck/view/atoms/large_text.dart';
 
 class ResponseShowDetail extends StatelessWidget {
@@ -25,7 +26,7 @@ class ResponseShowDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CircleLargeImage(image: Image.network(url)),
+        AngleCircleLargeImage(image: BaseImageNetWork.build(url: url)),
         LargeText(
           title: title,
         ),

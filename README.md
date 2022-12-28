@@ -8,7 +8,7 @@
 ## ディレクトリ構成
 - ui
   - atoms
-    - widgetの最小パーツ、またはwidgetを組み合わせてはいるもののそれをmoleculesのパーツとして使っているwidget。response_list_tile.dartやresponse_count.dartがそれに該当する。
+    - widgetの最小パーツ
   - molecules
     - テキストやボタンを組み合わせた最小構成
   - organisms

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/view/atoms/base_image_network.dart';
 
 class ResponseListTile extends StatelessWidget {
   const ResponseListTile({
@@ -15,15 +16,7 @@ class ResponseListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Image.network(
-        url,
-        errorBuilder: (context, object, _) {
-          return const Icon(
-            Icons.error,
-            color: Colors.red,
-          );
-        },
-      ),
+      leading: BaseImageNetWork.build(url: url),
       title: Text(title),
       subtitle: Text(subtitle ?? ''),
     );
