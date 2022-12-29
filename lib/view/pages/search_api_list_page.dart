@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/const/enum/page_info_enum.dart';
-import 'package:flutter_engineer_codecheck/const/enum/response_enum.dart';
 import 'package:flutter_engineer_codecheck/model/api_error.dart';
 import 'package:flutter_engineer_codecheck/model/result.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/view/atoms/base_circle_progress_indicator.dart';
 import 'package:flutter_engineer_codecheck/view/atoms/center_container.dart';
-import 'package:flutter_engineer_codecheck/view/atoms/ok_snack_bar.dart';
 import 'package:flutter_engineer_codecheck/view/molecules/search_bar.dart';
 import 'package:flutter_engineer_codecheck/view/organisms/response_list_view.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
@@ -23,9 +21,6 @@ class SearchApiListPage extends StatelessWidget {
     final deviceHeight = MediaQuery.of(context).size.height;
     final formController =
         context.select((SearchApiViewModel store) => store.formController);
-    // この変数を使うと異常系のテストが通らないため意図的に残す。
-    // final apiError =
-    //     context.select((SearchApiViewModel store) => store.apiError);
     return Scaffold(
       appBar: AppBar(
         title: Text(PageInfoEnum.top.title),
@@ -45,32 +40,11 @@ class SearchApiListPage extends StatelessWidget {
                         controller: formController,
                         callback: () async {
                           if (_formKey.currentState!.validate()) {
-                            final scaffoldMessengerState =
-                                ScaffoldMessenger.of(context);
                             await context
                                 .read<SearchApiViewModel>()
                                 .fetchSearchApiModelStruct(
                                   formController.text,
                                 );
-                            // context.selectでapiErrorを定義した場合に異常系のテストが通りません。、
-                            // fetchSearchApiModelStructでは、apiErrorを更新していることが確認できたのですが、
-                            // なぜかこのページに戻ってきた際のapiErrorを確認するとnullの状態になっており、SUCCESSFULMESSAGEが表示されました。
-                            // formControllerやsearchApiModelStructは意図通りに取得できたのですが....
-                            // Consumerにしたところ、apiErrorがこのページでも取得できており、テストが通りました。
-                            // なぜConsumerから値を引っ張るとテストが通るのか現状わかっておりません。
-
-                            // 後ほどFutureBuilderにsnackbarを記載
-                            if (model.apiError != null) {
-                              viewSnackBar(
-                                scaffoldMessengerState: scaffoldMessengerState,
-                                responseMessage: model.apiError!.message ?? '',
-                              );
-                            } else {
-                              viewSnackBar(
-                                scaffoldMessengerState: scaffoldMessengerState,
-                                responseMessage: ResponseEnum.success.message,
-                              );
-                            }
                           }
                         },
                       );
@@ -128,15 +102,6 @@ class SearchApiListPage extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  void viewSnackBar({
-    required ScaffoldMessengerState scaffoldMessengerState,
-    required String responseMessage,
-  }) {
-    scaffoldMessengerState.showSnackBar(
-      OkSnackBar.getSnackBar(responseMessage: responseMessage),
     );
   }
 }

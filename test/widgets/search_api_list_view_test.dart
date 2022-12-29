@@ -30,20 +30,6 @@ void main() {
       );
     }
 
-    void expectTextData({
-      required WidgetTester tester,
-      required String data,
-    }) {
-      expect(
-        ((tester.widget(
-          find.byKey(AppKeyName.snackBar),
-        ) as SnackBar)
-                .content as Text)
-            .data,
-        data,
-      );
-    }
-
     group('正常系', () {
       testWidgets('検索フォームと検索ボタンがあることをテスト', (WidgetTester tester) async {
         await tester.pumpWidget(testMainViewWidget());
@@ -73,8 +59,6 @@ void main() {
         await tester.pumpAndSettle();
         expect(find.text('やまもとまさと'), findsOneWidget);
         expect(find.text('鈴木大輔'), findsOneWidget);
-        expect(find.byKey(AppKeyName.snackBar), findsOneWidget);
-        expectTextData(tester: tester, data: ResponseEnum.success.message);
       });
     });
 
@@ -101,14 +85,8 @@ void main() {
         await tester.tap(
           find.byKey(AppKeyName.searchElevatedButton),
         );
-        await tester.pump(
-          const Duration(seconds: 1),
-        );
-        expect(find.byKey(AppKeyName.snackBar), findsOneWidget);
-        expectTextData(
-          tester: tester,
-          data: ResponseEnum.noConnection.message,
-        );
+        await tester.pumpAndSettle();
+        expect(find.text('インターネットに接続できませんでした'), findsOneWidget);
       });
     });
   });
