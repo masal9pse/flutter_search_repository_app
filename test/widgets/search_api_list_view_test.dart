@@ -70,7 +70,7 @@ void main() {
         await tester.tap(
           find.byKey(AppKeyName.searchElevatedButton),
         );
-        await tester.pump(const Duration(seconds: 1));
+        await tester.pumpAndSettle();
         expect(find.text('やまもとまさと'), findsOneWidget);
         expect(find.text('鈴木大輔'), findsOneWidget);
         expect(find.byKey(AppKeyName.snackBar), findsOneWidget);
