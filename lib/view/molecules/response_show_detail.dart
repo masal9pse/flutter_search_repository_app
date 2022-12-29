@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/view/atoms/angle_circle_large_image.dart';
 import 'package:flutter_engineer_codecheck/view/atoms/base_image_network.dart';
-import 'package:flutter_engineer_codecheck/view/atoms/large_text.dart';
+import 'package:flutter_engineer_codecheck/view/atoms/texts/large_text.dart';
+import 'package:flutter_engineer_codecheck/view/atoms/texts/normal_text.dart';
 
 class ResponseShowDetail extends StatelessWidget {
   const ResponseShowDetail({
@@ -37,9 +38,7 @@ class ResponseShowDetail extends StatelessWidget {
             color: Colors.grey,
           ),
         ),
-        Text(
-          subtitle,
-        ),
+        NormalText(text: subtitle),
         const Text(
           'スター数',
           style: TextStyle(
@@ -47,8 +46,8 @@ class ResponseShowDetail extends StatelessWidget {
             color: Colors.grey,
           ),
         ),
-        Text(
-          stargazersCount,
+        NormalText(
+          text: stargazersCount,
         ),
         const Text(
           'watcher数',
@@ -57,8 +56,8 @@ class ResponseShowDetail extends StatelessWidget {
             color: Colors.grey,
           ),
         ),
-        Text(
-          watchersCount,
+        NormalText(
+          text: watchersCount,
         ),
         const Text(
           'fork数',
@@ -67,8 +66,8 @@ class ResponseShowDetail extends StatelessWidget {
             color: Colors.grey,
           ),
         ),
-        Text(
-          forksCount,
+        NormalText(
+          text: forksCount,
         ),
         const Text(
           'issue数',
@@ -77,8 +76,8 @@ class ResponseShowDetail extends StatelessWidget {
             color: Colors.grey,
           ),
         ),
-        Text(
-          openIssuesCount,
+        NormalText(
+          text: openIssuesCount,
         ),
       ],
     );
