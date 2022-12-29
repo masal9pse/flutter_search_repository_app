@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/view/atoms/angle_circle_large_image.dart';
+import 'package:flutter_engineer_codecheck/view/atoms/images/angle_circle_large_image.dart';
 import 'package:flutter_engineer_codecheck/view/atoms/base_image_network.dart';
 import 'package:flutter_engineer_codecheck/view/atoms/texts/large_text.dart';
 import 'package:flutter_engineer_codecheck/view/atoms/texts/normal_text.dart';

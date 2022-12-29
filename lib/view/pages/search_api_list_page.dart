@@ -3,7 +3,7 @@ import 'package:flutter_engineer_codecheck/const/enum/page_info_enum.dart';
 import 'package:flutter_engineer_codecheck/model/api_error.dart';
 import 'package:flutter_engineer_codecheck/model/result.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
-import 'package:flutter_engineer_codecheck/view/atoms/base_circle_progress_indicator.dart';
+import 'package:flutter_engineer_codecheck/view/atoms/indicators/base_circle_progress_indicator.dart';
 import 'package:flutter_engineer_codecheck/view/atoms/center_container.dart';
 import 'package:flutter_engineer_codecheck/view/molecules/search_bar.dart';
 import 'package:flutter_engineer_codecheck/view/organisms/response_list_view.dart';
@@ -65,7 +65,7 @@ class SearchApiListPage extends StatelessWidget {
                           );
                         case ConnectionState.waiting:
                           return CenterContainer.build(
-                            widget: BaseCircleProgressIndicator.build(),
+                            widget: const BaseCircleProgressIndicator(),
                             height: deviceHeight * 0.6,
                           );
                         case ConnectionState.active:
