@@ -7,8 +7,9 @@ class AngleCircleLargeImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,      
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.all(16),
       child: AspectRatio(
         aspectRatio: 3 / 2,
         child: ClipRRect(
