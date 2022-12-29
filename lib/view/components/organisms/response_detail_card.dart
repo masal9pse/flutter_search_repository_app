@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/view/molecules/response_count.dart';
-import 'package:flutter_engineer_codecheck/view/molecules/response_list_tile.dart';
+import 'package:flutter_engineer_codecheck/view/components/molecules/response_count.dart';
+import 'package:flutter_engineer_codecheck/view/components/molecules/response_list_tile.dart';
 
 class ResponseDetailCard extends StatelessWidget {
   const ResponseDetailCard({

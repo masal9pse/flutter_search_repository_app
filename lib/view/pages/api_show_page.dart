@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/const/enum/page_info_enum.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
-import 'package:flutter_engineer_codecheck/view/organisms/response_show_detail.dart';
+import 'package:flutter_engineer_codecheck/view/components/organisms/response_show_detail.dart';
 
 class ApiShowPage extends StatelessWidget {
   ApiShowPage({

@@ -3,10 +3,10 @@ import 'package:flutter_engineer_codecheck/const/enum/page_info_enum.dart';
 import 'package:flutter_engineer_codecheck/model/api_error.dart';
 import 'package:flutter_engineer_codecheck/model/result.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
-import 'package:flutter_engineer_codecheck/view/atoms/indicators/base_circle_progress_indicator.dart';
-import 'package:flutter_engineer_codecheck/view/atoms/device_center_widget.dart';
-import 'package:flutter_engineer_codecheck/view/organisms/search_bar.dart';
-import 'package:flutter_engineer_codecheck/view/organisms/response_list_view.dart';
+import 'package:flutter_engineer_codecheck/view/components/atoms/indicators/base_circle_progress_indicator.dart';
+import 'package:flutter_engineer_codecheck/view/components/atoms/device_center_widget.dart';
+import 'package:flutter_engineer_codecheck/view/components/organisms/search_bar.dart';
+import 'package:flutter_engineer_codecheck/view/components/organisms/response_list_view.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
 import 'package:provider/provider.dart';
 

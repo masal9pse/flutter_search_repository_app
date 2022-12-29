@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/view/atoms/images/angle_circle_large_image.dart';
-import 'package:flutter_engineer_codecheck/view/atoms/texts/large_text.dart';
-import 'package:flutter_engineer_codecheck/view/atoms/texts/normal_text.dart';
+import 'package:flutter_engineer_codecheck/view/components/atoms/images/angle_circle_large_image.dart';
+import 'package:flutter_engineer_codecheck/view/components/atoms/texts/large_text.dart';
+import 'package:flutter_engineer_codecheck/view/components/atoms/texts/normal_text.dart';
 
 class ResponseShowDetail extends StatelessWidget {
   const ResponseShowDetail({

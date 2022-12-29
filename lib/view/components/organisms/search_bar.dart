@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/view/atoms/buttons/search_elevatate_button.dart';
-import 'package:flutter_engineer_codecheck/view/atoms/forms/search_form.dart';
+import 'package:flutter_engineer_codecheck/view/components/atoms/buttons/search_elevatate_button.dart';
+import 'package:flutter_engineer_codecheck/view/components/atoms/forms/search_form.dart';
 
 class SearchBar extends StatelessWidget {
   const SearchBar({
