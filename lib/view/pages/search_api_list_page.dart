@@ -5,9 +5,10 @@ import 'package:flutter_engineer_codecheck/model/result.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/view/components/atoms/indicators/base_circle_progress_indicator.dart';
 import 'package:flutter_engineer_codecheck/view/components/atoms/device_center_widget.dart';
+import 'package:flutter_engineer_codecheck/view/components/organisms/response_detail_card.dart';
 import 'package:flutter_engineer_codecheck/view/components/organisms/search_bar.dart';
-import 'package:flutter_engineer_codecheck/view/components/organisms/response_list_view.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class SearchApiListPage extends StatelessWidget {
@@ -75,10 +76,43 @@ class SearchApiListPage extends StatelessWidget {
 
                           final responseWidget = snapshot.data!.when(
                             success: (
-                              SearchApiModelStruct searchApiModelStructs,
+                              SearchApiModelStruct searchApiModelStruct,
                             ) {
-                              return ResponseListView(
-                                searchApiModelStruct: searchApiModelStructs,
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: searchApiModelStruct.items.length,
+                                itemBuilder: (context, index) {
+                                  final item =
+                                      searchApiModelStruct.items[index];
+                                  final owner = item.owner;
+                                  final avatarUrl = owner.avatarUrl;
+                                  final name = item.name;
+                                  final language = item.language ?? '';
+                                  final stargazersCount =
+                                      item.stargazersCount.toString();
+                                  final watchersCount =
+                                      item.watchersCount.toString();
+                                  final forksCount = item.forksCount.toString();
+                                  final openIssuesCount =
+                                      item.openIssuesCount.toString();
+
+                                  return ResponseDetailCard(
+                                    url: avatarUrl,
+                                    title: name,
+                                    subtitle: language,
+                                    stargazersCount: stargazersCount,
+                                    watchersCount: watchersCount,
+                                    forksCount: forksCount,
+                                    openIssuesCount: openIssuesCount,
+                                    callback: () {
+                                      context.push(
+                                        PageInfoEnum.show.route,
+                                        extra: item,
+                                      );
+                                    },
+                                  );
+                                },
                               );
                             },
                             failure: (ApiError apiError) {
