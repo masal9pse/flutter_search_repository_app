@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class IconCount extends StatelessWidget {
-  const IconCount({
+class ResponseIconCount extends StatelessWidget {
+  const ResponseIconCount({
     super.key,
     required this.icon,
     required this.count,
