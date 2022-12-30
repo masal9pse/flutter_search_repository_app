@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/const/enum/response_item_enum.dart';
 import 'package:flutter_engineer_codecheck/view/components/atoms/images/angle_circle_large_image.dart';
-import 'package:flutter_engineer_codecheck/view/components/atoms/texts/large_text.dart';
-import 'package:flutter_engineer_codecheck/view/components/atoms/texts/normal_text.dart';
+import 'package:flutter_engineer_codecheck/view/components/molecules/response_text.dart';
 
 class ResponseShowDetail extends StatelessWidget {
   const ResponseShowDetail({
     super.key,
     required this.url,
     required this.title,
-    required this.subtitle,
+    required this.language,
     required this.stargazersCount,
     required this.watchersCount,
     required this.forksCount,
@@ -17,7 +17,7 @@ class ResponseShowDetail extends StatelessWidget {
 
   final String url;
   final String title;
-  final String subtitle;
+  final String language;
   final String stargazersCount;
   final String watchersCount;
   final String forksCount;
@@ -37,56 +37,41 @@ class ResponseShowDetail extends StatelessWidget {
             },
           ),
         ),
-        LargeText(
-          title: title,
+        ResponseText(title: ResponseItemEnum.name.title, titleValue: title),
+        const SizedBox(
+          height: 10,
         ),
-        const Text(
-          '言語',
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.grey,
-          ),
+        ResponseText(
+          title: ResponseItemEnum.language.title,
+          titleValue: language,
         ),
-        NormalText(text: subtitle),
-        const Text(
-          'スター数',
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.grey,
-          ),
+        const SizedBox(
+          height: 10,
         ),
-        NormalText(
-          text: stargazersCount,
+        ResponseText(
+          title: ResponseItemEnum.stargazersCount.title,
+          titleValue: stargazersCount,
         ),
-        const Text(
-          'watcher数',
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.grey,
-          ),
+        const SizedBox(
+          height: 10,
         ),
-        NormalText(
-          text: watchersCount,
+        ResponseText(
+          title: ResponseItemEnum.watchersCount.title,
+          titleValue: watchersCount,
         ),
-        const Text(
-          'fork数',
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.grey,
-          ),
+        const SizedBox(
+          height: 10,
         ),
-        NormalText(
-          text: forksCount,
+        ResponseText(
+          title: ResponseItemEnum.forksCount.title,
+          titleValue: forksCount,
         ),
-        const Text(
-          'issue数',
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.grey,
-          ),
+        const SizedBox(
+          height: 10,
         ),
-        NormalText(
-          text: openIssuesCount,
+        ResponseText(
+          title: ResponseItemEnum.openIssuesCount.title,
+          titleValue: openIssuesCount,
         ),
       ],
     );

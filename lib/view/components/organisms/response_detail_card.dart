@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/const/enum/response_item_enum.dart';
 import 'package:flutter_engineer_codecheck/view/components/molecules/response_icon_count.dart';
 import 'package:flutter_engineer_codecheck/view/components/molecules/response_list_tile.dart';
 
@@ -33,33 +34,40 @@ class ResponseDetailCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ResponseListTile(
-                image: Image.network(
-                  url,
-                  errorBuilder: (context, object, _) {
-                    return const Icon(
-                      Icons.error,
-                      color: Colors.red,
-                    );
-                  },
-                ),
-                title: title,
-                subtitle: subtitle),
+              image: Image.network(
+                url,
+                errorBuilder: (context, object, _) {
+                  return const Icon(
+                    Icons.error,
+                    color: Colors.red,
+                  );
+                },
+              ),
+              title: title,
+              subtitle: subtitle,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                ResponseIconCount(icon: Icons.star, count: stargazersCount),
+                ResponseIconCount(
+                  icon: ResponseItemEnum.stargazersCount.icon,
+                  count: stargazersCount,
+                ),
                 const SizedBox(width: 8),
                 ResponseIconCount(
-                  icon: Icons.remove_red_eye,
+                  icon: ResponseItemEnum.watchersCount.icon,
                   count: watchersCount,
                 ),
                 const SizedBox(width: 8),
                 ResponseIconCount(
-                  icon: Icons.food_bank_sharp,
+                  icon: ResponseItemEnum.forksCount.icon,
                   count: forksCount,
                 ),
                 const SizedBox(width: 8),
-                ResponseIconCount(icon: Icons.report, count: openIssuesCount),
+                ResponseIconCount(
+                  icon: ResponseItemEnum.openIssuesCount.icon,
+                  count: openIssuesCount,
+                ),
                 const SizedBox(width: 8),
               ],
             ),

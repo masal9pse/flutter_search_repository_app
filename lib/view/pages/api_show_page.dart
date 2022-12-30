@@ -28,7 +28,7 @@ class ApiShowPage extends StatelessWidget {
       body: ResponseShowDetail(
         url: avatarUrl,
         title: name,
-        subtitle: language,
+        language: language,
         stargazersCount: stargazersCount,
         watchersCount: watchersCount,
         forksCount: forksCount,
