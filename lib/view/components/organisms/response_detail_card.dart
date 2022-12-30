@@ -32,7 +32,18 @@ class ResponseDetailCard extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            ResponseListTile(url: url, title: title, subtitle: subtitle),
+            ResponseListTile(
+                image: Image.network(
+                  url,
+                  errorBuilder: (context, object, _) {
+                    return const Icon(
+                      Icons.error,
+                      color: Colors.red,
+                    );
+                  },
+                ),
+                title: title,
+                subtitle: subtitle),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
