@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/view/components/molecules/response_count.dart';
+import 'package:flutter_engineer_codecheck/view/components/molecules/icon_count.dart';
 import 'package:flutter_engineer_codecheck/view/components/molecules/response_list_tile.dart';
 
 class ResponseDetailCard extends StatelessWidget {
@@ -36,16 +36,16 @@ class ResponseDetailCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                ResponseCount(icon: Icons.star, count: stargazersCount),
+                IconCount(icon: Icons.star, count: stargazersCount),
                 const SizedBox(width: 8),
-                ResponseCount(
+                IconCount(
                   icon: Icons.remove_red_eye,
                   count: watchersCount,
                 ),
                 const SizedBox(width: 8),
-                ResponseCount(icon: Icons.food_bank_sharp, count: forksCount),
+                IconCount(icon: Icons.food_bank_sharp, count: forksCount),
                 const SizedBox(width: 8),
-                ResponseCount(icon: Icons.report, count: openIssuesCount),
+                IconCount(icon: Icons.report, count: openIssuesCount),
                 const SizedBox(width: 8),
               ],
             ),

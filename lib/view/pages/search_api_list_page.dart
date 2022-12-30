@@ -18,7 +18,6 @@ class SearchApiListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final result = context.select((SearchApiViewModel store) => store.result);
-    final deviceHeight = MediaQuery.of(context).size.height;
     final formController =
         context.select((SearchApiViewModel store) => store.formController);
     return Scaffold(
