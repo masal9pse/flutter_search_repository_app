@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/const/enum/page_info_enum.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
-import 'package:flutter_engineer_codecheck/view/molecules/response_show_detail.dart';
+import 'package:flutter_engineer_codecheck/view/components/organisms/response_show_detail.dart';
 
 class ApiShowPage extends StatelessWidget {
   ApiShowPage({
@@ -28,7 +28,7 @@ class ApiShowPage extends StatelessWidget {
       body: ResponseShowDetail(
         url: avatarUrl,
         title: name,
-        subtitle: language,
+        language: language,
         stargazersCount: stargazersCount,
         watchersCount: watchersCount,
         forksCount: forksCount,
