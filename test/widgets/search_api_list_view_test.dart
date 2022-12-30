@@ -24,7 +24,7 @@ void main() {
     MaterialApp testMainViewWidget() {
       return MaterialApp(
         home: ChangeNotifierProvider(
-          create: (context) => SearchApiViewModel(mockSearchApiService),
+          create: (context) => SearchApiViewModel(searchApiService: mockSearchApiService),
           child: SearchApiListPage(),
         ),
       );
