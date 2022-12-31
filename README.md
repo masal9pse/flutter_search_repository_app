@@ -65,6 +65,7 @@ $ fvm flutter run
   - components
     - atoms
       - widgetの最小パーツ
+      - appBarをAtomsに入れると型の関係でStatelesswidgetを継承できない。よって他のAtomと書き方が異なる。なので、appBarをAtomsに入れるか検討中。
     - molecules
       - テキストやボタンを組み合わせた最小構成
     - organisms
@@ -85,7 +86,7 @@ $ fvm flutter run
   - 定数の定義  
     - enum
       - ２つ以上の定数を宣言できるものに関してはEnumからデータを引っ張ってくるようにしています。
-    - Atomsの文字の大きさなどは、Atomsを変更すれば全てに適応されるためconstに定義せずにマジックナンバーでそのまま記載しています。
+    - 文字の大きさなどは、Atomsを変更すれば全てに適応されるためconstに定義せずにマジックナンバーでそのまま記載しています。
 
 - [目次に戻る](#目次)
 <br />

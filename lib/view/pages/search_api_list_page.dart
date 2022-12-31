@@ -36,20 +36,16 @@ class SearchApiListPage extends StatelessWidget {
               padding: const EdgeInsets.only(top: 15),
               child: Column(
                 children: [
-                  Consumer<SearchApiViewModel>(
-                    builder: (context, model, child) {
-                      return SearchBar(
-                        controller: formController,
-                        callback: () async {
-                          if (_formKey.currentState!.validate()) {
-                            await context
-                                .read<SearchApiViewModel>()
-                                .fetchSearchApiModelStruct(
-                                  text: formController.text,
-                                );
-                          }
-                        },
-                      );
+                  SearchBar(
+                    controller: formController,
+                    callback: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await context
+                            .read<SearchApiViewModel>()
+                            .fetchSearchApiModelStruct(
+                              text: formController.text,
+                            );
+                      }
                     },
                   ),
                   FutureBuilder<Result<SearchApiModelStruct, ApiError>>(
