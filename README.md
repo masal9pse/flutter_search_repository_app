@@ -20,22 +20,15 @@ $ fvm --version
 $ fvm flutter doctor
 Doctor summary (to see all details, run flutter doctor -v):
 [✓] Flutter (Channel stable, 3.3.10, on macOS 12.5 21G72 darwin-arm, locale ja-JP)
-[✗] Android toolchain - develop for Android devices
-    ✗ Unable to locate Android SDK.
-      Install Android Studio from: https://developer.android.com/studio/index.html
-      On first launch it will assist you in installing the Android SDK components.
-      (or visit https://flutter.dev/docs/get-started/install/macos#android-setup for detailed instructions).
-      If the Android SDK has been installed to a custom location, please use
-      `flutter config --android-sdk` to update to that location.
-
+[✓] Android toolchain - develop for Android devices (Android SDK version 33.0.1)
 [✓] Xcode - develop for iOS and macOS (Xcode 14.2)
 [✓] Chrome - develop for the web
-[!] Android Studio (not installed)
+[✓] Android Studio (version 2021.3)
 [✓] VS Code (version 1.74.2)
 [✓] Connected device (3 available)
 [✓] HTTP Host Availability
 
-! Doctor found issues in 2 categories.
+• No issues found!
 ```
 
 ### アプリの起動方法
