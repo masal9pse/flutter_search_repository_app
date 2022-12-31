@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/const/enum/page_info_enum.dart';
+import 'package:flutter_engineer_codecheck/const/enum/response_enum.dart';
 import 'package:flutter_engineer_codecheck/model/api_error.dart';
 import 'package:flutter_engineer_codecheck/model/result.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
@@ -60,8 +61,10 @@ class SearchApiListPage extends StatelessWidget {
                     ) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.none:
-                          return const DeviceCenterWidget(
-                            widget: NormalText(text: '検索したいキーワードを入力してください。'),
+                          return DeviceCenterWidget(
+                            widget: NormalText(
+                              text: ResponseEnum.notYetSearched.message,
+                            ),
                           );
                         case ConnectionState.waiting:
                           return const DeviceCenterWidget(
@@ -70,8 +73,10 @@ class SearchApiListPage extends StatelessWidget {
                         case ConnectionState.active:
                         case ConnectionState.done:
                           if (snapshot.data == null) {
-                            return const DeviceCenterWidget(
-                              widget: NormalText(text: '検索データを取得できませんでした。'),
+                            return DeviceCenterWidget(
+                              widget: NormalText(
+                                text: ResponseEnum.zeroData.message,
+                              ),
                             );
                           }
 
@@ -80,8 +85,10 @@ class SearchApiListPage extends StatelessWidget {
                               SearchApiModelStruct searchApiModelStruct,
                             ) {
                               if (searchApiModelStruct.items.isEmpty) {
-                                return const DeviceCenterWidget(
-                                  widget: NormalText(text: 'データが一件も取得できませんでした。'),
+                                return DeviceCenterWidget(
+                                  widget: NormalText(
+                                    text: ResponseEnum.zeroData.message,
+                                  ),
                                 );
                               }
 
@@ -124,7 +131,8 @@ class SearchApiListPage extends StatelessWidget {
                             },
                             failure: (ApiError apiError) {
                               return DeviceCenterWidget(
-                                widget: NormalText(text: apiError.message ?? ''),
+                                widget:
+                                    NormalText(text: apiError.message ?? ''),
                               );
                             },
                           );
