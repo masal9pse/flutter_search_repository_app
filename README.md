@@ -20,22 +20,15 @@ $ fvm --version
 $ fvm flutter doctor
 Doctor summary (to see all details, run flutter doctor -v):
 [✓] Flutter (Channel stable, 3.3.10, on macOS 12.5 21G72 darwin-arm, locale ja-JP)
-[✗] Android toolchain - develop for Android devices
-    ✗ Unable to locate Android SDK.
-      Install Android Studio from: https://developer.android.com/studio/index.html
-      On first launch it will assist you in installing the Android SDK components.
-      (or visit https://flutter.dev/docs/get-started/install/macos#android-setup for detailed instructions).
-      If the Android SDK has been installed to a custom location, please use
-      `flutter config --android-sdk` to update to that location.
-
+[✓] Android toolchain - develop for Android devices (Android SDK version 33.0.1)
 [✓] Xcode - develop for iOS and macOS (Xcode 14.2)
 [✓] Chrome - develop for the web
-[!] Android Studio (not installed)
+[✓] Android Studio (version 2021.3)
 [✓] VS Code (version 1.74.2)
 [✓] Connected device (3 available)
 [✓] HTTP Host Availability
 
-! Doctor found issues in 2 categories.
+• No issues found!
 ```
 
 ### アプリの起動方法
@@ -103,8 +96,7 @@ $ fvm flutter run
 | 同じ例外をキャッチする処理を書いている箇所がいくつかあるので、SearchApiService で例外をキャッチした後、アプリ独自のデータに変換して以降の処理に渡すようにすると、それ以降の処理で例外をキャッチする必要がなくなり、可読性・保守性も向上するためおすすめです。  |   Result<T,E>を使用して２重例外を防ぐようにしました。      |
 | 一覧で要素をタップしても何も起こらない     | 詳細ページに飛べるよう修正しました。     
 | Widgetが1つの大きめのbuildメソッドで組まれていて可読性がやや低い     | Atomic Designを導入してコンポーネント化のルール化をしました。 
-| 文言はすべて lib/const/response_message.dart に定義するか、 多言語対応も見据えての arb ファイルに記載するようにするとより保守性が向上するためおすすめです。| 一部残っているので修正する。|
-| Dartで基本的に利用することが推奨の名前付き引数が活用されておらず可読性が損なわれている       |   全てに導入できていないのでやる。     |
+| 文言はすべて lib/const/response_message.dart に定義するか、 多言語対応も見据えての arb ファイルに記載するようにするとより保守性が向上するためおすすめです。| constファイルに記載しました。|
 | pedantic_monoがpubspec.yamlで指定されているのにanalysis_options.yamlでは使われておらずチグハグ    |   静的解析のパッケージをFlutter公式が提示した推奨ルールを用いているflutter_listに変更しました。   |
 
 <br />
@@ -127,5 +119,5 @@ $ fvm flutter run
 - issue,PRを途中から導入したものの、開発効率を優先させるために、技術的な不安点がない実装に関しては大きい単位でissue,PRを切ったこと。
 - riverpodを導入できなかったこと。余裕があればそれに加えてhooks_riverpod + StateNotifierも使ってみたい。
 - CIを導入できなかったこと。
-<br />
 - [目次に戻る](#目次)
+<br />
