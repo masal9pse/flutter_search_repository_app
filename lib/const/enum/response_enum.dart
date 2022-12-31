@@ -1,4 +1,5 @@
 enum ResponseEnum {
+  notYetSearched(message: '検索したいキーワードを入力してください。', status: 0),
   success(message: 'サーバーから情報を取得することに成功しました。', status: 200),
   invalid(message: '無効な値が返却されました。', status: 100),
   noConnection(message: 'インターネットに接続できませんでした', status: 101),
@@ -7,7 +8,9 @@ enum ResponseEnum {
   badRequest(message: '検証に失敗しました。時間をおいて再度実行してください。', status: 104),
   serverProblem(message: '検証に失敗しました。時間をおいて再度実行してください。', status: 105),
   timeout(message: 'タイムアウトしました。インターネットに接続してください。', status: 106),
-  other(message: '例外が発生しました。時間をおいて再度実行してください。', status: 107);
+  other(message: '例外が発生しました。時間をおいて再度実行してください。', status: 107),
+  nullData(message: '検索データを取得できませんでした。', status: 108),
+  zeroData(message: 'データが一件も取得できませんでした。', status: 109);
 
   const ResponseEnum({required this.message, required this.status});
   final String message;

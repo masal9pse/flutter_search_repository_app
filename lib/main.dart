@@ -18,7 +18,7 @@ Future<void> main() async {
         providers: [
           ChangeNotifierProvider<SearchApiViewModel>(
             create: (context) => SearchApiViewModel(
-              SearchApiService(),
+              searchApiService: SearchApiService(),
             ),
           ),
         ],
