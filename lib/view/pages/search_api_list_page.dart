@@ -5,6 +5,7 @@ import 'package:flutter_engineer_codecheck/model/result.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/view/components/atoms/indicators/base_circle_progress_indicator.dart';
 import 'package:flutter_engineer_codecheck/view/components/atoms/device_center_widget.dart';
+import 'package:flutter_engineer_codecheck/view/components/atoms/texts/normal_text.dart';
 import 'package:flutter_engineer_codecheck/view/components/organisms/response_detail_card.dart';
 import 'package:flutter_engineer_codecheck/view/components/organisms/search_bar.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
@@ -43,7 +44,7 @@ class SearchApiListPage extends StatelessWidget {
                             await context
                                 .read<SearchApiViewModel>()
                                 .fetchSearchApiModelStruct(
-                                  formController.text,
+                                  text: formController.text,
                                 );
                           }
                         },
@@ -60,7 +61,7 @@ class SearchApiListPage extends StatelessWidget {
                       switch (snapshot.connectionState) {
                         case ConnectionState.none:
                           return const DeviceCenterWidget(
-                            widget: Text('検索したいキーワードを入力してください。'),
+                            widget: NormalText(text: '検索したいキーワードを入力してください。'),
                           );
                         case ConnectionState.waiting:
                           return const DeviceCenterWidget(
@@ -70,7 +71,7 @@ class SearchApiListPage extends StatelessWidget {
                         case ConnectionState.done:
                           if (snapshot.data == null) {
                             return const DeviceCenterWidget(
-                              widget: Text('検索データを取得できませんでした。'),
+                              widget: NormalText(text: '検索データを取得できませんでした。'),
                             );
                           }
 
@@ -78,6 +79,12 @@ class SearchApiListPage extends StatelessWidget {
                             success: (
                               SearchApiModelStruct searchApiModelStruct,
                             ) {
+                              if (searchApiModelStruct.items.isEmpty) {
+                                return const DeviceCenterWidget(
+                                  widget: NormalText(text: 'データが一件も取得できませんでした。'),
+                                );
+                              }
+
                               return ListView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
@@ -117,7 +124,7 @@ class SearchApiListPage extends StatelessWidget {
                             },
                             failure: (ApiError apiError) {
                               return DeviceCenterWidget(
-                                widget: Text(apiError.message ?? ''),
+                                widget: NormalText(text: apiError.message ?? ''),
                               );
                             },
                           );

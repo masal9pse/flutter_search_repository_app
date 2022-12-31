@@ -14,7 +14,7 @@ class SearchApiViewModel with ChangeNotifier {
   final formController = TextEditingController();
 
   /// API 通信 と View層への通知
-  Future<void> fetchSearchApiModelStruct(String text) async {
+  Future<void> fetchSearchApiModelStruct({required String text}) async {
     final response = searchApiService.getApiListInfo(input: text);
     result = response;
     notifyListeners();
