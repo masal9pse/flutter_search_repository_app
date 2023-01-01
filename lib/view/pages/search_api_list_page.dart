@@ -71,7 +71,7 @@ class SearchApiListPage extends StatelessWidget {
                           if (snapshot.data == null) {
                             return DeviceCenterWidget(
                               widget: NormalText(
-                                text: ResponseEnum.zeroData.message,
+                                text: ResponseEnum.nullData.message,
                               ),
                             );
                           }
