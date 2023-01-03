@@ -43,8 +43,7 @@ void main() {
         const input = 'Go language';
         final apiSuccessTestData01 = ApiMockTestData().apiSuccessTestData01;
         final convertedApiSuccessTestData01 =
-            SearchApiModelStruct.fromJson(apiSuccessTestData01);
-        // なぜかgetApiListInfoの返り値をオプショナルにしたらテストが通った。
+            SearchApiModelStruct.fromJson(apiSuccessTestData01);        
         when(mockSearchApiService.getApiListInfo(input: input)).thenAnswer(
           (_) => Future.value(Result.success(convertedApiSuccessTestData01)),
         );
