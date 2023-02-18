@@ -8,6 +8,7 @@ import 'package:flutter_engineer_codecheck/view/pages/api_show_page.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:simple_logger/simple_logger.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    print('ciが通るかテスト');
     return MaterialApp.router(
       routeInformationProvider: router.routeInformationProvider,
       routeInformationParser: router.routeInformationParser,
