@@ -6,7 +6,8 @@ import 'package:flutter_engineer_codecheck/const/enum/response_enum.dart';
 import 'package:flutter_engineer_codecheck/model/api_error.dart';
 import 'package:flutter_engineer_codecheck/model/result.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
-import 'package:flutter_engineer_codecheck/service/search_api_service.dart';
+import 'package:flutter_engineer_codecheck/infrastructure/search_api_service.dart';
+import 'package:flutter_engineer_codecheck/repository/search_api_repository.dart';
 import 'package:flutter_engineer_codecheck/view/pages/search_api_list_page.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,7 +15,7 @@ import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import '../test_data/api_mock_test_data.dart';
 
-class MockSearchApiService extends Mock implements SearchApiService {}
+class MockSearchApiService extends Mock implements SearchApiRepository {}
 
 void main() {
   setUpAll(() => HttpOverrides.global = null);
@@ -24,7 +25,8 @@ void main() {
     MaterialApp testMainViewWidget() {
       return MaterialApp(
         home: ChangeNotifierProvider(
-          create: (context) => SearchApiViewModel(searchApiService: mockSearchApiService),
+          create: (context) =>
+              SearchApiViewModel(searchApiRepository: mockSearchApiService),
           child: SearchApiListPage(),
         ),
       );
@@ -43,7 +45,7 @@ void main() {
         const input = 'Go language';
         final apiSuccessTestData01 = ApiMockTestData().apiSuccessTestData01;
         final convertedApiSuccessTestData01 =
-            SearchApiModelStruct.fromJson(apiSuccessTestData01);        
+            SearchApiModelStruct.fromJson(apiSuccessTestData01);
         when(mockSearchApiService.getApiListInfo(input: input)).thenAnswer(
           (_) => Future.value(Result.success(convertedApiSuccessTestData01)),
         );
