@@ -10,19 +10,18 @@ import 'package:flutter_engineer_codecheck/view/components/atoms/texts/normal_te
 import 'package:flutter_engineer_codecheck/view/components/organisms/response_detail_card.dart';
 import 'package:flutter_engineer_codecheck/view/components/organisms/search_bar.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
-class SearchApiListPage extends StatelessWidget {
+class SearchApiListPage extends ConsumerWidget {
   final _formKey = GlobalKey<FormState>();
 
   SearchApiListPage({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final result = context.select((SearchApiViewModel store) => store.result);
-    final formController =
-        context.select((SearchApiViewModel store) => store.formController);
+    final result = ref.watch(searchApiProvider).result;
+    final formController = ref.watch(searchApiProvider).formController;
     return Scaffold(
       appBar: AppBar(
         title: Text(PageInfoEnum.top.title),
@@ -40,11 +39,7 @@ class SearchApiListPage extends StatelessWidget {
                     controller: formController,
                     callback: () async {
                       if (_formKey.currentState!.validate()) {
-                        await context
-                            .read<SearchApiViewModel>()
-                            .fetchSearchApiModelStruct(
-                              text: formController.text,
-                            );
+                        await ref.read(searchApiProvider.notifier).fetchSearchApiModelStruct(text: formController.text);
                       }
                     },
                   ),

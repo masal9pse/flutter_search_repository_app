@@ -7,7 +7,7 @@ import 'package:flutter_engineer_codecheck/repository/search_api_repository_impl
 import 'package:flutter_engineer_codecheck/view/pages/search_api_list_page.dart';
 import 'package:flutter_engineer_codecheck/view/pages/api_show_page.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 Future<void> main() async {
@@ -15,14 +15,7 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((value) {
     runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider<SearchApiViewModel>(
-            create: (context) => SearchApiViewModel(
-              searchApiRepository: SearchApiRepositoryImpl(searchApiClient: SearchApiClient()),
-            ),
-          ),
-        ],
+      ProviderScope(
         child: MyApp(),
       ),
     );
