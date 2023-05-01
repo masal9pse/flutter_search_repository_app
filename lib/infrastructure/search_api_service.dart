@@ -8,54 +8,16 @@ import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:http/http.dart' as http;
 
 class SearchApiClient {
-  Future<Result<SearchApiModelStruct, ApiError>>? getApiListInfo({
+  Future<SearchApiModelStruct>? getApiListInfo({
     required String input,
   }) async {
-    try {
       final url =
           Uri.parse('https://api.github.com/search/repositories?q=$input');
       const timeOutCount = 5;
       final response =
           await http.get(url).timeout(const Duration(seconds: timeOutCount));
       final decoded = json.decode(response.body) as Map<String, dynamic>;
-      if (response.statusCode == 200) {
         final searchApiModelStruct = SearchApiModelStruct.fromJson(decoded);
-        return Result.success(searchApiModelStruct);
-      }
-      return Result.failure(
-        ApiError(
-          code: ResponseEnum.invalid.status,
-          message: ResponseEnum.invalid.message,
-        ),
-      );
-    } on HttpException {
-      return Result.failure(
-        ApiError(
-          code: ResponseEnum.noConnection.status,
-          message: ResponseEnum.noConnection.message,
-        ),
-      );
-    } on FormatException {
-      return Result.failure(
-        ApiError(
-          code: ResponseEnum.invalid.status,
-          message: ResponseEnum.invalid.message,
-        ),
-      );
-    } on TimeoutException {
-      return Result.failure(
-        ApiError(
-          code: ResponseEnum.timeout.status,
-          message: ResponseEnum.timeout.message,
-        ),
-      );
-    } on Exception {
-      return Result.failure(
-        ApiError(
-          code: ResponseEnum.other.status,
-          message: ResponseEnum.other.message,
-        ),
-      );
-    }
+      return searchApiModelStruct;
   }
 }

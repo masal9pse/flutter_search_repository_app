@@ -11,7 +11,8 @@ class SearchApiRepositoryImpl implements SearchApiRepository {
   SearchApiRepositoryImpl({required this.searchApiClient});
 
   @override
-  Future<Result<SearchApiModelStruct, ApiError>>? getApiListInfo({
+  // Future<Result<SearchApiModelStruct, ApiError>>? getApiListInfo({
+  Future<SearchApiModelStruct>? getApiListInfo({
     required String input,
   }) {
     return searchApiClient.getApiListInfo(input: input);
@@ -19,5 +20,9 @@ class SearchApiRepositoryImpl implements SearchApiRepository {
 }
 
 final searchApiRepositoryProvider = Provider<SearchApiRepository>(
-  ((ref) => SearchApiRepositoryImpl(searchApiClient: SearchApiClient())),
+  ((ref) {
+    // final a = ref.watch();
+    // return SearchApiRepositoryImpl(searchApiClient: SearchApiClient());
+    return SearchApiRepositoryImpl(searchApiClient: SearchApiClient());
+  }),
 );
