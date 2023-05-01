@@ -7,7 +7,7 @@ import 'package:flutter_engineer_codecheck/model/result.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/repository/search_api_repository.dart';
 import 'package:flutter_engineer_codecheck/repository/search_api_repository_impl.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SearchApiNotifier with ChangeNotifier {
   SearchApiNotifier({required this.searchApiRepository});
@@ -25,5 +25,8 @@ class SearchApiNotifier with ChangeNotifier {
 }
 
 final searchApiProvider = ChangeNotifierProvider<SearchApiNotifier>((ref) {
+  // final repository = ref.watch<SearchApiRepository>(searchApiProvider);
   return SearchApiNotifier(searchApiRepository: SearchApiRepositoryImpl(searchApiClient: SearchApiClient()));
+  // return SearchApiNotifier(searchApiRepository: repository);
 });
+a

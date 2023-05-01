@@ -254,13 +254,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.0"
-  hooks_riverpod:
-    dependency: "direct main"
-    description:
-      name: hooks_riverpod
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.3.6"
   http:
     dependency: "direct main"
     description:
@@ -352,6 +345,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+  mockito:
+    dependency: "direct main"
+    description:
+      name: mockito
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.4.0"
   package_config:
     dependency: transitive
     description:
