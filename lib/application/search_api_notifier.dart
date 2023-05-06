@@ -7,8 +7,6 @@ part 'search_api_notifier.g.dart';
 
 @riverpod
 class SearchApiNotifier extends _$SearchApiNotifier {
-
-  final repository = SearchApiRepositoryImpl(searchApiClient: SearchApiClient());  
   @override
   Future<SearchApiModelStruct?> build() async {
     return null;
@@ -17,10 +15,9 @@ class SearchApiNotifier extends _$SearchApiNotifier {
   // 状態を変更したときにisRefreshingをtrueにする
   Future<void> updateState(String input) async {
     state = const AsyncValue.loading();
-    // state = AsyncData(await repository.getApiListInfo(input: input));
+    // refが使えるので、これでrepositoryProviderを呼び出せる
+    final repository = ref.watch(searchApiRepositoryProvider);
     final data = await repository.getApiListInfo(input: input);
     state = AsyncValue.data(data);
-    
-    final k = 3;
   }
 }

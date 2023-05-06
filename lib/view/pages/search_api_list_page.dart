@@ -43,7 +43,10 @@ class SearchApiListPage extends ConsumerWidget {
                       if (value == null) {
                         return const Text('No data');
                       }
-                      return Text(value!.items.first.name);
+                      if (value.totalCount == 0) {
+                        return const Text('0データ');
+                      }
+                      return Text(value.items.first.name);
                     },
                     error: (error, stack) => Text('Error: $error'),
                     loading: () => const CircularProgressIndicator(),
