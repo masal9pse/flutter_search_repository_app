@@ -1,3 +1,4 @@
+import 'package:flutter_engineer_codecheck/application/search_api_notifier.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/repository/search_api_repository.dart';
 import 'package:flutter_engineer_codecheck/repository/search_api_repository_impl.dart';
@@ -19,8 +20,17 @@ class FakeSearchApiRepositoryImpl implements SearchApiRepository {
   }
 }
 
+class FakeErrorSearchApiRepositoryImpl implements SearchApiRepository {
+  @override
+  Future<SearchApiModelStruct>? getApiListInfo({
+    required String input,
+  }) {
+      throw Exception('error');
+  }
+}
+
 void main() {
-  test('Override repository provider', () async {
+  test('データが取得できることをテスト', () async {
     final container = ProviderContainer(
       overrides: [
         searchApiRepositoryProvider

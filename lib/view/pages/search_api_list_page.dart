@@ -12,7 +12,6 @@ class SearchApiListPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final screenWidth = MediaQuery.of(context).size.width;
-    // final provider = ref.watch(searchApiProvider('ruby'));
     final searchApiProvider2 = ref.watch(searchApiNotifierProvider);
     return Scaffold(
       appBar: AppBar(
@@ -31,9 +30,9 @@ class SearchApiListPage extends ConsumerWidget {
                     controller: TextEditingController(),
                     callback: () async {
                       if (_formKey.currentState!.validate()) {
-                        // await ref.read(searchApiProvider.notifier).fetchSearchApiModelStruct(text: formController.text);
-                        // await ref.read(searchApiProvider2.value).fetchSearchApiModelStruct(text: formController.text);
-                        ref.read(searchApiNotifierProvider.notifier).updateState('php');
+                        ref
+                            .read(searchApiNotifierProvider.notifier)
+                            .updateState('php');
                       }
                     },
                   ),
@@ -48,7 +47,7 @@ class SearchApiListPage extends ConsumerWidget {
                       }
                       return Text(value.items.first.name);
                     },
-                    error: (error, stack) => Text('Error: $error'),
+                    error: (error, stack) => const Text('インターネットに接続できませんでした'),
                     loading: () => const CircularProgressIndicator(),
                   )
                 ],

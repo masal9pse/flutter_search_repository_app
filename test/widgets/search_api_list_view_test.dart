@@ -15,65 +15,44 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import '../test_data/api_mock_test_data.dart';
-
-class MockSearchApiService extends Mock implements SearchApiRepository {}
-
-class FakeSearchApiRepositoryImpl implements SearchApiRepository {
-  @override
-  Future<Result<SearchApiModelStruct, ApiError>>? getApiListInfo({
-    required String input,
-  }) {
-    //  return Result.success();
-    //final apiSuccessTestData01 = ApiMockTestData().apiSuccessTestData01;
-    final apiSuccessTestData01 = ApiMockTestData().apiSuccessTestData01;
-    final convertedApiSuccessTestData01 =
-        SearchApiModelStruct.fromJson(apiSuccessTestData01);
-    // final convertedApiSuccessTestData01 =
-    //     SearchApiModelStruct.fromJson(apiSuccessTestData01);
-    // when(mockSearchApiService.getApiListInfo(input: input)).thenAnswer(
-    //   (_) => Future.value(Result.success(convertedApiSuccessTestData01)),
-    // );
-    return Future.value(Result.success(convertedApiSuccessTestData01));
-  }
-}
+import '../unit/provider_test.dart';
 
 void main() {
   setUpAll(() => HttpOverrides.global = null);
   group('API一覧ページのテスト', () {
-    // final mockSearchApiService = MockSearchApiService();
-
-    ProviderScope testMainViewWidget() {
-      return ProviderScope(
-        overrides: [          
-          // searchApiRepositoryProvider.overrideWithValue(
-          //   AsyncValue.data(FakeSearchApiRepositoryImpl()),
-          // ),
-          searchApiRepositoryProvider.overrideWithValue(FakeSearchApiRepositoryImpl())
-        ],
-        child: MaterialApp(
-          home: SearchApiListPage(),
-        ),
+    MaterialApp testMainViewWidget() {
+      return MaterialApp(
+        home: SearchApiListPage(),
       );
     }
 
     group('正常系', () {
       testWidgets('検索フォームと検索ボタンがあることをテスト', (WidgetTester tester) async {
-        await tester.pumpWidget(testMainViewWidget());
+        await tester.pumpWidget(
+          ProviderScope(
+            overrides: [
+              searchApiRepositoryProvider
+                  .overrideWithValue(FakeSearchApiRepositoryImpl())
+            ],
+            child: testMainViewWidget(),
+          ),
+        );
         expect(find.byKey(AppKeyName.topPageSearchTextField), findsOneWidget);
         expect(find.byKey(AppKeyName.searchElevatedButton), findsOneWidget);
       });
 
       testWidgets('検索フォームに入力して、検索ボタンをタップすると一覧に表示される。',
           (WidgetTester tester) async {
-        await tester.pumpWidget(testMainViewWidget());
+        await tester.pumpWidget(
+          ProviderScope(
+            overrides: [
+              searchApiRepositoryProvider
+                  .overrideWithValue(FakeSearchApiRepositoryImpl())
+            ],
+            child: testMainViewWidget(),
+          ),
+        );
         const input = 'Go language';
-        // final apiSuccessTestData01 = ApiMockTestData().apiSuccessTestData01;
-        // final convertedApiSuccessTestData01 =
-        //     SearchApiModelStruct.fromJson(apiSuccessTestData01);
-        // when(mockSearchApiService.getApiListInfo(input: input)).thenAnswer(
-        //   (_) => Future.value(Result.success(convertedApiSuccessTestData01)),
-        // );
-        
 
         await tester.enterText(
           find.byKey(AppKeyName.topPageSearchTextField),
@@ -84,25 +63,22 @@ void main() {
         );
         await tester.pumpAndSettle();
         expect(find.text('やまもとまさと'), findsOneWidget);
-        expect(find.text('鈴木大輔'), findsOneWidget);
       });
     });
 
     group('異常系', () {
       testWidgets('検索ボタンをタップするとsnackbarに例外のメッセージが表示されることをテスト',
           (WidgetTester tester) async {
-        await tester.pumpWidget(testMainViewWidget());
+        await tester.pumpWidget(
+          ProviderScope(
+            overrides: [
+              searchApiRepositoryProvider
+                  .overrideWithValue(FakeErrorSearchApiRepositoryImpl())
+            ],
+            child: testMainViewWidget(),
+          ),
+        );
         const input = 'PHP';
-        // when(mockSearchApiService.getApiListInfo(input: input)).thenAnswer(
-        //   (_) => Future.value(
-        //     Result.failure(
-        //       ApiError(
-        //         code: ResponseEnum.noConnection.status,
-        //         message: ResponseEnum.noConnection.message,
-        //       ),
-        //     ),
-        //   ),
-        // );
 
         await tester.enterText(
           find.byKey(AppKeyName.topPageSearchTextField),

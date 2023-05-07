@@ -14,10 +14,13 @@ class SearchApiNotifier extends _$SearchApiNotifier {
 
   // 状態を変更したときにisRefreshingをtrueにする
   Future<void> updateState(String input) async {
-    state = const AsyncValue.loading();
-    // refが使えるので、これでrepositoryProviderを呼び出せる
-    final repository = ref.watch(searchApiRepositoryProvider);
-    final data = await repository.getApiListInfo(input: input);
-    state = AsyncValue.data(data);
+    try {
+      state = const AsyncValue.loading();
+      final repository = ref.watch(searchApiRepositoryProvider);
+      final data = await repository.getApiListInfo(input: input);
+      state = AsyncValue.data(data);
+    } catch (e,stackTrace) {
+      state = AsyncValue.error(e, stackTrace);
+    }
   }
 }
