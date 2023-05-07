@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/application/state/search_api_notifier.dart';
+import 'package:flutter_engineer_codecheck/application/state/text_editing_controller_provider.dart';
 import 'package:flutter_engineer_codecheck/const/enum/page_info_enum.dart';
 import 'package:flutter_engineer_codecheck/const/enum/response_enum.dart';
-import 'package:flutter_engineer_codecheck/model/api_error.dart';
-import 'package:flutter_engineer_codecheck/model/result.dart';
-import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
-import 'package:flutter_engineer_codecheck/view/components/atoms/indicators/base_circle_progress_indicator.dart';
 import 'package:flutter_engineer_codecheck/view/components/atoms/device_center_widget.dart';
 import 'package:flutter_engineer_codecheck/view/components/atoms/texts/normal_text.dart';
 import 'package:flutter_engineer_codecheck/view/components/organisms/response_detail_card.dart';
 import 'package:flutter_engineer_codecheck/view/components/organisms/search_bar.dart';
-import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
-class SearchApiListPage extends StatelessWidget {
+class SearchApiListPage extends ConsumerWidget {
   final _formKey = GlobalKey<FormState>();
 
   SearchApiListPage({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final result = context.select((SearchApiViewModel store) => store.result);
-    final formController =
-        context.select((SearchApiViewModel store) => store.formController);
+    final searchApiResults = ref.watch(searchApiNotifierProvider);
+    final textEditingController = ref.watch(textEditingControllerProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(PageInfoEnum.top.title),
@@ -37,105 +33,64 @@ class SearchApiListPage extends StatelessWidget {
               child: Column(
                 children: [
                   SearchBar(
-                    controller: formController,
+                    controller: textEditingController,
                     callback: () async {
                       if (_formKey.currentState!.validate()) {
-                        await context
-                            .read<SearchApiViewModel>()
-                            .fetchSearchApiModelStruct(
-                              text: formController.text,
-                            );
+                        ref
+                            .read(searchApiNotifierProvider.notifier)
+                            .updateState(textEditingController.text);
                       }
                     },
                   ),
-                  FutureBuilder<Result<SearchApiModelStruct, ApiError>>(
-                    future: result,
-                    builder: (
-                      BuildContext context,
-                      AsyncSnapshot<Result<SearchApiModelStruct, ApiError>>
-                          snapshot,
-                    ) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.none:
-                          return DeviceCenterWidget(
-                            widget: NormalText(
-                              text: ResponseEnum.notYetSearched.message,
-                            ),
-                          );
-                        case ConnectionState.waiting:
-                          return const DeviceCenterWidget(
-                            widget: BaseCircleProgressIndicator(),
-                          );
-                        case ConnectionState.active:
-                        case ConnectionState.done:
-                          if (snapshot.data == null) {
-                            return DeviceCenterWidget(
-                              widget: NormalText(
-                                text: ResponseEnum.nullData.message,
-                              ),
-                            );
-                          }
-
-                          final responseWidget = snapshot.data!.when(
-                            success: (
-                              SearchApiModelStruct searchApiModelStruct,
-                            ) {
-                              if (searchApiModelStruct.items.isEmpty) {
-                                return DeviceCenterWidget(
-                                  widget: NormalText(
-                                    text: ResponseEnum.zeroData.message,
-                                  ),
+                  searchApiResults.when(
+                    data: (value) {
+                      if (value == null) {
+                        return const DeviceCenterWidget(
+                            widget: NormalText(text: 'フォームに値を入力してください'));
+                      }
+                      if (value.items.isEmpty) {
+                        return NormalText(text: ResponseEnum.zeroData.message);
+                      }
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: value.items.length,
+                          itemBuilder: (context, index) {
+                            final item = value.items[index];
+                            final owner = item.owner;
+                            final avatarUrl = owner.avatarUrl;
+                            final name = item.name;
+                            final language = item.language ?? '';
+                            final stargazersCount =
+                                item.stargazersCount.toString();
+                            final watchersCount = item.watchersCount.toString();
+                            final forksCount = item.forksCount.toString();
+                            final openIssuesCount =
+                                item.openIssuesCount.toString();
+                      
+                            return ResponseDetailCard(
+                              url: avatarUrl,
+                              title: name,
+                              subtitle: language,
+                              stargazersCount: stargazersCount,
+                              watchersCount: watchersCount,
+                              forksCount: forksCount,
+                              openIssuesCount: openIssuesCount,
+                              callback: () {
+                                context.push(
+                                  PageInfoEnum.show.route,
+                                  extra: item,
                                 );
-                              }
-
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: searchApiModelStruct.items.length,
-                                itemBuilder: (context, index) {
-                                  final item =
-                                      searchApiModelStruct.items[index];
-                                  final owner = item.owner;
-                                  final avatarUrl = owner.avatarUrl;
-                                  final name = item.name;
-                                  final language = item.language ?? '';
-                                  final stargazersCount =
-                                      item.stargazersCount.toString();
-                                  final watchersCount =
-                                      item.watchersCount.toString();
-                                  final forksCount = item.forksCount.toString();
-                                  final openIssuesCount =
-                                      item.openIssuesCount.toString();
-
-                                  return ResponseDetailCard(
-                                    url: avatarUrl,
-                                    title: name,
-                                    subtitle: language,
-                                    stargazersCount: stargazersCount,
-                                    watchersCount: watchersCount,
-                                    forksCount: forksCount,
-                                    openIssuesCount: openIssuesCount,
-                                    callback: () {
-                                      context.push(
-                                        PageInfoEnum.show.route,
-                                        extra: item,
-                                      );
-                                    },
-                                  );
-                                },
-                              );
-                            },
-                            failure: (ApiError apiError) {
-                              return DeviceCenterWidget(
-                                widget:
-                                    NormalText(text: apiError.message ?? ''),
-                              );
-                            },
-                          );
-                          return responseWidget;
-                      }
+                              },
+                            );
+                          },
+                        );                      
                     },
-                  ),
+                    error: (error, stack) => const Text('インターネットに接続できませんでした'),
+                    loading: () => const DeviceCenterWidget(
+                      widget: CircularProgressIndicator(),
+                    ),
+                  )
                 ],
               ),
             ),
