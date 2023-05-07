@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class DeviceCenterWidget extends StatelessWidget {
-  const DeviceCenterWidget({super.key, this.widget});
+  const DeviceCenterWidget({super.key, required this.widget});
 
-  final Widget? widget;
+  final Widget widget;
   @override
   Widget build(BuildContext context) {
     return Container(
