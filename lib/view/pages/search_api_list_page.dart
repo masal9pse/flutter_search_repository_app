@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/application/search_api_notifier.dart';
+import 'package:flutter_engineer_codecheck/application/state/search_api_notifier.dart';
+import 'package:flutter_engineer_codecheck/application/state/text_editing_controller_provider.dart';
 import 'package:flutter_engineer_codecheck/const/enum/page_info_enum.dart';
 import 'package:flutter_engineer_codecheck/view/components/organisms/search_bar.dart';
-import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SearchApiListPage extends ConsumerWidget {
@@ -12,7 +12,8 @@ class SearchApiListPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final searchApiProvider2 = ref.watch(searchApiNotifierProvider);
+    final searchApiResults = ref.watch(searchApiNotifierProvider);
+    final textEditingController = ref.watch(textEditingControllerProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(PageInfoEnum.top.title),
@@ -27,17 +28,16 @@ class SearchApiListPage extends ConsumerWidget {
               child: Column(
                 children: [
                   SearchBar(
-                    controller: TextEditingController(),
+                    controller: textEditingController,
                     callback: () async {
                       if (_formKey.currentState!.validate()) {
                         ref
                             .read(searchApiNotifierProvider.notifier)
-                            .updateState('php');
+                            .updateState(textEditingController.text);
                       }
                     },
                   ),
-                  // searchApiProvider2.when(data: data, error: error, loading: loading)
-                  searchApiProvider2.when(
+                  searchApiResults.when(
                     data: (value) {
                       if (value == null) {
                         return const Text('No data');

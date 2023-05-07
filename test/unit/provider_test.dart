@@ -1,8 +1,7 @@
-import 'package:flutter_engineer_codecheck/application/search_api_notifier.dart';
+import 'package:flutter_engineer_codecheck/application/state/search_api_notifier.dart';
+import 'package:flutter_engineer_codecheck/application/state/search_api_repository_provider.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/repository/search_api_repository.dart';
-import 'package:flutter_engineer_codecheck/repository/search_api_repository_impl.dart';
-import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -38,16 +37,16 @@ void main() {
       ],
     );
     expect(
-      container.read(searchApiProvider('php')),
+      container.read(searchApiNotifierProvider),
       const AsyncValue<SearchApiModelStruct?>.loading(),
     );
     // Wait for the request to finish
     await Future<void>.value();
 
-    expect(container.read(searchApiProvider('php')).value!.items.first.name,
-        'やまもとまさと');
+    final data = await container.read(searchApiRepositoryProvider).getApiListInfo(input: 'php');
+    expect(data!.items.first.name,'やまもとまさと');
     expect(
-      container.read(searchApiProvider('php')).value!,
+      data,
       isA<SearchApiModelStruct?>()
           .having((entity) => entity!.totalCount, 'totalCount', 10)
           .having((entity) => entity!.items.first.name, 'name', 'やまもとまさと')
