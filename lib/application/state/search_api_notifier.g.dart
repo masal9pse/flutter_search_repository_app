@@ -29,7 +29,7 @@ class _SystemHash {
   }
 }
 
-String _$SearchApiNotifierHash() => r'ca57b82a55b3facc0e6ee57b028f7b0386a6b1af';
+String _$SearchApiNotifierHash() => r'a1ed5027e0e7982656b820d18aa169cd1debe2e1';
 
 /// See also [SearchApiNotifier].
 final searchApiNotifierProvider =

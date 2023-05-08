@@ -186,6 +186,7 @@ Item _$ItemFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Item {
+  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   int? get stargazersCount => throw _privateConstructorUsedError;
   int? get watchersCount => throw _privateConstructorUsedError;
@@ -205,7 +206,8 @@ abstract class $ItemCopyWith<$Res> {
       _$ItemCopyWithImpl<$Res, Item>;
   @useResult
   $Res call(
-      {String name,
+      {int id,
+      String name,
       int? stargazersCount,
       int? watchersCount,
       String? language,
@@ -229,6 +231,7 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? stargazersCount = freezed,
     Object? watchersCount = freezed,
@@ -238,6 +241,10 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
     Object? owner = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -285,7 +292,8 @@ abstract class _$$_ItemCopyWith<$Res> implements $ItemCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String name,
+      {int id,
+      String name,
       int? stargazersCount,
       int? watchersCount,
       String? language,
@@ -306,6 +314,7 @@ class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$_Item>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? stargazersCount = freezed,
     Object? watchersCount = freezed,
@@ -315,6 +324,10 @@ class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$_Item>
     Object? owner = null,
   }) {
     return _then(_$_Item(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -352,7 +365,8 @@ class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$_Item>
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$_Item implements _Item {
   const _$_Item(
-      {required this.name,
+      {required this.id,
+      required this.name,
       this.stargazersCount,
       this.watchersCount,
       this.language,
@@ -362,6 +376,8 @@ class _$_Item implements _Item {
 
   factory _$_Item.fromJson(Map<String, dynamic> json) => _$$_ItemFromJson(json);
 
+  @override
+  final int id;
   @override
   final String name;
   @override
@@ -379,7 +395,7 @@ class _$_Item implements _Item {
 
   @override
   String toString() {
-    return 'Item(name: $name, stargazersCount: $stargazersCount, watchersCount: $watchersCount, language: $language, forksCount: $forksCount, openIssuesCount: $openIssuesCount, owner: $owner)';
+    return 'Item(id: $id, name: $name, stargazersCount: $stargazersCount, watchersCount: $watchersCount, language: $language, forksCount: $forksCount, openIssuesCount: $openIssuesCount, owner: $owner)';
   }
 
   @override
@@ -387,6 +403,7 @@ class _$_Item implements _Item {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Item &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.stargazersCount, stargazersCount) ||
                 other.stargazersCount == stargazersCount) &&
@@ -403,7 +420,7 @@ class _$_Item implements _Item {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, stargazersCount,
+  int get hashCode => Object.hash(runtimeType, id, name, stargazersCount,
       watchersCount, language, forksCount, openIssuesCount, owner);
 
   @JsonKey(ignore: true)
@@ -422,7 +439,8 @@ class _$_Item implements _Item {
 
 abstract class _Item implements Item {
   const factory _Item(
-      {required final String name,
+      {required final int id,
+      required final String name,
       final int? stargazersCount,
       final int? watchersCount,
       final String? language,
@@ -432,6 +450,8 @@ abstract class _Item implements Item {
 
   factory _Item.fromJson(Map<String, dynamic> json) = _$_Item.fromJson;
 
+  @override
+  int get id;
   @override
   String get name;
   @override

@@ -22,6 +22,7 @@ class Item with _$Item {
     fieldRename: FieldRename.snake,
   )
   const factory Item({
+    required int id,
     required String name,
     int? stargazersCount,
     int? watchersCount,
