@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/view/components/atoms/texts/large_text.dart';
-import 'package:flutter_engineer_codecheck/view/components/atoms/texts/normal_text.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/texts/large_text.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/texts/normal_text.dart';
 
 class ResponseText extends StatelessWidget {
   const ResponseText({

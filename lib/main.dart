@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_engineer_codecheck/const/enum/page_info_enum.dart';
-import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
-import 'package:flutter_engineer_codecheck/view/pages/search_api_list_page.dart';
-import 'package:flutter_engineer_codecheck/view/pages/api_show_page.dart';
+import 'package:flutter_engineer_codecheck/damain/entity/search_api_struct.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/pages/search_api_list_page.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/pages/api_show_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 

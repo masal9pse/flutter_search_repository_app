@@ -3,10 +3,10 @@ import 'package:flutter_engineer_codecheck/application/state/search_api_notifier
 import 'package:flutter_engineer_codecheck/application/state/text_editing_controller_provider.dart';
 import 'package:flutter_engineer_codecheck/const/enum/page_info_enum.dart';
 import 'package:flutter_engineer_codecheck/const/enum/response_enum.dart';
-import 'package:flutter_engineer_codecheck/view/components/atoms/device_center_widget.dart';
-import 'package:flutter_engineer_codecheck/view/components/atoms/texts/normal_text.dart';
-import 'package:flutter_engineer_codecheck/view/components/organisms/response_detail_card.dart';
-import 'package:flutter_engineer_codecheck/view/components/organisms/search_bar.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/device_center_widget.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/texts/normal_text.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/response_detail_card.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/search_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -46,45 +46,46 @@ class SearchApiListPage extends ConsumerWidget {
                     data: (value) {
                       if (value == null) {
                         return const DeviceCenterWidget(
-                            widget: NormalText(text: 'フォームに値を入力してください'));
+                          widget: NormalText(text: 'フォームに値を入力してください'),
+                        );
                       }
                       if (value.items.isEmpty) {
                         return NormalText(text: ResponseEnum.zeroData.message);
                       }
                       return ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: value.items.length,
-                          itemBuilder: (context, index) {
-                            final item = value.items[index];
-                            final owner = item.owner;
-                            final avatarUrl = owner.avatarUrl;
-                            final name = item.name;
-                            final language = item.language ?? '';
-                            final stargazersCount =
-                                item.stargazersCount.toString();
-                            final watchersCount = item.watchersCount.toString();
-                            final forksCount = item.forksCount.toString();
-                            final openIssuesCount =
-                                item.openIssuesCount.toString();
-                      
-                            return ResponseDetailCard(
-                              url: avatarUrl,
-                              title: name,
-                              subtitle: language,
-                              stargazersCount: stargazersCount,
-                              watchersCount: watchersCount,
-                              forksCount: forksCount,
-                              openIssuesCount: openIssuesCount,
-                              callback: () {
-                                context.push(
-                                  PageInfoEnum.show.route,
-                                  extra: item,
-                                );
-                              },
-                            );
-                          },
-                        );                      
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: value.items.length,
+                        itemBuilder: (context, index) {
+                          final item = value.items[index];
+                          final owner = item.owner;
+                          final avatarUrl = owner.avatarUrl;
+                          final name = item.name;
+                          final language = item.language ?? '';
+                          final stargazersCount =
+                              item.stargazersCount.toString();
+                          final watchersCount = item.watchersCount.toString();
+                          final forksCount = item.forksCount.toString();
+                          final openIssuesCount =
+                              item.openIssuesCount.toString();
+
+                          return ResponseDetailCard(
+                            url: avatarUrl,
+                            title: name,
+                            subtitle: language,
+                            stargazersCount: stargazersCount,
+                            watchersCount: watchersCount,
+                            forksCount: forksCount,
+                            openIssuesCount: openIssuesCount,
+                            callback: () {
+                              context.push(
+                                PageInfoEnum.show.route,
+                                extra: item,
+                              );
+                            },
+                          );
+                        },
+                      );
                     },
                     error: (error, stack) => const Text('インターネットに接続できませんでした'),
                     loading: () => const DeviceCenterWidget(

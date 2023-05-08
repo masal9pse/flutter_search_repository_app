@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/const/enum/response_item_enum.dart';
-import 'package:flutter_engineer_codecheck/view/components/atoms/images/angle_circle_large_image.dart';
-import 'package:flutter_engineer_codecheck/view/components/molecules/response_text.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/images/angle_circle_large_image.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/components/molecules/response_text.dart';
 
 class ResponseShowDetail extends StatelessWidget {
   const ResponseShowDetail({

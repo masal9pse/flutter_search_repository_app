@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
+import 'package:flutter_engineer_codecheck/damain/entity/search_api_struct.dart';
 import 'package:http/http.dart' as http;
 
 class SearchApiClient {
