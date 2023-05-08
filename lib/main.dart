@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         builder: ((context, state) {
           final item = state.extra as Item;
           return ApiShowPage(
-            item: item,
+            id: item.id,
           );
         }),
       ),
