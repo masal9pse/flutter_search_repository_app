@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/application/state/search_api_repository_provider.dart';
 import 'package:flutter_engineer_codecheck/const/app_key_name.dart';
-import 'package:flutter_engineer_codecheck/view/pages/search_api_list_page.dart';
+import 'package:flutter_engineer_codecheck/infrastructure/fake_search_api_client.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/pages/search_api_list_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../unit/provider_test.dart';
 
 void main() {
   setUpAll(() => HttpOverrides.global = null);
