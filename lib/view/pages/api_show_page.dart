@@ -1,26 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/application/state/search_api_notifier.dart';
 import 'package:flutter_engineer_codecheck/const/enum/page_info_enum.dart';
-import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/view/components/organisms/response_show_detail.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ApiShowPage extends StatelessWidget {
-  ApiShowPage({
+class ApiShowPage extends ConsumerWidget {
+  const ApiShowPage({
     Key? key,
-    required this.item,
+    required this.id,
   }) : super(key: key);
 
-  final Item item;
-  late final owner = item.owner;
-  late final avatarUrl = owner.avatarUrl;
-  late final name = item.name;
-  late final language = item.language ?? '';
-  late final stargazersCount = item.stargazersCount.toString();
-  late final watchersCount = item.watchersCount.toString();
-  late final forksCount = item.forksCount.toString();
-  late final openIssuesCount = item.openIssuesCount.toString();
+  final int id;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final item = ref
+        .watch(searchApiNotifierProvider)
+        .whenData(
+          (value) => value!.items.firstWhere((element) => element.id == id),
+        )
+        .value;
+    final owner = item!.owner;
+    final avatarUrl = owner.avatarUrl;
+    final name = item.name;
+    final language = item.language ?? '';
+    final stargazersCount = item.stargazersCount.toString();
+    final watchersCount = item.watchersCount.toString();
+    final forksCount = item.forksCount.toString();
+    final openIssuesCount = item.openIssuesCount.toString();
     return Scaffold(
       appBar: AppBar(
         title: Text(PageInfoEnum.show.title),

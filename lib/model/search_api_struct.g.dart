@@ -7,8 +7,7 @@ part of 'search_api_struct.dart';
 // **************************************************************************
 
 _$_SearchApiModelStruct _$$_SearchApiModelStructFromJson(
-  Map<String, dynamic> json,
-) =>
+        Map<String, dynamic> json) =>
     _$_SearchApiModelStruct(
       totalCount: json['total_count'] as int,
       items: (json['items'] as List<dynamic>)
@@ -17,14 +16,14 @@ _$_SearchApiModelStruct _$$_SearchApiModelStructFromJson(
     );
 
 Map<String, dynamic> _$$_SearchApiModelStructToJson(
-  _$_SearchApiModelStruct instance,
-) =>
+        _$_SearchApiModelStruct instance) =>
     <String, dynamic>{
       'total_count': instance.totalCount,
       'items': instance.items,
     };
 
 _$_Item _$$_ItemFromJson(Map<String, dynamic> json) => _$_Item(
+      id: json['id'] as int,
       name: json['name'] as String,
       stargazersCount: json['stargazers_count'] as int?,
       watchersCount: json['watchers_count'] as int?,
@@ -35,6 +34,7 @@ _$_Item _$$_ItemFromJson(Map<String, dynamic> json) => _$_Item(
     );
 
 Map<String, dynamic> _$$_ItemToJson(_$_Item instance) => <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'stargazers_count': instance.stargazersCount,
       'watchers_count': instance.watchersCount,
