@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/application/di/use_cases.dart';
 import 'package:flutter_engineer_codecheck/application/state/search_api_notifier.dart';
 import 'package:flutter_engineer_codecheck/application/state/text_editing_controller_provider.dart';
 import 'package:flutter_engineer_codecheck/const/enum/page_info_enum.dart';
@@ -36,9 +37,9 @@ class SearchApiListPage extends ConsumerWidget {
                     controller: textEditingController,
                     callback: () async {
                       if (_formKey.currentState!.validate()) {
-                        ref
-                            .read(searchApiNotifierProvider.notifier)
-                            .updateState(textEditingController.text);
+                        final useCase = ref.read(searchGitHubDataProvider);
+                        await useCase
+                            .searchGitHubData(textEditingController.text);
                       }
                     },
                   ),

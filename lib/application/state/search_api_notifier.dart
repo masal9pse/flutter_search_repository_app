@@ -1,5 +1,5 @@
-import 'package:flutter_engineer_codecheck/application/state/search_api_repository_provider.dart';
 import 'package:flutter_engineer_codecheck/damain/entity/search_api_struct.dart';
+import 'package:flutter_engineer_codecheck/damain/repository/search_api_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'search_api_notifier.g.dart';
 
@@ -10,11 +10,16 @@ class SearchApiNotifier extends _$SearchApiNotifier {
     return null;
   }
 
-  Future<void> updateState(String input) async {
+  Future<void> load() async {
     state = const AsyncValue.loading();
-      final repository = ref.watch(searchApiRepositoryProvider);
+  }
+
+  Future<void> updateState(SearchApiModelStruct data) async {
+  // Future<void> updateState() async {
+    // state = const AsyncValue.loading();
+      // final repository = ref.watch(searchApiRepositoryProvider);
       state = await AsyncValue.guard(() async {
-        final data = await repository.getApiListInfo(input: input);
+        // final data = await repository.getApiListInfo(input: input);
         return data;
       });
   }
