@@ -8,7 +8,7 @@ class SearchGitHubDataUseCase {
   SearchGitHubDataUseCase({required this.repository, required this.notifier});
 
   Future<void> searchGitHubData(String searchWord) async {
-    notifier.load();
+    await notifier.load();
     final data = await repository.getApiListInfo(input: searchWord);
     await notifier.updateState(data!);
   }
