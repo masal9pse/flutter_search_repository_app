@@ -46,8 +46,8 @@ class SearchApiListPage extends ConsumerWidget {
                   searchApiResults.when(
                     data: (value) {
                       if (value == null) {
-                        return const DeviceCenterWidget(
-                          widget: NormalText(text: 'フォームに値を入力してください'),
+                        return DeviceCenterWidget(
+                          widget: NormalText(text: ResponseEnum.notYetSearched.message),
                         );
                       }
                       if (value.items.isEmpty) {
@@ -88,7 +88,9 @@ class SearchApiListPage extends ConsumerWidget {
                         },
                       );
                     },
-                    error: (error, stack) => const Text('インターネットに接続できませんでした'),
+                    error: (error, stack) => DeviceCenterWidget(
+                      widget: Text(ResponseEnum.noConnection.message),
+                    ),
                     loading: () => const DeviceCenterWidget(
                       widget: CircularProgressIndicator(),
                     ),

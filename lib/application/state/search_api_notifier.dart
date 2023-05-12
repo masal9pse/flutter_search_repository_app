@@ -1,4 +1,6 @@
 import 'package:flutter_engineer_codecheck/damain/entity/search_api_struct.dart';
+import 'package:flutter_engineer_codecheck/damain/types/error.dart';
+import 'package:flutter_engineer_codecheck/damain/types/result.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'search_api_notifier.g.dart';
 
@@ -13,9 +15,14 @@ class SearchApiNotifier extends _$SearchApiNotifier {
     state = const AsyncValue.loading();
   }
 
-  Future<void> updateState(SearchApiModelStruct data) async {
-      state = await AsyncValue.guard(() async {
-        return data;
-      });
+  Future<void> updateState(Result<SearchApiModelStruct, AppError> data) async {
+    data.when(
+      success: (value) {
+        state = AsyncValue.data(value);
+      },
+      failure: (error) {
+        state = AsyncValue.error(error, StackTrace.current);
+      },
+    );
   }
 }
