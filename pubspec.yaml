@@ -29,6 +29,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   provider: ^6.0.2
+  flutter_state_notifier: ^0.7.3
   state_notifier: ^0.7.2+1
   http: ^0.13.3
   mockito: ^5.0.15
