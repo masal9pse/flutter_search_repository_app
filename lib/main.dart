@@ -1,55 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_engineer_codecheck/application/const/enum/page_info_enum.dart';
-import 'package:flutter_engineer_codecheck/damain/entity/search_api_struct.dart';
-import 'package:flutter_engineer_codecheck/presentation/view/pages/search_api_list_page.dart';
-import 'package:flutter_engineer_codecheck/presentation/view/pages/api_show_page.dart';
+import 'package:flutter_engineer_codecheck/presentation/router/app.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((value) {
     runApp(
-      ProviderScope(
-        child: MyApp(),
+      const ProviderScope(
+        child: App(),
       ),
     );
   });
-}
-
-class MyApp extends StatelessWidget {
-  final router = GoRouter(
-    routes: [
-      GoRoute(
-        path: PageInfoEnum.top.route,
-        builder: ((context, state) => SearchApiListPage()),
-      ),
-      GoRoute(
-        path: PageInfoEnum.show.route,
-        builder: ((context, state) {
-          final item = state.extra as Item;
-          return ApiShowPage(
-            id: item.id,
-          );
-        }),
-      ),
-    ],
-  );
-
-  MyApp({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routeInformationProvider: router.routeInformationProvider,
-      routeInformationParser: router.routeInformationParser,
-      routerDelegate: router.routerDelegate,
-      title: PageInfoEnum.top.title,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.white,
-      ),
-    );
-  }
 }
