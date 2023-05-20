@@ -6,7 +6,7 @@ import 'package:flutter_engineer_codecheck/infrastructure/test_data/api_mock_tes
 
 class FakeSearchApiRepositoryImpl implements SearchApiRepository {
   @override
-  Future<Result<SearchApiModelStruct,AppError>> getApiListInfo({
+  Future<ApiResults> getApiListInfo({
     required String input,
   }) {
     final apiSuccessTestData01 = ApiMockTestData().apiSuccessTestData01;
@@ -18,7 +18,7 @@ class FakeSearchApiRepositoryImpl implements SearchApiRepository {
 
 class FakeErrorSearchApiRepositoryImpl implements SearchApiRepository {
   @override
-  Future<Result<SearchApiModelStruct,AppError>> getApiListInfo({
+  Future<ApiResults> getApiListInfo({
     required String input,
   }) {
       return Future.value(const Result.failure(AppError.fetchError()));
