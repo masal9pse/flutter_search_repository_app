@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/application/di/search_api_repository_provider.dart';
+import 'package:flutter_engineer_codecheck/application/di/infurastructure.dart';
 import 'package:flutter_engineer_codecheck/application/const/app_key_name.dart';
-import 'package:flutter_engineer_codecheck/infrastructure/fake_search_api_client.dart';
+import 'package:flutter_engineer_codecheck/infrastructure/search_fake_api_repository.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/pages/search_api_list_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -23,7 +23,7 @@ void main() {
           ProviderScope(
             overrides: [
               searchApiRepositoryProvider
-                  .overrideWithValue(FakeSearchApiRepositoryImpl())
+                  .overrideWithValue(SearchFakeApiRepository())
             ],
             child: testMainViewWidget(),
           ),
@@ -38,7 +38,7 @@ void main() {
           ProviderScope(
             overrides: [
               searchApiRepositoryProvider
-                  .overrideWithValue(FakeSearchApiRepositoryImpl())
+                  .overrideWithValue(SearchFakeApiRepository())
             ],
             child: testMainViewWidget(),
           ),
@@ -64,7 +64,7 @@ void main() {
           ProviderScope(
             overrides: [
               searchApiRepositoryProvider
-                  .overrideWithValue(FakeErrorSearchApiRepositoryImpl())
+                  .overrideWithValue(SearchFakeErrorApiRepository())
             ],
             child: testMainViewWidget(),
           ),

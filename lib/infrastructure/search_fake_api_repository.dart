@@ -4,7 +4,7 @@ import 'package:flutter_engineer_codecheck/damain/types/error.dart';
 import 'package:flutter_engineer_codecheck/damain/types/result.dart';
 import 'package:flutter_engineer_codecheck/infrastructure/test_data/api_mock_test_data.dart';
 
-class FakeSearchApiRepositoryImpl implements SearchApiRepository {
+class SearchFakeApiRepository implements SearchApiRepository {
   @override
   Future<ApiResults> getApiListInfo({
     required String input,
@@ -16,7 +16,7 @@ class FakeSearchApiRepositoryImpl implements SearchApiRepository {
   }
 }
 
-class FakeErrorSearchApiRepositoryImpl implements SearchApiRepository {
+class SearchFakeErrorApiRepository implements SearchApiRepository {
   @override
   Future<ApiResults> getApiListInfo({
     required String input,

@@ -6,7 +6,8 @@ import 'package:flutter_engineer_codecheck/damain/types/error.dart';
 import 'package:flutter_engineer_codecheck/damain/types/result.dart';
 import 'package:http/http.dart' as http;
 
-class SearchApiClient {
+class SearchGitHubApiRepository implements SearchApiRepository {
+  @override
   Future<ApiResults> getApiListInfo({
     required String input,
   }) async {
