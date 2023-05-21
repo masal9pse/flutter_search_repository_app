@@ -5,21 +5,38 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "flutter_engineer_codecheck",
+            "name": "flutter_engineer_codecheck (debug mode mock api)",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": [
+                "--dart-define=flavor=dev",
+            ]
+        },
+        {
+            "name": "flutter_engineer_codecheck (debug mode prog api)",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--dart-define=flavor=devStg",
+            ]
         },
         {
             "name": "flutter_engineer_codecheck (profile mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "args": [
+                "--dart-define=flavor=stg",
+            ]
         },
         {
             "name": "flutter_engineer_codecheck (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "args": [
+                "--dart-define=flavor=prd",
+            ]
         }
     ]
 }
