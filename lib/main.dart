@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_engineer_codecheck/const/enum/page_info_enum.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/infrastructure/search_api_service.dart';
+import 'package:flutter_engineer_codecheck/repository/search_api_repository.dart';
 import 'package:flutter_engineer_codecheck/repository/search_api_repository_impl.dart';
 import 'package:flutter_engineer_codecheck/view/pages/search_api_list_page.dart';
 import 'package:flutter_engineer_codecheck/view/pages/api_show_page.dart';
@@ -18,9 +19,10 @@ Future<void> main() async {
     runApp(
       MultiProvider(
         providers: [
+          Provider(create: (_) => SearchApiRepositoryImpl(searchApiClient: SearchApiClient())),
           StateNotifierProvider<SearchApiViewModel,SearchApiModelStruct>(
             create: (context) => SearchApiViewModel(
-              searchApiRepository: SearchApiRepositoryImpl(searchApiClient: SearchApiClient()),
+              searchApiRepository: context.read<SearchApiRepositoryImpl>(),
             ),
           ),
         ],
