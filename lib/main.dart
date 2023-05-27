@@ -18,7 +18,7 @@ Future<void> main() async {
     runApp(
       MultiProvider(
         providers: [
-          StateNotifierProvider<SearchApiViewModel>(
+          StateNotifierProvider<SearchApiViewModel,SearchApiModelStruct>(
             create: (context) => SearchApiViewModel(
               searchApiRepository: SearchApiRepositoryImpl(searchApiClient: SearchApiClient()),
             ),

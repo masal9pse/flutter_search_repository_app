@@ -11,13 +11,13 @@ class SearchApiViewModel extends StateNotifier<SearchApiModelStruct> {
   SearchApiViewModel({required this.searchApiRepository}):super(const SearchApiModelStruct(items: [], totalCount: 0));
   
   final SearchApiRepository searchApiRepository;
-  Future<Result<SearchApiModelStruct, ApiError>>? result;
 
   // final formController = TextEditingController();
 
   /// API 通信 と View層への通知
   Future<void> fetchSearchApiModelStruct({required String text}) async {
-    final response = searchApiRepository.getApiListInfo(input: text);
-    result = response;
+    final response = await searchApiRepository.getApiListInfo(input: text);
+    state = state.copyWith(items: response!.items,totalCount: response.totalCount);
+    int k = 3;
   }
 }

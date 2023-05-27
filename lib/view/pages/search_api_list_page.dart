@@ -20,128 +20,74 @@ class SearchApiListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final result = context.select((SearchApiViewModel store) => store.result);
-    final formController =
-        context.select((SearchApiViewModel store) => store.formController);
+    final items = context
+        .select<SearchApiModelStruct, List<Item>>((store) => store.items);
+    // final state = context.watch<SearchApiModelStruct>();
+    // final formController =
+    //     context.select((SearchApiViewModel store) => store.formController);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(PageInfoEnum.top.title),
-      ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Center(
-            child: Container(
-              width: screenWidth * 0.8,
-              padding: const EdgeInsets.only(top: 15),
-              child: Column(
-                children: [
+        appBar: AppBar(
+          title: Text(PageInfoEnum.top.title),
+        ),
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Center(
+              child: Container(
+                width: screenWidth * 0.8,
+                padding: const EdgeInsets.only(top: 15),
+                child: Column(children: [
                   SearchBar(
-                    controller: formController,
+                    // controller: formController,
+                    controller: TextEditingController(),
                     callback: () async {
                       if (_formKey.currentState!.validate()) {
                         await context
                             .read<SearchApiViewModel>()
                             .fetchSearchApiModelStruct(
-                              text: formController.text,
+                              text: 'text',
                             );
                       }
                     },
                   ),
-                  FutureBuilder<Result<SearchApiModelStruct, ApiError>>(
-                    future: result,
-                    builder: (
-                      BuildContext context,
-                      AsyncSnapshot<Result<SearchApiModelStruct, ApiError>>
-                          snapshot,
-                    ) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.none:
-                          return DeviceCenterWidget(
-                            widget: NormalText(
-                              text: ResponseEnum.notYetSearched.message,
-                            ),
-                          );
-                        case ConnectionState.waiting:
-                          return const DeviceCenterWidget(
-                            widget: BaseCircleProgressIndicator(),
-                          );
-                        case ConnectionState.active:
-                        case ConnectionState.done:
-                          if (snapshot.data == null) {
-                            return DeviceCenterWidget(
-                              widget: NormalText(
-                                text: ResponseEnum.nullData.message,
-                              ),
-                            );
-                          }
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    // itemCount: state.items.length,
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      final item = items[index];
+                      // final item = state[index];
+                      final owner = item.owner;
+                      final avatarUrl = owner.avatarUrl;
+                      final name = item.name;
+                      final language = item.language ?? '';
+                      final stargazersCount = item.stargazersCount.toString();
+                      final watchersCount = item.watchersCount.toString();
+                      final forksCount = item.forksCount.toString();
+                      final openIssuesCount = item.openIssuesCount.toString();
 
-                          final responseWidget = snapshot.data!.when(
-                            success: (
-                              SearchApiModelStruct searchApiModelStruct,
-                            ) {
-                              if (searchApiModelStruct.items.isEmpty) {
-                                return DeviceCenterWidget(
-                                  widget: NormalText(
-                                    text: ResponseEnum.zeroData.message,
-                                  ),
-                                );
-                              }
-
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: searchApiModelStruct.items.length,
-                                itemBuilder: (context, index) {
-                                  final item =
-                                      searchApiModelStruct.items[index];
-                                  final owner = item.owner;
-                                  final avatarUrl = owner.avatarUrl;
-                                  final name = item.name;
-                                  final language = item.language ?? '';
-                                  final stargazersCount =
-                                      item.stargazersCount.toString();
-                                  final watchersCount =
-                                      item.watchersCount.toString();
-                                  final forksCount = item.forksCount.toString();
-                                  final openIssuesCount =
-                                      item.openIssuesCount.toString();
-
-                                  return ResponseDetailCard(
-                                    url: avatarUrl,
-                                    title: name,
-                                    subtitle: language,
-                                    stargazersCount: stargazersCount,
-                                    watchersCount: watchersCount,
-                                    forksCount: forksCount,
-                                    openIssuesCount: openIssuesCount,
-                                    callback: () {
-                                      context.push(
-                                        PageInfoEnum.show.route,
-                                        extra: item,
-                                      );
-                                    },
-                                  );
-                                },
-                              );
-                            },
-                            failure: (ApiError apiError) {
-                              return DeviceCenterWidget(
-                                widget:
-                                    NormalText(text: apiError.message ?? ''),
-                              );
-                            },
+                      return ResponseDetailCard(
+                        url: avatarUrl,
+                        title: name,
+                        subtitle: language,
+                        stargazersCount: stargazersCount,
+                        watchersCount: watchersCount,
+                        forksCount: forksCount,
+                        openIssuesCount: openIssuesCount,
+                        callback: () {
+                          context.push(
+                            PageInfoEnum.show.route,
+                            extra: item,
                           );
-                          return responseWidget;
-                      }
+                        },
+                      );
                     },
-                  ),
-                ],
+                  )
+                ]),
               ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
