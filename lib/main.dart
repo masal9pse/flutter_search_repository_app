@@ -32,6 +32,7 @@ Future<void> main() async {
             create: (context) => SearchApiViewModel(
               searchApiRepository: context.read<SearchApiRepositoryImpl>(),
             ),
+            child: SearchApiListPage(),
           ),
         ],
         child: MyApp(),
