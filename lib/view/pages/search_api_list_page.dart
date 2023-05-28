@@ -22,9 +22,7 @@ class SearchApiListPage extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final items = context
         .select<SearchApiModelStruct, List<Item>>((store) => store.items);
-    // final state = context.watch<SearchApiModelStruct>();
-    // final formController =
-    //     context.select((SearchApiViewModel store) => store.formController);
+    final textEditingController = context.watch<TextEditingController>();
     return Scaffold(
         appBar: AppBar(
           title: Text(PageInfoEnum.top.title),
@@ -38,14 +36,13 @@ class SearchApiListPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 15),
                 child: Column(children: [
                   SearchBar(
-                    // controller: formController,
-                    controller: TextEditingController(),
+                    controller: textEditingController,
                     callback: () async {
                       if (_formKey.currentState!.validate()) {
                         await context
                             .read<SearchApiViewModel>()
                             .fetchSearchApiModelStruct(
-                              text: 'text',
+                              text: textEditingController.text,
                             );
                       }
                     },

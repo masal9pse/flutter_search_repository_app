@@ -19,8 +19,16 @@ Future<void> main() async {
     runApp(
       MultiProvider(
         providers: [
-          Provider(create: (_) => SearchApiRepositoryImpl(searchApiClient: SearchApiClient())),
-          StateNotifierProvider<SearchApiViewModel,SearchApiModelStruct>(
+          Provider(
+            create: (_) =>
+                SearchApiRepositoryImpl(searchApiClient: SearchApiClient()),
+          ),
+          // 自動破棄されていないかもしれないので、disposeを呼ぶ必要があるかも
+          ChangeNotifierProvider(
+            create: (_) => TextEditingController(),
+            child: SearchApiListPage(),
+          ),
+          StateNotifierProvider<SearchApiViewModel, SearchApiModelStruct>(
             create: (context) => SearchApiViewModel(
               searchApiRepository: context.read<SearchApiRepositoryImpl>(),
             ),
