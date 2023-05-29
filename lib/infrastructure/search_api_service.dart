@@ -1,9 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
-import 'package:flutter_engineer_codecheck/const/enum/response_enum.dart';
-import 'package:flutter_engineer_codecheck/model/api_error.dart';
-import 'package:flutter_engineer_codecheck/model/result.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,8 +15,8 @@ class SearchApiClient {
       final decoded = json.decode(response.body) as Map<String, dynamic>;
       if (response.statusCode == 200) {
         final searchApiModelStruct = SearchApiModelStruct.fromJson(decoded);
-        // return Result.success(searchApiModelStruct);
         return searchApiModelStruct;
       }
+      return null;
   }
 }

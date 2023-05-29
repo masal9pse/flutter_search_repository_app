@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/const/enum/page_info_enum.dart';
-import 'package:flutter_engineer_codecheck/const/enum/response_enum.dart';
 import 'package:flutter_engineer_codecheck/infrastructure/search_api_service.dart';
-import 'package:flutter_engineer_codecheck/model/api_error.dart';
-import 'package:flutter_engineer_codecheck/model/result.dart';
 import 'package:flutter_engineer_codecheck/model/search_api_struct.dart';
 import 'package:flutter_engineer_codecheck/repository/search_api_repository_impl.dart';
-import 'package:flutter_engineer_codecheck/view/components/atoms/indicators/base_circle_progress_indicator.dart';
-import 'package:flutter_engineer_codecheck/view/components/atoms/device_center_widget.dart';
-import 'package:flutter_engineer_codecheck/view/components/atoms/texts/normal_text.dart';
 import 'package:flutter_engineer_codecheck/view/components/organisms/response_detail_card.dart';
 import 'package:flutter_engineer_codecheck/view/components/organisms/search_bar.dart';
 import 'package:flutter_engineer_codecheck/view_model/search_api_view_model.dart';
@@ -33,10 +27,7 @@ class SearchApiHomeListPage extends StatelessWidget {
           child: SearchApiListPage(),
         ),
         StateNotifierProvider<SearchApiViewModel, SearchApiModelStruct>(
-          create: (context) => SearchApiViewModel(
-            read: context.read,
-            // searchApiRepository: context.read<SearchApiRepositoryImpl>(),
-          ),
+          create: (context) => SearchApiViewModel(),
           child: SearchApiListPage(),
         ),
       ],
@@ -56,17 +47,18 @@ class SearchApiListPage extends StatelessWidget {
         .select<SearchApiModelStruct, List<Item>>((store) => store.items);
     final textEditingController = context.watch<TextEditingController>();
     return Scaffold(
-        appBar: AppBar(
-          title: Text(PageInfoEnum.top.title),
-        ),
-        body: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Center(
-              child: Container(
-                width: screenWidth * 0.8,
-                padding: const EdgeInsets.only(top: 15),
-                child: Column(children: [
+      appBar: AppBar(
+        title: Text(PageInfoEnum.top.title),
+      ),
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Center(
+            child: Container(
+              width: screenWidth * 0.8,
+              padding: const EdgeInsets.only(top: 15),
+              child: Column(
+                children: [
                   SearchBar(
                     controller: textEditingController,
                     callback: () async {
@@ -113,10 +105,12 @@ class SearchApiListPage extends StatelessWidget {
                       );
                     },
                   )
-                ]),
+                ],
               ),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
