@@ -30,7 +30,8 @@ Future<void> main() async {
           ),
           StateNotifierProvider<SearchApiViewModel, SearchApiModelStruct>(
             create: (context) => SearchApiViewModel(
-              searchApiRepository: context.read<SearchApiRepositoryImpl>(),
+              context: context,
+              // searchApiRepository: context.read<SearchApiRepositoryImpl>(),
             ),
             child: SearchApiListPage(),
           ),
