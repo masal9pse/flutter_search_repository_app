@@ -17,27 +17,28 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((value) {
     runApp(
-      MultiProvider(
-        providers: [
-          Provider(
-            create: (_) =>
-                SearchApiRepositoryImpl(searchApiClient: SearchApiClient()),
-          ),
-          // 自動破棄されていないかもしれないので、disposeを呼ぶ必要があるかも
-          ChangeNotifierProvider(
-            create: (_) => TextEditingController(),
-            child: SearchApiListPage(),
-          ),
-          StateNotifierProvider<SearchApiViewModel, SearchApiModelStruct>(
-            create: (context) => SearchApiViewModel(
-              context: context,
-              // searchApiRepository: context.read<SearchApiRepositoryImpl>(),
-            ),
-            child: SearchApiListPage(),
-          ),
-        ],
-        child: MyApp(),
-      ),
+      MyApp(),
+      // MultiProvider(
+      //   providers: [
+      //     Provider(
+      //       create: (_) =>
+      //           SearchApiRepositoryImpl(searchApiClient: SearchApiClient()),
+      //     ),
+      //     // 自動破棄されていないかもしれないので、disposeを呼ぶ必要があるかも
+      //     ChangeNotifierProvider(
+      //       create: (_) => TextEditingController(),
+      //       child: SearchApiListPage(),
+      //     ),
+      //     StateNotifierProvider<SearchApiViewModel, SearchApiModelStruct>(
+      //       create: (context) => SearchApiViewModel(
+      //         read: context.read,
+      //         // searchApiRepository: context.read<SearchApiRepositoryImpl>(),
+      //       ),
+      //       child: SearchApiListPage(),
+      //     ),
+      //   ],
+      //   child: MyApp(),
+      // ),
     );
   });
 }
@@ -47,7 +48,8 @@ class MyApp extends StatelessWidget {
     routes: [
       GoRoute(
         path: PageInfoEnum.top.route,
-        builder: ((context, state) => SearchApiListPage()),
+        // builder: ((context, state) => SearchApiListPage()),
+        builder: ((context, state) => const SearchApiHomeListPage()),
       ),
       GoRoute(
         path: PageInfoEnum.show.route,
