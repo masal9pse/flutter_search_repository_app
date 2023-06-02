@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/pages/couter2.dart';
 
 class Manager {
-  Manager._();
-
-  static final instance = Manager._();
+  Manager._internal();
+  static final instance = Manager._internal();
   int count = 0;
 }
 
@@ -24,11 +24,10 @@ class MyHomePage extends StatefulWidget {
 // F. Stateを継承したクラス
 class _MyHomePageState extends State<MyHomePage> {
   // G. 状態の保持と更新
-  int _counter = 0;
   void _incrementCounter() {
-    // Manager.instance.count++;
+    Manager.instance.count++;
     setState(() {
-    _counter++;
+      // _counter++;
     });
   }
 
@@ -51,13 +50,20 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             // I. _counterの表示
             Text(
-              '$_counter',
+              // '$_counter',
+              '${Manager.instance.count}',
               // N-2. Theme
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-            ElevatedButton(onPressed: () {
-
-            }, child: Text('Bページに遷移'))
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const CounterValue2(),
+                    ),
+                  );
+                },
+                child: Text('Bページに遷移'))
           ],
         ),
       ),
