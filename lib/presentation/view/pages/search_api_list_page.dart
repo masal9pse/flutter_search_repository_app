@@ -7,7 +7,9 @@ import 'package:flutter_engineer_codecheck/application/const/enum/response_enum.
 import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/device_center_widget.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/texts/normal_text.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/response_detail_card.dart';
-import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/search_bar.dart' as search;
+import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/search_bar.dart'
+    as search;
+import 'package:flutter_engineer_codecheck/presentation/view/pages/counter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -33,6 +35,15 @@ class SearchApiListPage extends ConsumerWidget {
               padding: const EdgeInsets.only(top: 15),
               child: Column(
                 children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: ((context) => MyHomePage(title: 'page A')),
+                          ),
+                        );
+                      },
+                      child: Text('go go counter')),
                   search.SearchBar(
                     controller: textEditingController,
                     callback: () async {
@@ -47,7 +58,8 @@ class SearchApiListPage extends ConsumerWidget {
                     data: (value) {
                       if (value == null) {
                         return DeviceCenterWidget(
-                          widget: NormalText(text: ResponseEnum.notYetSearched.message),
+                          widget: NormalText(
+                              text: ResponseEnum.notYetSearched.message),
                         );
                       }
                       if (value.items.isEmpty) {
