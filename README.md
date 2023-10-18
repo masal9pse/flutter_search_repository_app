@@ -41,6 +41,17 @@ vscodeから左の３番目からアプリを起動してください。
 
 ```
 
+### コマンド
+- テストコードのカバレッジ率を確認する
+https://tech.andpad.co.jp/entry/2020/11/17/170000#%E3%82%AB%E3%83%90%E3%83%AC%E3%83%83%E3%82%B8%E3%81%AE%E8%A6%8B%E3%81%88%E3%82%8B%E5%8C%96
+
+```bash
+$ fvm flutter test --coverage
+$ brew install lcov
+$ genhtml coverage/lcov.info -o coverage/html
+
+```
+
 <br />
 
 ## アーキテクチャー
