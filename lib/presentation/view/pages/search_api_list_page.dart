@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/application/const/app_key_name.dart';
 import 'package:flutter_engineer_codecheck/application/di/use_cases.dart';
 import 'package:flutter_engineer_codecheck/application/state/search_api_notifier.dart';
 import 'package:flutter_engineer_codecheck/application/state/text_editing_controller_provider.dart';
@@ -71,6 +72,7 @@ class SearchApiListPage extends ConsumerWidget {
                               item.openIssuesCount.toString();
 
                           return ResponseDetailCard(
+                            key: AppKeyName.responseDetailCard(index),
                             url: avatarUrl,
                             title: name,
                             subtitle: language,
