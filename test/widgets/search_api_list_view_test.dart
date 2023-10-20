@@ -23,7 +23,7 @@ void main() {
           ProviderScope(
             overrides: [
               searchApiRepositoryProvider
-                  .overrideWithValue(SearchFakeApiRepository())
+                  .overrideWith((ref) => SearchFakeApiRepository()),
             ],
             child: testMainViewWidget(),
           ),
@@ -38,7 +38,7 @@ void main() {
           ProviderScope(
             overrides: [
               searchApiRepositoryProvider
-                  .overrideWithValue(SearchFakeApiRepository())
+                  .overrideWith((ref) => SearchFakeApiRepository()),
             ],
             child: testMainViewWidget(),
           ),
@@ -64,7 +64,7 @@ void main() {
           ProviderScope(
             overrides: [
               searchApiRepositoryProvider
-                  .overrideWithValue(SearchFakeErrorApiRepository())
+                  .overrideWith((ref) => SearchFakeErrorApiRepository()),
             ],
             child: testMainViewWidget(),
           ),
