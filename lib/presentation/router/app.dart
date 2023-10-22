@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/application/const/enum/page_info_enum.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/pages/search_api_list_page.dart';
 
 class App extends StatelessWidget {
