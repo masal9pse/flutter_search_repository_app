@@ -14,13 +14,8 @@ class ApiShowPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final item = ref
-        .watch(searchApiNotifierProvider)
-        .whenData(
-          (value) => value!.items.firstWhere((element) => element.id == id),
-        )
-        .value;
-    final owner = item!.owner;
+    final item = ref.watch(searchApiNotifierProvider).value!.items[id];
+    final owner = item.owner;
     final avatarUrl = owner.avatarUrl;
     final name = item.name;
     final language = item.language ?? '';

@@ -8,9 +8,10 @@ import 'package:flutter_engineer_codecheck/application/const/enum/response_enum.
 import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/device_center_widget.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/texts/normal_text.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/response_detail_card.dart';
-import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/search_bar.dart' as search;
+import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/search_bar.dart'
+    as search;
+import 'package:flutter_engineer_codecheck/presentation/view/pages/api_show_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class SearchApiListPage extends ConsumerWidget {
   final _formKey = GlobalKey<FormState>();
@@ -48,7 +49,9 @@ class SearchApiListPage extends ConsumerWidget {
                     data: (value) {
                       if (value == null) {
                         return DeviceCenterWidget(
-                          widget: NormalText(text: ResponseEnum.notYetSearched.message),
+                          widget: NormalText(
+                            text: ResponseEnum.notYetSearched.message,
+                          ),
                         );
                       }
                       if (value.items.isEmpty) {
@@ -81,9 +84,13 @@ class SearchApiListPage extends ConsumerWidget {
                             forksCount: forksCount,
                             openIssuesCount: openIssuesCount,
                             callback: () {
-                              context.push(
-                                PageInfoEnum.show.route,
-                                extra: item,
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ApiShowPage(
+                                    id: index,
+                                  ),
+                                ),
                               );
                             },
                           );
