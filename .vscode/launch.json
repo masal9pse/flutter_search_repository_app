@@ -13,11 +13,11 @@
             ]
         },
         {
-            "name": "flutter_engineer_codecheck (debug mode prog api)",
+            "name": "flutter_engineer_codecheck (debug mode prod api)",
             "request": "launch",
             "type": "dart",
             "args": [
-                "--dart-define=flavor=devStg",
+                "--dart-define=flavor=dev_stg",
             ]
         },
         {
