@@ -15,6 +15,18 @@ void main() {
     return const App();
   }
 
+  /// 指定のurlを表示しているNetworkImageを見つける
+  Finder findByNetworkImage(String path) {
+    final finder = find.byWidgetPredicate((Widget widget) {
+      if (widget is Image && widget.image is NetworkImage) {
+        final networkImage = widget.image as NetworkImage;
+        return networkImage.url == path;
+      }
+      return false;
+    });
+    return finder;
+  }
+
   testWidgets('正常系_一覧表示画面のテスト', (WidgetTester tester) async {
     await tester.pumpWidget(
       ProviderScope(
@@ -41,13 +53,14 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('やまもとまさと'), findsOneWidget);
-
     // 検索結果をタップすると、詳細画面に遷移することを確認
     await tester.tap(
       find.byKey(AppKeyName.responseDetailCard(0)),
     );
     await tester.pumpAndSettle();
     expect(find.text(PageInfoEnum.show.title), findsOneWidget);
+    const path = 'https://avatars.githubusercontent.com/u/84199788?v=4';
+    expect(findByNetworkImage(path), findsOneWidget);
   });
 
   testWidgets('異常系_一覧表示画面のテスト', (WidgetTester tester) async {
