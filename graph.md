@@ -1,6 +1,4 @@
-fvm: running Dart from Flutter "3.13.8"
-
-Analyzing /Users/yamamotohiroto/flutter_engineer_codecheck ...
+```mermaid
 flowchart TB
   subgraph Arrows
     direction LR
@@ -33,3 +31,4 @@ flowchart TB
   searchApiNotifierProvider ==> ApiShowPage;
   searchApiNotifierProvider ==> searchGitHubDataProvider;
   searchApiRepositoryProvider ==> searchGitHubDataProvider;
+```
