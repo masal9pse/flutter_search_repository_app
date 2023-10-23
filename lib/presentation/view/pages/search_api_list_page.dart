@@ -103,7 +103,7 @@ class SearchApiListPage extends ConsumerWidget {
                     loading: () => const DeviceCenterWidget(
                       widget: CircularProgressIndicator(),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
