@@ -6,23 +6,23 @@ part of 'search_api_struct.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SearchApiModelStruct _$$_SearchApiModelStructFromJson(
+_$SearchApiModelStructImpl _$$SearchApiModelStructImplFromJson(
         Map<String, dynamic> json) =>
-    _$_SearchApiModelStruct(
+    _$SearchApiModelStructImpl(
       totalCount: json['total_count'] as int,
       items: (json['items'] as List<dynamic>)
           .map((e) => Item.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$_SearchApiModelStructToJson(
-        _$_SearchApiModelStruct instance) =>
+Map<String, dynamic> _$$SearchApiModelStructImplToJson(
+        _$SearchApiModelStructImpl instance) =>
     <String, dynamic>{
       'total_count': instance.totalCount,
       'items': instance.items,
     };
 
-_$_Item _$$_ItemFromJson(Map<String, dynamic> json) => _$_Item(
+_$ItemImpl _$$ItemImplFromJson(Map<String, dynamic> json) => _$ItemImpl(
       id: json['id'] as int,
       name: json['name'] as String,
       stargazersCount: json['stargazers_count'] as int?,
@@ -33,7 +33,8 @@ _$_Item _$$_ItemFromJson(Map<String, dynamic> json) => _$_Item(
       owner: Owner.fromJson(json['owner'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_ItemToJson(_$_Item instance) => <String, dynamic>{
+Map<String, dynamic> _$$ItemImplToJson(_$ItemImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'stargazers_count': instance.stargazersCount,
@@ -44,10 +45,11 @@ Map<String, dynamic> _$$_ItemToJson(_$_Item instance) => <String, dynamic>{
       'owner': instance.owner,
     };
 
-_$_Owner _$$_OwnerFromJson(Map<String, dynamic> json) => _$_Owner(
+_$OwnerImpl _$$OwnerImplFromJson(Map<String, dynamic> json) => _$OwnerImpl(
       avatarUrl: json['avatar_url'] as String,
     );
 
-Map<String, dynamic> _$$_OwnerToJson(_$_Owner instance) => <String, dynamic>{
+Map<String, dynamic> _$$OwnerImplToJson(_$OwnerImpl instance) =>
+    <String, dynamic>{
       'avatar_url': instance.avatarUrl,
     };

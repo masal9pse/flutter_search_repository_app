@@ -69,22 +69,22 @@ class _$SearchApiModelStructCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_SearchApiModelStructCopyWith<$Res>
+abstract class _$$SearchApiModelStructImplCopyWith<$Res>
     implements $SearchApiModelStructCopyWith<$Res> {
-  factory _$$_SearchApiModelStructCopyWith(_$_SearchApiModelStruct value,
-          $Res Function(_$_SearchApiModelStruct) then) =
-      __$$_SearchApiModelStructCopyWithImpl<$Res>;
+  factory _$$SearchApiModelStructImplCopyWith(_$SearchApiModelStructImpl value,
+          $Res Function(_$SearchApiModelStructImpl) then) =
+      __$$SearchApiModelStructImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int totalCount, List<Item> items});
 }
 
 /// @nodoc
-class __$$_SearchApiModelStructCopyWithImpl<$Res>
-    extends _$SearchApiModelStructCopyWithImpl<$Res, _$_SearchApiModelStruct>
-    implements _$$_SearchApiModelStructCopyWith<$Res> {
-  __$$_SearchApiModelStructCopyWithImpl(_$_SearchApiModelStruct _value,
-      $Res Function(_$_SearchApiModelStruct) _then)
+class __$$SearchApiModelStructImplCopyWithImpl<$Res>
+    extends _$SearchApiModelStructCopyWithImpl<$Res, _$SearchApiModelStructImpl>
+    implements _$$SearchApiModelStructImplCopyWith<$Res> {
+  __$$SearchApiModelStructImplCopyWithImpl(_$SearchApiModelStructImpl _value,
+      $Res Function(_$SearchApiModelStructImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -93,7 +93,7 @@ class __$$_SearchApiModelStructCopyWithImpl<$Res>
     Object? totalCount = null,
     Object? items = null,
   }) {
-    return _then(_$_SearchApiModelStruct(
+    return _then(_$SearchApiModelStructImpl(
       totalCount: null == totalCount
           ? _value.totalCount
           : totalCount // ignore: cast_nullable_to_non_nullable
@@ -109,13 +109,13 @@ class __$$_SearchApiModelStructCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_SearchApiModelStruct implements _SearchApiModelStruct {
-  const _$_SearchApiModelStruct(
+class _$SearchApiModelStructImpl implements _SearchApiModelStruct {
+  const _$SearchApiModelStructImpl(
       {required this.totalCount, required final List<Item> items})
       : _items = items;
 
-  factory _$_SearchApiModelStruct.fromJson(Map<String, dynamic> json) =>
-      _$$_SearchApiModelStructFromJson(json);
+  factory _$SearchApiModelStructImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SearchApiModelStructImplFromJson(json);
 
   @override
   final int totalCount;
@@ -136,7 +136,7 @@ class _$_SearchApiModelStruct implements _SearchApiModelStruct {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SearchApiModelStruct &&
+            other is _$SearchApiModelStructImpl &&
             (identical(other.totalCount, totalCount) ||
                 other.totalCount == totalCount) &&
             const DeepCollectionEquality().equals(other._items, _items));
@@ -150,13 +150,14 @@ class _$_SearchApiModelStruct implements _SearchApiModelStruct {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SearchApiModelStructCopyWith<_$_SearchApiModelStruct> get copyWith =>
-      __$$_SearchApiModelStructCopyWithImpl<_$_SearchApiModelStruct>(
-          this, _$identity);
+  _$$SearchApiModelStructImplCopyWith<_$SearchApiModelStructImpl>
+      get copyWith =>
+          __$$SearchApiModelStructImplCopyWithImpl<_$SearchApiModelStructImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SearchApiModelStructToJson(
+    return _$$SearchApiModelStructImplToJson(
       this,
     );
   }
@@ -165,10 +166,10 @@ class _$_SearchApiModelStruct implements _SearchApiModelStruct {
 abstract class _SearchApiModelStruct implements SearchApiModelStruct {
   const factory _SearchApiModelStruct(
       {required final int totalCount,
-      required final List<Item> items}) = _$_SearchApiModelStruct;
+      required final List<Item> items}) = _$SearchApiModelStructImpl;
 
   factory _SearchApiModelStruct.fromJson(Map<String, dynamic> json) =
-      _$_SearchApiModelStruct.fromJson;
+      _$SearchApiModelStructImpl.fromJson;
 
   @override
   int get totalCount;
@@ -176,8 +177,8 @@ abstract class _SearchApiModelStruct implements SearchApiModelStruct {
   List<Item> get items;
   @override
   @JsonKey(ignore: true)
-  _$$_SearchApiModelStructCopyWith<_$_SearchApiModelStruct> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$SearchApiModelStructImplCopyWith<_$SearchApiModelStructImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 Item _$ItemFromJson(Map<String, dynamic> json) {
@@ -286,9 +287,10 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
 }
 
 /// @nodoc
-abstract class _$$_ItemCopyWith<$Res> implements $ItemCopyWith<$Res> {
-  factory _$$_ItemCopyWith(_$_Item value, $Res Function(_$_Item) then) =
-      __$$_ItemCopyWithImpl<$Res>;
+abstract class _$$ItemImplCopyWith<$Res> implements $ItemCopyWith<$Res> {
+  factory _$$ItemImplCopyWith(
+          _$ItemImpl value, $Res Function(_$ItemImpl) then) =
+      __$$ItemImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -306,9 +308,10 @@ abstract class _$$_ItemCopyWith<$Res> implements $ItemCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$_Item>
-    implements _$$_ItemCopyWith<$Res> {
-  __$$_ItemCopyWithImpl(_$_Item _value, $Res Function(_$_Item) _then)
+class __$$ItemImplCopyWithImpl<$Res>
+    extends _$ItemCopyWithImpl<$Res, _$ItemImpl>
+    implements _$$ItemImplCopyWith<$Res> {
+  __$$ItemImplCopyWithImpl(_$ItemImpl _value, $Res Function(_$ItemImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -323,7 +326,7 @@ class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$_Item>
     Object? openIssuesCount = freezed,
     Object? owner = null,
   }) {
-    return _then(_$_Item(
+    return _then(_$ItemImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -363,8 +366,8 @@ class __$$_ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res, _$_Item>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Item implements _Item {
-  const _$_Item(
+class _$ItemImpl implements _Item {
+  const _$ItemImpl(
       {required this.id,
       required this.name,
       this.stargazersCount,
@@ -374,7 +377,8 @@ class _$_Item implements _Item {
       this.openIssuesCount,
       required this.owner});
 
-  factory _$_Item.fromJson(Map<String, dynamic> json) => _$$_ItemFromJson(json);
+  factory _$ItemImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ItemImplFromJson(json);
 
   @override
   final int id;
@@ -402,7 +406,7 @@ class _$_Item implements _Item {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Item &&
+            other is _$ItemImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.stargazersCount, stargazersCount) ||
@@ -426,12 +430,12 @@ class _$_Item implements _Item {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ItemCopyWith<_$_Item> get copyWith =>
-      __$$_ItemCopyWithImpl<_$_Item>(this, _$identity);
+  _$$ItemImplCopyWith<_$ItemImpl> get copyWith =>
+      __$$ItemImplCopyWithImpl<_$ItemImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ItemToJson(
+    return _$$ItemImplToJson(
       this,
     );
   }
@@ -446,9 +450,9 @@ abstract class _Item implements Item {
       final String? language,
       final int? forksCount,
       final int? openIssuesCount,
-      required final Owner owner}) = _$_Item;
+      required final Owner owner}) = _$ItemImpl;
 
-  factory _Item.fromJson(Map<String, dynamic> json) = _$_Item.fromJson;
+  factory _Item.fromJson(Map<String, dynamic> json) = _$ItemImpl.fromJson;
 
   @override
   int get id;
@@ -468,7 +472,8 @@ abstract class _Item implements Item {
   Owner get owner;
   @override
   @JsonKey(ignore: true)
-  _$$_ItemCopyWith<_$_Item> get copyWith => throw _privateConstructorUsedError;
+  _$$ItemImplCopyWith<_$ItemImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 Owner _$OwnerFromJson(Map<String, dynamic> json) {
@@ -517,18 +522,21 @@ class _$OwnerCopyWithImpl<$Res, $Val extends Owner>
 }
 
 /// @nodoc
-abstract class _$$_OwnerCopyWith<$Res> implements $OwnerCopyWith<$Res> {
-  factory _$$_OwnerCopyWith(_$_Owner value, $Res Function(_$_Owner) then) =
-      __$$_OwnerCopyWithImpl<$Res>;
+abstract class _$$OwnerImplCopyWith<$Res> implements $OwnerCopyWith<$Res> {
+  factory _$$OwnerImplCopyWith(
+          _$OwnerImpl value, $Res Function(_$OwnerImpl) then) =
+      __$$OwnerImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String avatarUrl});
 }
 
 /// @nodoc
-class __$$_OwnerCopyWithImpl<$Res> extends _$OwnerCopyWithImpl<$Res, _$_Owner>
-    implements _$$_OwnerCopyWith<$Res> {
-  __$$_OwnerCopyWithImpl(_$_Owner _value, $Res Function(_$_Owner) _then)
+class __$$OwnerImplCopyWithImpl<$Res>
+    extends _$OwnerCopyWithImpl<$Res, _$OwnerImpl>
+    implements _$$OwnerImplCopyWith<$Res> {
+  __$$OwnerImplCopyWithImpl(
+      _$OwnerImpl _value, $Res Function(_$OwnerImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -536,7 +544,7 @@ class __$$_OwnerCopyWithImpl<$Res> extends _$OwnerCopyWithImpl<$Res, _$_Owner>
   $Res call({
     Object? avatarUrl = null,
   }) {
-    return _then(_$_Owner(
+    return _then(_$OwnerImpl(
       avatarUrl: null == avatarUrl
           ? _value.avatarUrl
           : avatarUrl // ignore: cast_nullable_to_non_nullable
@@ -548,11 +556,11 @@ class __$$_OwnerCopyWithImpl<$Res> extends _$OwnerCopyWithImpl<$Res, _$_Owner>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$_Owner implements _Owner {
-  const _$_Owner({required this.avatarUrl});
+class _$OwnerImpl implements _Owner {
+  const _$OwnerImpl({required this.avatarUrl});
 
-  factory _$_Owner.fromJson(Map<String, dynamic> json) =>
-      _$$_OwnerFromJson(json);
+  factory _$OwnerImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OwnerImplFromJson(json);
 
   @override
   final String avatarUrl;
@@ -566,7 +574,7 @@ class _$_Owner implements _Owner {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Owner &&
+            other is _$OwnerImpl &&
             (identical(other.avatarUrl, avatarUrl) ||
                 other.avatarUrl == avatarUrl));
   }
@@ -578,26 +586,26 @@ class _$_Owner implements _Owner {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_OwnerCopyWith<_$_Owner> get copyWith =>
-      __$$_OwnerCopyWithImpl<_$_Owner>(this, _$identity);
+  _$$OwnerImplCopyWith<_$OwnerImpl> get copyWith =>
+      __$$OwnerImplCopyWithImpl<_$OwnerImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_OwnerToJson(
+    return _$$OwnerImplToJson(
       this,
     );
   }
 }
 
 abstract class _Owner implements Owner {
-  const factory _Owner({required final String avatarUrl}) = _$_Owner;
+  const factory _Owner({required final String avatarUrl}) = _$OwnerImpl;
 
-  factory _Owner.fromJson(Map<String, dynamic> json) = _$_Owner.fromJson;
+  factory _Owner.fromJson(Map<String, dynamic> json) = _$OwnerImpl.fromJson;
 
   @override
   String get avatarUrl;
   @override
   @JsonKey(ignore: true)
-  _$$_OwnerCopyWith<_$_Owner> get copyWith =>
+  _$$OwnerImplCopyWith<_$OwnerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

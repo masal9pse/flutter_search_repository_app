@@ -68,25 +68,25 @@ class _$AppErrorCopyWithImpl<$Res, $Val extends AppError>
 }
 
 /// @nodoc
-abstract class _$$_FetchErrorCopyWith<$Res> {
-  factory _$$_FetchErrorCopyWith(
-          _$_FetchError value, $Res Function(_$_FetchError) then) =
-      __$$_FetchErrorCopyWithImpl<$Res>;
+abstract class _$$FetchErrorImplCopyWith<$Res> {
+  factory _$$FetchErrorImplCopyWith(
+          _$FetchErrorImpl value, $Res Function(_$FetchErrorImpl) then) =
+      __$$FetchErrorImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_FetchErrorCopyWithImpl<$Res>
-    extends _$AppErrorCopyWithImpl<$Res, _$_FetchError>
-    implements _$$_FetchErrorCopyWith<$Res> {
-  __$$_FetchErrorCopyWithImpl(
-      _$_FetchError _value, $Res Function(_$_FetchError) _then)
+class __$$FetchErrorImplCopyWithImpl<$Res>
+    extends _$AppErrorCopyWithImpl<$Res, _$FetchErrorImpl>
+    implements _$$FetchErrorImplCopyWith<$Res> {
+  __$$FetchErrorImplCopyWithImpl(
+      _$FetchErrorImpl _value, $Res Function(_$FetchErrorImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_FetchError extends _FetchError {
-  const _$_FetchError() : super._();
+class _$FetchErrorImpl extends _FetchError {
+  const _$FetchErrorImpl() : super._();
 
   @override
   String toString() {
@@ -96,7 +96,7 @@ class _$_FetchError extends _FetchError {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_FetchError);
+        (other.runtimeType == runtimeType && other is _$FetchErrorImpl);
   }
 
   @override
@@ -160,6 +160,6 @@ class _$_FetchError extends _FetchError {
 }
 
 abstract class _FetchError extends AppError {
-  const factory _FetchError() = _$_FetchError;
+  const factory _FetchError() = _$FetchErrorImpl;
   const _FetchError._() : super._();
 }
