@@ -29,7 +29,7 @@ class ResponseShowDetail extends StatelessWidget {
         AngleCircleLargeImage(
           image: Image.network(
             url,
-            errorBuilder: (context, object, _) {
+            errorBuilder: (_, __, ___) {
               return const Icon(
                 Icons.error,
                 color: Colors.red,
