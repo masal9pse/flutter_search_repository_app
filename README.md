@@ -67,6 +67,43 @@ $ genhtml coverage/lcov.info -o coverage/html
   - widgetテスト
   - CI
 
+### riverpodのproviderやwidgetの関係性
+
+```mermaid
+flowchart TB
+  subgraph Arrows
+    direction LR
+    start1[ ] -..->|read| stop1[ ]
+    style start1 height:0px;
+    style stop1 height:0px;
+    start2[ ] --->|listen| stop2[ ]
+    style start2 height:0px;
+    style stop2 height:0px;
+    start3[ ] ===>|watch| stop3[ ]
+    style start3 height:0px;
+    style stop3 height:0px;
+  end
+  subgraph Type
+    direction TB
+    ConsumerWidget((widget));
+    Provider[[provider]];
+  end
+
+  searchGitHubDataProvider[["searchGitHubDataProvider"]];
+  searchApiNotifierProvider[["searchApiNotifierProvider"]];
+  searchApiRepositoryProvider[["searchApiRepositoryProvider"]];
+  textEditingControllerProvider[["textEditingControllerProvider"]];
+  SearchApiListPage((SearchApiListPage));
+  ApiShowPage((ApiShowPage));
+
+  searchApiNotifierProvider ==> SearchApiListPage;
+  textEditingControllerProvider ==> SearchApiListPage;
+  searchGitHubDataProvider -.-> SearchApiListPage;
+  searchApiNotifierProvider ==> ApiShowPage;
+  searchApiNotifierProvider ==> searchGitHubDataProvider;
+  searchApiRepositoryProvider ==> searchGitHubDataProvider;
+```
+
 ## １度目に提出したコードからの改善点
 
 - [１度目に提出したコード](https://github.com/masal9pse/flutter_engineer_codecheck/tree/5d222fbeba6776e10ddd66c2f05939d34d6299d7)にフィードバックいただいた部分に対して修正を行いました。
