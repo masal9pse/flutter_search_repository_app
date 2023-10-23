@@ -1,6 +1,6 @@
 name: flutter_engineer_codecheck
 description: A new Flutter project.
-publish_to: 'none'
+publish_to: 'yumemi'
 
 version: 1.0.0+1
 
@@ -10,8 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-
   cupertino_icons: ^1.0.2
   flutter_hooks: ^0.18.5+1
   flutter_riverpod: ^2.1.3
@@ -31,8 +29,6 @@ dev_dependencies:
   json_serializable: ^6.7.1
 
 flutter:
-
   uses-material-design: true
-
   assets:
     - assets/json/
