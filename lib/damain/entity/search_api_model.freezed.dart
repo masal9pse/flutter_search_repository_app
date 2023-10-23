@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'search_api_struct.dart';
+part of 'search_api_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,35 +14,34 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-SearchApiModelStruct _$SearchApiModelStructFromJson(Map<String, dynamic> json) {
-  return _SearchApiModelStruct.fromJson(json);
+SearchApiModel _$SearchApiModelFromJson(Map<String, dynamic> json) {
+  return _SearchApiModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$SearchApiModelStruct {
+mixin _$SearchApiModel {
   int get totalCount => throw _privateConstructorUsedError;
   List<Item> get items => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $SearchApiModelStructCopyWith<SearchApiModelStruct> get copyWith =>
+  $SearchApiModelCopyWith<SearchApiModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SearchApiModelStructCopyWith<$Res> {
-  factory $SearchApiModelStructCopyWith(SearchApiModelStruct value,
-          $Res Function(SearchApiModelStruct) then) =
-      _$SearchApiModelStructCopyWithImpl<$Res, SearchApiModelStruct>;
+abstract class $SearchApiModelCopyWith<$Res> {
+  factory $SearchApiModelCopyWith(
+          SearchApiModel value, $Res Function(SearchApiModel) then) =
+      _$SearchApiModelCopyWithImpl<$Res, SearchApiModel>;
   @useResult
   $Res call({int totalCount, List<Item> items});
 }
 
 /// @nodoc
-class _$SearchApiModelStructCopyWithImpl<$Res,
-        $Val extends SearchApiModelStruct>
-    implements $SearchApiModelStructCopyWith<$Res> {
-  _$SearchApiModelStructCopyWithImpl(this._value, this._then);
+class _$SearchApiModelCopyWithImpl<$Res, $Val extends SearchApiModel>
+    implements $SearchApiModelCopyWith<$Res> {
+  _$SearchApiModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -69,22 +68,22 @@ class _$SearchApiModelStructCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$SearchApiModelStructImplCopyWith<$Res>
-    implements $SearchApiModelStructCopyWith<$Res> {
-  factory _$$SearchApiModelStructImplCopyWith(_$SearchApiModelStructImpl value,
-          $Res Function(_$SearchApiModelStructImpl) then) =
-      __$$SearchApiModelStructImplCopyWithImpl<$Res>;
+abstract class _$$SearchApiModelImplCopyWith<$Res>
+    implements $SearchApiModelCopyWith<$Res> {
+  factory _$$SearchApiModelImplCopyWith(_$SearchApiModelImpl value,
+          $Res Function(_$SearchApiModelImpl) then) =
+      __$$SearchApiModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int totalCount, List<Item> items});
 }
 
 /// @nodoc
-class __$$SearchApiModelStructImplCopyWithImpl<$Res>
-    extends _$SearchApiModelStructCopyWithImpl<$Res, _$SearchApiModelStructImpl>
-    implements _$$SearchApiModelStructImplCopyWith<$Res> {
-  __$$SearchApiModelStructImplCopyWithImpl(_$SearchApiModelStructImpl _value,
-      $Res Function(_$SearchApiModelStructImpl) _then)
+class __$$SearchApiModelImplCopyWithImpl<$Res>
+    extends _$SearchApiModelCopyWithImpl<$Res, _$SearchApiModelImpl>
+    implements _$$SearchApiModelImplCopyWith<$Res> {
+  __$$SearchApiModelImplCopyWithImpl(
+      _$SearchApiModelImpl _value, $Res Function(_$SearchApiModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -93,7 +92,7 @@ class __$$SearchApiModelStructImplCopyWithImpl<$Res>
     Object? totalCount = null,
     Object? items = null,
   }) {
-    return _then(_$SearchApiModelStructImpl(
+    return _then(_$SearchApiModelImpl(
       totalCount: null == totalCount
           ? _value.totalCount
           : totalCount // ignore: cast_nullable_to_non_nullable
@@ -109,13 +108,13 @@ class __$$SearchApiModelStructImplCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$SearchApiModelStructImpl implements _SearchApiModelStruct {
-  const _$SearchApiModelStructImpl(
+class _$SearchApiModelImpl implements _SearchApiModel {
+  const _$SearchApiModelImpl(
       {required this.totalCount, required final List<Item> items})
       : _items = items;
 
-  factory _$SearchApiModelStructImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SearchApiModelStructImplFromJson(json);
+  factory _$SearchApiModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SearchApiModelImplFromJson(json);
 
   @override
   final int totalCount;
@@ -129,14 +128,14 @@ class _$SearchApiModelStructImpl implements _SearchApiModelStruct {
 
   @override
   String toString() {
-    return 'SearchApiModelStruct(totalCount: $totalCount, items: $items)';
+    return 'SearchApiModel(totalCount: $totalCount, items: $items)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SearchApiModelStructImpl &&
+            other is _$SearchApiModelImpl &&
             (identical(other.totalCount, totalCount) ||
                 other.totalCount == totalCount) &&
             const DeepCollectionEquality().equals(other._items, _items));
@@ -150,26 +149,25 @@ class _$SearchApiModelStructImpl implements _SearchApiModelStruct {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SearchApiModelStructImplCopyWith<_$SearchApiModelStructImpl>
-      get copyWith =>
-          __$$SearchApiModelStructImplCopyWithImpl<_$SearchApiModelStructImpl>(
-              this, _$identity);
+  _$$SearchApiModelImplCopyWith<_$SearchApiModelImpl> get copyWith =>
+      __$$SearchApiModelImplCopyWithImpl<_$SearchApiModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$SearchApiModelStructImplToJson(
+    return _$$SearchApiModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _SearchApiModelStruct implements SearchApiModelStruct {
-  const factory _SearchApiModelStruct(
+abstract class _SearchApiModel implements SearchApiModel {
+  const factory _SearchApiModel(
       {required final int totalCount,
-      required final List<Item> items}) = _$SearchApiModelStructImpl;
+      required final List<Item> items}) = _$SearchApiModelImpl;
 
-  factory _SearchApiModelStruct.fromJson(Map<String, dynamic> json) =
-      _$SearchApiModelStructImpl.fromJson;
+  factory _SearchApiModel.fromJson(Map<String, dynamic> json) =
+      _$SearchApiModelImpl.fromJson;
 
   @override
   int get totalCount;
@@ -177,8 +175,8 @@ abstract class _SearchApiModelStruct implements SearchApiModelStruct {
   List<Item> get items;
   @override
   @JsonKey(ignore: true)
-  _$$SearchApiModelStructImplCopyWith<_$SearchApiModelStructImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$SearchApiModelImplCopyWith<_$SearchApiModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 Item _$ItemFromJson(Map<String, dynamic> json) {

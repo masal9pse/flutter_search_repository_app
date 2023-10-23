@@ -29,11 +29,11 @@ class _SystemHash {
   }
 }
 
-String _$SearchApiNotifierHash() => r'de0c275f156bba79bec90897623b2adb9684bf99';
+String _$SearchApiNotifierHash() => r'a65312285e79ac5c4be41906fed78631c7f5bfc9';
 
 /// See also [SearchApiNotifier].
 final searchApiNotifierProvider =
-    AutoDisposeAsyncNotifierProvider<SearchApiNotifier, SearchApiModelStruct?>(
+    AutoDisposeAsyncNotifierProvider<SearchApiNotifier, SearchApiModel?>(
   SearchApiNotifier.new,
   name: r'searchApiNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -41,10 +41,10 @@ final searchApiNotifierProvider =
       : _$SearchApiNotifierHash,
 );
 typedef SearchApiNotifierRef
-    = AutoDisposeAsyncNotifierProviderRef<SearchApiModelStruct?>;
+    = AutoDisposeAsyncNotifierProviderRef<SearchApiModel?>;
 
 abstract class _$SearchApiNotifier
-    extends AutoDisposeAsyncNotifier<SearchApiModelStruct?> {
+    extends AutoDisposeAsyncNotifier<SearchApiModel?> {
   @override
-  FutureOr<SearchApiModelStruct?> build();
+  FutureOr<SearchApiModel?> build();
 }

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter_engineer_codecheck/damain/entity/search_api_struct.dart';
+import 'package:flutter_engineer_codecheck/damain/entity/search_api_model.dart';
 import 'package:flutter_engineer_codecheck/damain/repository/search_api_repository.dart';
 import 'package:flutter_engineer_codecheck/damain/types/error.dart';
 import 'package:flutter_engineer_codecheck/damain/types/result.dart';
@@ -18,7 +18,7 @@ class SearchGitHubApiRepository implements SearchApiRepository {
       final response =
           await http.get(url).timeout(const Duration(seconds: timeOutCount));
       final decoded = json.decode(response.body) as Map<String, dynamic>;
-        final searchApiModelStruct = SearchApiModelStruct.fromJson(decoded);
+        final searchApiModelStruct = SearchApiModel.fromJson(decoded);
       return Result.success(searchApiModelStruct);
     } on Exception catch (_) {
       return const Result.failure(AppError.fetchError());

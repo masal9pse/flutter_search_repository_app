@@ -1,22 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'search_api_struct.dart';
+part of 'search_api_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SearchApiModelStructImpl _$$SearchApiModelStructImplFromJson(
-        Map<String, dynamic> json) =>
-    _$SearchApiModelStructImpl(
+_$SearchApiModelImpl _$$SearchApiModelImplFromJson(Map<String, dynamic> json) =>
+    _$SearchApiModelImpl(
       totalCount: json['total_count'] as int,
       items: (json['items'] as List<dynamic>)
           .map((e) => Item.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$SearchApiModelStructImplToJson(
-        _$SearchApiModelStructImpl instance) =>
+Map<String, dynamic> _$$SearchApiModelImplToJson(
+        _$SearchApiModelImpl instance) =>
     <String, dynamic>{
       'total_count': instance.totalCount,
       'items': instance.items,

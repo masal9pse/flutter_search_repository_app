@@ -1,19 +1,19 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-part 'search_api_struct.freezed.dart';
-part 'search_api_struct.g.dart';
+part 'search_api_model.freezed.dart';
+part 'search_api_model.g.dart';
 
 @freezed
-class SearchApiModelStruct with _$SearchApiModelStruct {
+class SearchApiModel with _$SearchApiModel {
   @JsonSerializable(
     fieldRename: FieldRename.snake,
   )
-  const factory SearchApiModelStruct({
+  const factory SearchApiModel({
     required int totalCount,
     required List<Item> items,
-  }) = _SearchApiModelStruct;
+  }) = _SearchApiModel;
 
-  factory SearchApiModelStruct.fromJson(Map<String, dynamic> json) =>
-      _$SearchApiModelStructFromJson(json);
+  factory SearchApiModel.fromJson(Map<String, dynamic> json) =>
+      _$SearchApiModelFromJson(json);
 }
 
 @freezed
