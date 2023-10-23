@@ -38,10 +38,11 @@ void main() {
       ),
     );
 
-    // タイトル、テキストフォーム、検索実行ボタンが表示されていること
+    // トップ画面読み込み時の挙動をテスト
     expect(find.text(PageInfoEnum.top.title), findsOneWidget);
     expect(find.byKey(AppKeyName.topPageSearchTextField), findsOneWidget);
     expect(find.byKey(AppKeyName.searchElevatedButton), findsOneWidget);
+    expect(find.byKey(AppKeyName.responseDetailCard(0)), findsNothing);
 
     // テキストフォームにキーワードを入力して、ボタンを押すと検索結果が更新されること
     await tester.enterText(
@@ -52,7 +53,10 @@ void main() {
       find.byKey(AppKeyName.searchElevatedButton),
     );
     await tester.pumpAndSettle();
-    expect(find.text('やまもとまさと'), findsOneWidget);
+    expect(find.byKey(AppKeyName.responseDetailCard(0)), findsOneWidget);
+    expect(find.byKey(AppKeyName.responseDetailCard(7)), findsOneWidget);
+    expect(find.byKey(AppKeyName.responseDetailCard(8)), findsNothing);
+
     // 検索結果をタップすると、詳細画面に遷移することを確認
     await tester.tap(
       find.byKey(AppKeyName.responseDetailCard(0)),
