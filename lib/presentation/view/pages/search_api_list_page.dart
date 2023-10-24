@@ -19,7 +19,6 @@ class SearchApiListPage extends ConsumerWidget {
   SearchApiListPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final screenWidth = MediaQuery.of(context).size.width;
     final searchApiResults = ref.watch(searchApiNotifierProvider);
     final textEditingController = ref.watch(textEditingControllerProvider);
     return Scaffold(
@@ -30,81 +29,87 @@ class SearchApiListPage extends ConsumerWidget {
         child: Form(
           key: _formKey,
           child: Center(
-            child: Container(
-              width: screenWidth * 0.8,
-              padding: const EdgeInsets.only(top: 15),
-              child: Column(
-                children: [
-                  search.SearchBar(
-                    controller: textEditingController,
-                    callback: () async {
-                      if (_formKey.currentState!.validate()) {
-                        final useCase = ref.read(searchGitHubDataProvider);
-                        await useCase
-                            .searchGitHubData(textEditingController.text);
-                      }
-                    },
-                  ),
-                  searchApiResults.when(
-                    data: (value) {
-                      if (value == null) {
-                        return DeviceCenterWidget(
-                          widget: NormalText(
-                            text: ResponseEnum.notYetSearched.message,
-                          ),
-                        );
-                      }
-                      if (value.items.isEmpty) {
-                        return NormalText(text: ResponseEnum.zeroData.message);
-                      }
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: value.items.length,
-                        itemBuilder: (context, index) {
-                          final item = value.items[index];
-                          final owner = item.owner;
-                          final avatarUrl = owner.avatarUrl;
-                          final name = item.name;
-                          final language = item.language ?? '';
-                          final stargazersCount =
-                              item.stargazersCount.toString();
-                          final watchersCount = item.watchersCount.toString();
-                          final forksCount = item.forksCount.toString();
-                          final openIssuesCount =
-                              item.openIssuesCount.toString();
-
-                          return ResponseDetailCard(
-                            key: AppKeyName.responseDetailCard(index),
-                            url: avatarUrl,
-                            title: name,
-                            subtitle: language,
-                            stargazersCount: stargazersCount,
-                            watchersCount: watchersCount,
-                            forksCount: forksCount,
-                            openIssuesCount: openIssuesCount,
-                            callback: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ApiShowPage(
-                                    id: index,
-                                  ),
-                                ),
-                              );
-                            },
+            child: FractionallySizedBox(
+              widthFactor: 0.8,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Column(
+                  children: [
+                    search.SearchBar(
+                      controller: textEditingController,
+                      callback: () async {
+                        if (_formKey.currentState!.validate()) {
+                          final useCase = ref.read(searchGitHubDataProvider);
+                          await useCase
+                              .searchGitHubData(textEditingController.text);
+                        }
+                      },
+                    ),
+                    searchApiResults.when(
+                      data: (value) {
+                        if (value == null) {
+                          return DeviceCenterWidget(
+                            widget: NormalText(
+                              text: ResponseEnum.notYetSearched.message,
+                            ),
                           );
-                        },
-                      );
-                    },
-                    error: (error, stack) => DeviceCenterWidget(
-                      widget: Text(ResponseEnum.noConnection.message),
+                        }
+                        if (value.items.isEmpty) {
+                          return NormalText(
+                            text: ResponseEnum.zeroData.message,
+                          );
+                        }
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: value.items.length,
+                          itemBuilder: (context, index) {
+                            final item = value.items[index];
+                            final owner = item.owner;
+                            final avatarUrl = owner.avatarUrl;
+                            final name = item.name;
+                            final language = item.language ?? '';
+                            final stargazersCount =
+                                item.stargazersCount.toString();
+                            final watchersCount = item.watchersCount.toString();
+                            final forksCount = item.forksCount.toString();
+                            final openIssuesCount =
+                                item.openIssuesCount.toString();
+
+                            return ResponseDetailCard(
+                              key: AppKeyName.responseDetailCard(index),
+                              url: avatarUrl,
+                              title: name,
+                              subtitle: language,
+                              stargazersCount: stargazersCount,
+                              watchersCount: watchersCount,
+                              forksCount: forksCount,
+                              openIssuesCount: openIssuesCount,
+                              callback: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ApiShowPage(
+                                      id: index,
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
+                      error: (error, stack) {
+                        return DeviceCenterWidget(
+                          widget: Text(ResponseEnum.noConnection.message),
+                        );
+                      },
+                      loading: () => const DeviceCenterWidget(
+                        widget: CircularProgressIndicator(),
+                      ),
                     ),
-                    loading: () => const DeviceCenterWidget(
-                      widget: CircularProgressIndicator(),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
