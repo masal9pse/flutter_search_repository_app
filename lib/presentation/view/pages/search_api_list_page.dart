@@ -13,6 +13,7 @@ import 'package:flutter_engineer_codecheck/presentation/view/components/organism
 import 'package:flutter_engineer_codecheck/presentation/view/pages/api_show_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// トップページ
 class SearchApiListPage extends ConsumerWidget {
   final _formKey = GlobalKey<FormState>();
 
@@ -39,7 +40,7 @@ class SearchApiListPage extends ConsumerWidget {
                       controller: textEditingController,
                       callback: () async {
                         if (_formKey.currentState!.validate()) {
-                          final useCase = ref.read(searchGitHubDataProvider);
+                          final useCase = ref.read(searchGitHubDataUseCaseProvider);
                           await useCase
                               .searchGitHubData(textEditingController.text);
                         }

@@ -4,6 +4,7 @@ import 'package:flutter_engineer_codecheck/application/const/enum/page_info_enum
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/response_show_detail.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// 詳細ページ
 class ApiShowPage extends ConsumerWidget {
   const ApiShowPage({
     Key? key,

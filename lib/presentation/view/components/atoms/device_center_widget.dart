@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// 高さが明確に指定できないWidget内(SingleChildScrollView)で画面の真ん中に配置するWidget
+/// 高さが明確に指定できないWidget内(SingleChildScrollView等)で画面の真ん中に配置するWidget
 class DeviceCenterWidget extends StatelessWidget {
   const DeviceCenterWidget({super.key, required this.child});
 

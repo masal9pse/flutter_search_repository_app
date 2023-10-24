@@ -4,6 +4,7 @@ import 'package:flutter_engineer_codecheck/domain/types/result.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'search_api_notifier.g.dart';
 
+/// 検索結果の状態を管理クラス
 @riverpod
 class SearchApiNotifier extends _$SearchApiNotifier {
   @override

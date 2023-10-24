@@ -3,6 +3,7 @@ import 'package:flutter_engineer_codecheck/application/const/enum/response_item_
 import 'package:flutter_engineer_codecheck/presentation/view/components/molecules/response_icon_count.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/molecules/response_list_tile.dart';
 
+/// 検索結果
 class ResponseDetailCard extends StatelessWidget {
   const ResponseDetailCard({
     super.key,
