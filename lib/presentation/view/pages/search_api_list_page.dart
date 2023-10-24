@@ -49,14 +49,16 @@ class SearchApiListPage extends ConsumerWidget {
                       data: (value) {
                         if (value == null) {
                           return DeviceCenterWidget(
-                            widget: NormalText(
+                            child: NormalText(
                               text: ResponseEnum.notYetSearched.message,
                             ),
                           );
                         }
                         if (value.items.isEmpty) {
-                          return NormalText(
-                            text: ResponseEnum.zeroData.message,
+                          return DeviceCenterWidget(
+                            child: NormalText(
+                              text: ResponseEnum.zeroData.message,
+                            ),
                           );
                         }
                         return ListView.builder(
@@ -101,11 +103,11 @@ class SearchApiListPage extends ConsumerWidget {
                       },
                       error: (error, stack) {
                         return DeviceCenterWidget(
-                          widget: Text(ResponseEnum.noConnection.message),
+                          child: Text(ResponseEnum.noConnection.message),
                         );
                       },
                       loading: () => const DeviceCenterWidget(
-                        widget: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(),
                       ),
                     ),
                   ],

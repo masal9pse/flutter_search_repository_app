@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
+/// 高さが明確に指定できないWidget内(SingleChildScrollView)で画面の真ん中に配置するWidget
 class DeviceCenterWidget extends StatelessWidget {
-  const DeviceCenterWidget({super.key, required this.widget});
+  const DeviceCenterWidget({super.key, required this.child});
 
-  final Widget widget;
+  final Widget child;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height * 0.6,
-      alignment: Alignment.center,
-      child: widget,
+      child: Center(child: child),
     );
   }
 }
