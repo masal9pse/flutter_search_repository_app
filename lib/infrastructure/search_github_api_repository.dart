@@ -18,8 +18,8 @@ class SearchGitHubApiRepository implements SearchApiRepository {
       final response =
           await http.get(url).timeout(const Duration(seconds: timeOutCount));
       final decoded = json.decode(response.body) as Map<String, dynamic>;
-        final searchApiModelStruct = SearchApiModel.fromJson(decoded);
-      return Result.success(searchApiModelStruct);
+        final searchApiModel = SearchApiModel.fromJson(decoded);
+      return Result.success(searchApiModel);
     } on Exception catch (_) {
       return const Result.failure(AppError.fetchError());
     }
