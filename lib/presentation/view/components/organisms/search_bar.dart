@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/buttons/search_elevatate_button.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/buttons/search_elevated_button.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/forms/search_form.dart';
 
 class SearchBar extends StatelessWidget {
@@ -22,7 +22,7 @@ class SearchBar extends StatelessWidget {
             controller: controller,
           ),
         ),
-        Container(
+        const SizedBox(
           width: 10,
         ),
         Expanded(
