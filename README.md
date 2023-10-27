@@ -1,8 +1,3 @@
-## 環境構築
-[こちらの記事](https://zenn.dev/altiveinc/articles/flutter-version-management#%E5%8F%82%E5%8A%A0%E3%81%97%E3%81%9F%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E3%81%A7fvm%E3%81%8C%E4%BD%BF%E3%82%8F%E3%82%8C%E3%81%A6%E3%81%84%E3%81%9F%E6%99%82%E3%81%AB%E3%81%99%E3%82%8B%E3%81%93%E3%81%A8)を参考にして環境を構築しました。
-
-<br />
-
 ### バージョン情報
 
 ```bash
@@ -67,7 +62,7 @@ $ genhtml coverage/lcov.info -o coverage/html
   - widgetテスト
   - CI
 
-### riverpodのproviderやwidgetの関係性
+### riverpodのproviderやwidgetの関係性グラフ
 
 ```mermaid
 flowchart TB
@@ -128,3 +123,4 @@ flowchart TB
 基本的には、まずissueを切って、コミットメッセージにissue番号を記載し飛べるようにする。
 その他、issueに関連しない修正もコミットメッセージで修正内容が伝わるようにする。
 以前はPRを切っていたが現状、個人開発であること＋PR毎にレビューしてマージする必要がないのでこの開発手法にしました。
+featureの機能を実装する場合は、必ずテストを書いてクローズさせる
