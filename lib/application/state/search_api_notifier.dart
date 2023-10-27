@@ -1,4 +1,4 @@
-import 'package:flutter_engineer_codecheck/domain/entity/search_api_model.dart';
+import 'package:flutter_engineer_codecheck/domain/model/search_api_model.dart';
 import 'package:flutter_engineer_codecheck/domain/types/error.dart';
 import 'package:flutter_engineer_codecheck/domain/types/result.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
