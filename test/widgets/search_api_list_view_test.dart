@@ -12,7 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   setUpAll(() => HttpOverrides.global = null);
-  group('API一覧ページのテスト', () {
+  group('トップページのテスト', () {
     Widget testMainViewWidget() {
       return const App();
     }
@@ -20,7 +20,7 @@ void main() {
     const searchWord = 'Dart';
 
     group('正常系', () {
-      testWidgets('一覧表示画面_読み込み時のテスト',
+      testWidgets('読み込み時のテスト',
           (WidgetTester tester) async {
         await tester.runAsync(() async {
           await tester.pumpWidget(
