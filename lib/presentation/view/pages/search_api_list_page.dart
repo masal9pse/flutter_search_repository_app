@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/application/const/app_key_name.dart';
 import 'package:flutter_engineer_codecheck/application/di/use_cases.dart';
+import 'package:flutter_engineer_codecheck/application/state/form_key_provider.dart';
 import 'package:flutter_engineer_codecheck/application/state/search_api_notifier.dart';
 import 'package:flutter_engineer_codecheck/application/state/text_editing_controller_provider.dart';
 import 'package:flutter_engineer_codecheck/application/const/enum/page_info_enum.dart';
@@ -15,20 +16,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// トップページ
 class SearchApiListPage extends ConsumerWidget {
-  final _formKey = GlobalKey<FormState>();
 
-  SearchApiListPage({super.key});
+  const SearchApiListPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final searchApiResults = ref.watch(searchApiNotifierProvider);
     final textEditingController = ref.watch(textEditingControllerProvider);
+    final formKey = ref.watch(formKeyProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(PageInfoEnum.top.title),
       ),
       body: SingleChildScrollView(
         child: Form(
-          key: _formKey,
+          key: formKey,
           child: Center(
             child: FractionallySizedBox(
               widthFactor: 0.8,
@@ -39,7 +40,7 @@ class SearchApiListPage extends ConsumerWidget {
                     search.SearchBar(
                       controller: textEditingController,
                       callback: () async {
-                        if (_formKey.currentState!.validate()) {
+                        if (formKey.currentState!.validate()) {
                           final useCase = ref.read(searchGitHubDataUseCaseProvider);
                           await useCase
                               .searchGitHubData(textEditingController.text);
