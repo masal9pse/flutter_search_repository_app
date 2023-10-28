@@ -11,12 +11,11 @@ import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/te
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/response_detail_card.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/search_bar.dart'
     as search;
-import 'package:flutter_engineer_codecheck/presentation/view/pages/api_show_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 /// トップページ
 class SearchApiListPage extends ConsumerWidget {
-
   const SearchApiListPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,7 +40,8 @@ class SearchApiListPage extends ConsumerWidget {
                       controller: textEditingController,
                       callback: () async {
                         if (formKey.currentState!.validate()) {
-                          final useCase = ref.read(searchGitHubDataUseCaseProvider);
+                          final useCase =
+                              ref.read(searchGitHubDataUseCaseProvider);
                           await useCase
                               .searchGitHubData(textEditingController.text);
                         }
@@ -90,14 +90,7 @@ class SearchApiListPage extends ConsumerWidget {
                               forksCount: forksCount,
                               openIssuesCount: openIssuesCount,
                               callback: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ApiShowPage(
-                                      id: index,
-                                    ),
-                                  ),
-                                );
+                                context.push('/show', extra: index);
                               },
                             );
                           },
