@@ -10,7 +10,7 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: SearchApiListPage(),
+      home: const SearchApiListPage(),
     );
   }
 }
