@@ -20,7 +20,7 @@ void main() {
     const searchWord = 'Dart';
 
     group('正常系', () {
-      testWidgets('読み込み時のテスト',
+      testWidgets('読み込み時にタイトル、フォーム、ボタンが表示されていることと項目が１つも表示されていないこと',
           (WidgetTester tester) async {
         await tester.runAsync(() async {
           await tester.pumpWidget(
