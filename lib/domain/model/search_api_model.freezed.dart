@@ -360,7 +360,7 @@ class _$ItemImpl implements _Item {
       this.language = '',
       this.forksCount = 0,
       this.openIssuesCount = 0,
-      this.owner = const Owner(avatarUrl: '')});
+      this.owner = const Owner()});
 
   factory _$ItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$ItemImplFromJson(json);

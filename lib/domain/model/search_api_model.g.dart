@@ -30,7 +30,7 @@ _$ItemImpl _$$ItemImplFromJson(Map<String, dynamic> json) => _$ItemImpl(
       forksCount: json['forks_count'] as int? ?? 0,
       openIssuesCount: json['open_issues_count'] as int? ?? 0,
       owner: json['owner'] == null
-          ? const Owner(avatarUrl: '')
+          ? const Owner()
           : Owner.fromJson(json['owner'] as Map<String, dynamic>),
     );
 

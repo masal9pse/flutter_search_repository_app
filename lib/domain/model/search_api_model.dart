@@ -28,7 +28,7 @@ class Item with _$Item {
     @Default('') String language,
     @Default(0) int forksCount,
     @Default(0) int openIssuesCount,
-    @Default(Owner(avatarUrl: '')) Owner owner,
+    @Default(Owner()) Owner owner,
   }) = _Item;
 
   factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
