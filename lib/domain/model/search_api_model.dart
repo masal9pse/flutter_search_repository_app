@@ -8,8 +8,8 @@ class SearchApiModel with _$SearchApiModel {
     fieldRename: FieldRename.snake,
   )
   const factory SearchApiModel({
-    required int totalCount,
-    required List<Item> items,
+    @Default(0) int totalCount,
+    @Default(<Item>[]) List<Item> items,
   }) = _SearchApiModel;
 
   factory SearchApiModel.fromJson(Map<String, dynamic> json) =>
@@ -22,26 +22,25 @@ class Item with _$Item {
     fieldRename: FieldRename.snake,
   )
   const factory Item({
-    required int id,
-    required String name,
-    int? stargazersCount,
-    int? watchersCount,
-    String? language,
-    int? forksCount,
-    int? openIssuesCount,
-    required Owner owner,
+    @Default('') String name,
+    @Default(0) int stargazersCount,
+    @Default(0) int watchersCount,
+    @Default('') String language,
+    @Default(0) int forksCount,
+    @Default(0) int openIssuesCount,
+    @Default(Owner(avatarUrl: '')) Owner owner,
   }) = _Item;
 
   factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
 }
 
 @freezed
-class Owner with _$Owner{
+class Owner with _$Owner {
   @JsonSerializable(
     fieldRename: FieldRename.snake,
   )
   const factory Owner({
-    required String avatarUrl,
+    @Default('') String avatarUrl,
   }) = _Owner;
 
   factory Owner.fromJson(Map<String, dynamic> json) => _$OwnerFromJson(json);

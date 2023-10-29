@@ -8,10 +8,11 @@ part of 'search_api_model.dart';
 
 _$SearchApiModelImpl _$$SearchApiModelImplFromJson(Map<String, dynamic> json) =>
     _$SearchApiModelImpl(
-      totalCount: json['total_count'] as int,
-      items: (json['items'] as List<dynamic>)
-          .map((e) => Item.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      totalCount: json['total_count'] as int? ?? 0,
+      items: (json['items'] as List<dynamic>?)
+              ?.map((e) => Item.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <Item>[],
     );
 
 Map<String, dynamic> _$$SearchApiModelImplToJson(
@@ -22,19 +23,19 @@ Map<String, dynamic> _$$SearchApiModelImplToJson(
     };
 
 _$ItemImpl _$$ItemImplFromJson(Map<String, dynamic> json) => _$ItemImpl(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      stargazersCount: json['stargazers_count'] as int?,
-      watchersCount: json['watchers_count'] as int?,
-      language: json['language'] as String?,
-      forksCount: json['forks_count'] as int?,
-      openIssuesCount: json['open_issues_count'] as int?,
-      owner: Owner.fromJson(json['owner'] as Map<String, dynamic>),
+      name: json['name'] as String? ?? '',
+      stargazersCount: json['stargazers_count'] as int? ?? 0,
+      watchersCount: json['watchers_count'] as int? ?? 0,
+      language: json['language'] as String? ?? '',
+      forksCount: json['forks_count'] as int? ?? 0,
+      openIssuesCount: json['open_issues_count'] as int? ?? 0,
+      owner: json['owner'] == null
+          ? const Owner(avatarUrl: '')
+          : Owner.fromJson(json['owner'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$ItemImplToJson(_$ItemImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'name': instance.name,
       'stargazers_count': instance.stargazersCount,
       'watchers_count': instance.watchersCount,
@@ -45,7 +46,7 @@ Map<String, dynamic> _$$ItemImplToJson(_$ItemImpl instance) =>
     };
 
 _$OwnerImpl _$$OwnerImplFromJson(Map<String, dynamic> json) => _$OwnerImpl(
-      avatarUrl: json['avatar_url'] as String,
+      avatarUrl: json['avatar_url'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$OwnerImplToJson(_$OwnerImpl instance) =>

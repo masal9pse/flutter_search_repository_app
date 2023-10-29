@@ -110,16 +110,18 @@ class __$$SearchApiModelImplCopyWithImpl<$Res>
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$SearchApiModelImpl implements _SearchApiModel {
   const _$SearchApiModelImpl(
-      {required this.totalCount, required final List<Item> items})
+      {this.totalCount = 0, final List<Item> items = const <Item>[]})
       : _items = items;
 
   factory _$SearchApiModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$SearchApiModelImplFromJson(json);
 
   @override
+  @JsonKey()
   final int totalCount;
   final List<Item> _items;
   @override
+  @JsonKey()
   List<Item> get items {
     if (_items is EqualUnmodifiableListView) return _items;
     // ignore: implicit_dynamic_type
@@ -163,8 +165,7 @@ class _$SearchApiModelImpl implements _SearchApiModel {
 
 abstract class _SearchApiModel implements SearchApiModel {
   const factory _SearchApiModel(
-      {required final int totalCount,
-      required final List<Item> items}) = _$SearchApiModelImpl;
+      {final int totalCount, final List<Item> items}) = _$SearchApiModelImpl;
 
   factory _SearchApiModel.fromJson(Map<String, dynamic> json) =
       _$SearchApiModelImpl.fromJson;
@@ -185,13 +186,12 @@ Item _$ItemFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Item {
-  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  int? get stargazersCount => throw _privateConstructorUsedError;
-  int? get watchersCount => throw _privateConstructorUsedError;
-  String? get language => throw _privateConstructorUsedError;
-  int? get forksCount => throw _privateConstructorUsedError;
-  int? get openIssuesCount => throw _privateConstructorUsedError;
+  int get stargazersCount => throw _privateConstructorUsedError;
+  int get watchersCount => throw _privateConstructorUsedError;
+  String get language => throw _privateConstructorUsedError;
+  int get forksCount => throw _privateConstructorUsedError;
+  int get openIssuesCount => throw _privateConstructorUsedError;
   Owner get owner => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -205,13 +205,12 @@ abstract class $ItemCopyWith<$Res> {
       _$ItemCopyWithImpl<$Res, Item>;
   @useResult
   $Res call(
-      {int id,
-      String name,
-      int? stargazersCount,
-      int? watchersCount,
-      String? language,
-      int? forksCount,
-      int? openIssuesCount,
+      {String name,
+      int stargazersCount,
+      int watchersCount,
+      String language,
+      int forksCount,
+      int openIssuesCount,
       Owner owner});
 
   $OwnerCopyWith<$Res> get owner;
@@ -230,44 +229,39 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? name = null,
-    Object? stargazersCount = freezed,
-    Object? watchersCount = freezed,
-    Object? language = freezed,
-    Object? forksCount = freezed,
-    Object? openIssuesCount = freezed,
+    Object? stargazersCount = null,
+    Object? watchersCount = null,
+    Object? language = null,
+    Object? forksCount = null,
+    Object? openIssuesCount = null,
     Object? owner = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      stargazersCount: freezed == stargazersCount
+      stargazersCount: null == stargazersCount
           ? _value.stargazersCount
           : stargazersCount // ignore: cast_nullable_to_non_nullable
-              as int?,
-      watchersCount: freezed == watchersCount
+              as int,
+      watchersCount: null == watchersCount
           ? _value.watchersCount
           : watchersCount // ignore: cast_nullable_to_non_nullable
-              as int?,
-      language: freezed == language
+              as int,
+      language: null == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
-              as String?,
-      forksCount: freezed == forksCount
+              as String,
+      forksCount: null == forksCount
           ? _value.forksCount
           : forksCount // ignore: cast_nullable_to_non_nullable
-              as int?,
-      openIssuesCount: freezed == openIssuesCount
+              as int,
+      openIssuesCount: null == openIssuesCount
           ? _value.openIssuesCount
           : openIssuesCount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
@@ -292,13 +286,12 @@ abstract class _$$ItemImplCopyWith<$Res> implements $ItemCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
-      String name,
-      int? stargazersCount,
-      int? watchersCount,
-      String? language,
-      int? forksCount,
-      int? openIssuesCount,
+      {String name,
+      int stargazersCount,
+      int watchersCount,
+      String language,
+      int forksCount,
+      int openIssuesCount,
       Owner owner});
 
   @override
@@ -315,44 +308,39 @@ class __$$ItemImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? name = null,
-    Object? stargazersCount = freezed,
-    Object? watchersCount = freezed,
-    Object? language = freezed,
-    Object? forksCount = freezed,
-    Object? openIssuesCount = freezed,
+    Object? stargazersCount = null,
+    Object? watchersCount = null,
+    Object? language = null,
+    Object? forksCount = null,
+    Object? openIssuesCount = null,
     Object? owner = null,
   }) {
     return _then(_$ItemImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      stargazersCount: freezed == stargazersCount
+      stargazersCount: null == stargazersCount
           ? _value.stargazersCount
           : stargazersCount // ignore: cast_nullable_to_non_nullable
-              as int?,
-      watchersCount: freezed == watchersCount
+              as int,
+      watchersCount: null == watchersCount
           ? _value.watchersCount
           : watchersCount // ignore: cast_nullable_to_non_nullable
-              as int?,
-      language: freezed == language
+              as int,
+      language: null == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
-              as String?,
-      forksCount: freezed == forksCount
+              as String,
+      forksCount: null == forksCount
           ? _value.forksCount
           : forksCount // ignore: cast_nullable_to_non_nullable
-              as int?,
-      openIssuesCount: freezed == openIssuesCount
+              as int,
+      openIssuesCount: null == openIssuesCount
           ? _value.openIssuesCount
           : openIssuesCount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
@@ -366,38 +354,42 @@ class __$$ItemImplCopyWithImpl<$Res>
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$ItemImpl implements _Item {
   const _$ItemImpl(
-      {required this.id,
-      required this.name,
-      this.stargazersCount,
-      this.watchersCount,
-      this.language,
-      this.forksCount,
-      this.openIssuesCount,
-      required this.owner});
+      {this.name = '',
+      this.stargazersCount = 0,
+      this.watchersCount = 0,
+      this.language = '',
+      this.forksCount = 0,
+      this.openIssuesCount = 0,
+      this.owner = const Owner(avatarUrl: '')});
 
   factory _$ItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$ItemImplFromJson(json);
 
   @override
-  final int id;
-  @override
+  @JsonKey()
   final String name;
   @override
-  final int? stargazersCount;
+  @JsonKey()
+  final int stargazersCount;
   @override
-  final int? watchersCount;
+  @JsonKey()
+  final int watchersCount;
   @override
-  final String? language;
+  @JsonKey()
+  final String language;
   @override
-  final int? forksCount;
+  @JsonKey()
+  final int forksCount;
   @override
-  final int? openIssuesCount;
+  @JsonKey()
+  final int openIssuesCount;
   @override
+  @JsonKey()
   final Owner owner;
 
   @override
   String toString() {
-    return 'Item(id: $id, name: $name, stargazersCount: $stargazersCount, watchersCount: $watchersCount, language: $language, forksCount: $forksCount, openIssuesCount: $openIssuesCount, owner: $owner)';
+    return 'Item(name: $name, stargazersCount: $stargazersCount, watchersCount: $watchersCount, language: $language, forksCount: $forksCount, openIssuesCount: $openIssuesCount, owner: $owner)';
   }
 
   @override
@@ -405,7 +397,6 @@ class _$ItemImpl implements _Item {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ItemImpl &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.stargazersCount, stargazersCount) ||
                 other.stargazersCount == stargazersCount) &&
@@ -422,7 +413,7 @@ class _$ItemImpl implements _Item {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, stargazersCount,
+  int get hashCode => Object.hash(runtimeType, name, stargazersCount,
       watchersCount, language, forksCount, openIssuesCount, owner);
 
   @JsonKey(ignore: true)
@@ -441,31 +432,28 @@ class _$ItemImpl implements _Item {
 
 abstract class _Item implements Item {
   const factory _Item(
-      {required final int id,
-      required final String name,
-      final int? stargazersCount,
-      final int? watchersCount,
-      final String? language,
-      final int? forksCount,
-      final int? openIssuesCount,
-      required final Owner owner}) = _$ItemImpl;
+      {final String name,
+      final int stargazersCount,
+      final int watchersCount,
+      final String language,
+      final int forksCount,
+      final int openIssuesCount,
+      final Owner owner}) = _$ItemImpl;
 
   factory _Item.fromJson(Map<String, dynamic> json) = _$ItemImpl.fromJson;
 
   @override
-  int get id;
-  @override
   String get name;
   @override
-  int? get stargazersCount;
+  int get stargazersCount;
   @override
-  int? get watchersCount;
+  int get watchersCount;
   @override
-  String? get language;
+  String get language;
   @override
-  int? get forksCount;
+  int get forksCount;
   @override
-  int? get openIssuesCount;
+  int get openIssuesCount;
   @override
   Owner get owner;
   @override
@@ -555,12 +543,13 @@ class __$$OwnerImplCopyWithImpl<$Res>
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$OwnerImpl implements _Owner {
-  const _$OwnerImpl({required this.avatarUrl});
+  const _$OwnerImpl({this.avatarUrl = ''});
 
   factory _$OwnerImpl.fromJson(Map<String, dynamic> json) =>
       _$$OwnerImplFromJson(json);
 
   @override
+  @JsonKey()
   final String avatarUrl;
 
   @override
@@ -596,7 +585,7 @@ class _$OwnerImpl implements _Owner {
 }
 
 abstract class _Owner implements Owner {
-  const factory _Owner({required final String avatarUrl}) = _$OwnerImpl;
+  const factory _Owner({final String avatarUrl}) = _$OwnerImpl;
 
   factory _Owner.fromJson(Map<String, dynamic> json) = _$OwnerImpl.fromJson;
 

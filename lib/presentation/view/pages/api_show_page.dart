@@ -19,7 +19,7 @@ class ApiShowPage extends ConsumerWidget {
     final owner = item.owner;
     final avatarUrl = owner.avatarUrl;
     final name = item.name;
-    final language = item.language ?? '';
+    final language = item.language;
     final stargazersCount = item.stargazersCount.toString();
     final watchersCount = item.watchersCount.toString();
     final forksCount = item.forksCount.toString();

@@ -31,7 +31,9 @@ class _SystemHash {
 
 String _$SearchApiNotifierHash() => r'a65312285e79ac5c4be41906fed78631c7f5bfc9';
 
-/// See also [SearchApiNotifier].
+/// 検索結果の状態を管理クラス
+///
+/// Copied from [SearchApiNotifier].
 final searchApiNotifierProvider =
     AutoDisposeAsyncNotifierProvider<SearchApiNotifier, SearchApiModel?>(
   SearchApiNotifier.new,
