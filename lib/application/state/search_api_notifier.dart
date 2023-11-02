@@ -1,10 +1,9 @@
 import 'package:flutter_engineer_codecheck/domain/model/search_api_model.dart';
-import 'package:flutter_engineer_codecheck/domain/types/error.dart';
-import 'package:flutter_engineer_codecheck/domain/types/result.dart';
+import 'package:flutter_engineer_codecheck/domain/repository/search_api_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'search_api_notifier.g.dart';
 
-/// 検索結果の状態を管理クラス
+/// 検索結果の状態を管理するクラス
 @riverpod
 class SearchApiNotifier extends _$SearchApiNotifier {
   @override
@@ -16,7 +15,7 @@ class SearchApiNotifier extends _$SearchApiNotifier {
     state = const AsyncValue.loading();
   }
 
-  Future<void> updateState(Result<SearchApiModel, AppError> data) async {
+  Future<void> updateState(ApiResults data) async {
     data.when(
       success: (value) {
         state = AsyncValue.data(value);
