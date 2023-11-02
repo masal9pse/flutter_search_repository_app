@@ -47,10 +47,19 @@ $ genhtml coverage/lcov.info -o coverage/html
 
 ```
 
+- ビルドランナーコマンド_Freezedやriverpod_generatorの更新をする際に使用
+```bash
+$ fvm flutter pub run build_runner build
+```
+
 <br />
 
 ## アーキテクチャー
 オニオンアーキテクチャー
+- application
+- domain
+- infrastructure
+- presentation
 
 ## 機能一覧
 - Must
