@@ -6,7 +6,7 @@ import 'package:flutter_engineer_codecheck/application/const/app_key_name.dart';
 import 'package:flutter_engineer_codecheck/application/const/enum/response_enum.dart';
 import 'package:flutter_engineer_codecheck/application/di/infrastructure.dart';
 import 'package:flutter_engineer_codecheck/infrastructure/search_fake_api_repository.dart';
-import 'package:flutter_engineer_codecheck/presentation/router/app.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/pages/search_api_list_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -14,7 +14,9 @@ void main() {
   setUpAll(() => HttpOverrides.global = null);
   group('トップページのテスト', () {
     Widget testMainViewWidget() {
-      return const App();
+      return const MaterialApp(
+        home: SearchApiListPage(),
+      );
     }
 
     const searchWord = 'Dart';
@@ -85,8 +87,7 @@ void main() {
         );
       });
 
-      testWidgets('項目をタップすると、詳細画面に遷移すること',
-          (WidgetTester tester) async {
+      testWidgets('項目をタップすると、詳細画面に遷移すること', (WidgetTester tester) async {
         await tester.runAsync(
           () async {
             await tester.pumpWidget(
