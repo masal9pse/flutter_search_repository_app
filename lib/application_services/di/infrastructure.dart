@@ -1,5 +1,5 @@
-import 'package:flutter_engineer_codecheck/application/config/flavor.dart';
-import 'package:flutter_engineer_codecheck/application/const/enum/flavor.dart';
+import 'package:flutter_engineer_codecheck/application_services/config/flavor.dart';
+import 'package:flutter_engineer_codecheck/application_services/const/enum/flavor.dart';
 import 'package:flutter_engineer_codecheck/domain/repository/search_api_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // DI は特別に外レイヤーをimportする

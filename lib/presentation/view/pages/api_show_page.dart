@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/application/state/search_api_notifier.dart';
-import 'package:flutter_engineer_codecheck/application/const/enum/page_info_enum.dart';
+import 'package:flutter_engineer_codecheck/application_services/state/search_api_notifier.dart';
+import 'package:flutter_engineer_codecheck/application_services/const/enum/page_info_enum.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/response_show_detail.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

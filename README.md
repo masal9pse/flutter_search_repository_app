@@ -57,9 +57,12 @@ $ fvm flutter pub run build_runner build
 ## アーキテクチャー
 オニオンアーキテクチャー
 - application
+  - アプリケーション固有のロジック(ユースケースなど)を持つ
 - domain
 - infrastructure
+  - ドメインサービス層で用意したIRepositoryの実態
 - presentation
+  - ここではアプリのViewを担当
 
 ## 機能一覧
 - Must

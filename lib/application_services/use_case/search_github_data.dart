@@ -1,4 +1,4 @@
-import 'package:flutter_engineer_codecheck/application/state/search_api_notifier.dart';
+import 'package:flutter_engineer_codecheck/application_services/state/search_api_notifier.dart';
 import 'package:flutter_engineer_codecheck/domain/repository/search_api_repository.dart';
 
 /// GitHubからレポジトリを検索する

@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/application/const/enum/page_info_enum.dart';
-import 'package:flutter_engineer_codecheck/application/const/app_key_name.dart';
-import 'package:flutter_engineer_codecheck/application/const/enum/response_enum.dart';
-import 'package:flutter_engineer_codecheck/application/di/infrastructure.dart';
+import 'package:flutter_engineer_codecheck/application_services/const/enum/page_info_enum.dart';
+import 'package:flutter_engineer_codecheck/application_services/const/app_key_name.dart';
+import 'package:flutter_engineer_codecheck/application_services/const/enum/response_enum.dart';
+import 'package:flutter_engineer_codecheck/application_services/di/infrastructure.dart';
 import 'package:flutter_engineer_codecheck/infrastructure/search_fake_api_repository.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/pages/search_api_list_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

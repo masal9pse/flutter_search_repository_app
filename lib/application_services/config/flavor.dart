@@ -1,4 +1,4 @@
-import 'package:flutter_engineer_codecheck/application/const/enum/flavor.dart';
+import 'package:flutter_engineer_codecheck/application_services/const/enum/flavor.dart';
 
 /// フレーバー
 final flavor = _readFlavor();
