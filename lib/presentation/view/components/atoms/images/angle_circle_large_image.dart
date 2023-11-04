@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AngleCircleLargeImage extends StatelessWidget {
-  const AngleCircleLargeImage({Key? key, required this.image})
-      : super(key: key);
+  const AngleCircleLargeImage({super.key, required this.image});
   final Image image;
 
   @override

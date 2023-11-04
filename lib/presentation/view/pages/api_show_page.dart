@@ -7,9 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// 詳細ページ
 class ApiShowPage extends ConsumerWidget {
   const ApiShowPage({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   final int id;
 
