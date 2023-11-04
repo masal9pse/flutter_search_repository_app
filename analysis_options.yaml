@@ -5,6 +5,8 @@ linter:
     require_trailing_commas: true
 
 analyzer:
+  plugins:
+    - custom_lint
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
