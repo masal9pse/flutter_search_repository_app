@@ -201,14 +201,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.6"
-  custom_lint_builder:
-    dependency: transitive
-    description:
-      name: custom_lint_builder
-      sha256: c6f656a4d83385fc0656ae60410ed06bb382898c45627bfb8bbaa323aea97883
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.6"
   custom_lint_core:
     dependency: transitive
     description:
@@ -283,6 +275,11 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_web_plugins:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   freezed:
     dependency: "direct dev"
     description:
@@ -315,6 +312,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  go_router:
+    dependency: "direct main"
+    description:
+      name: go_router
+      sha256: e156bc1b2088eb5ece9351bccd48c3e1719a4858eacbd44e59162e98a68205d1
+      url: "https://pub.dev"
+    source: hosted
+    version: "12.0.1"
   graphs:
     dependency: transitive
     description:
@@ -323,14 +328,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
-  hotreloader:
-    dependency: transitive
-    description:
-      name: hotreloader
-      sha256: "94ee21a60ea2836500799f3af035dc3212b1562027f1e0031c14e087f0231449"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.1.0"
   http:
     dependency: "direct main"
     description:
@@ -507,14 +504,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.5"
-  riverpod_lint:
-    dependency: "direct main"
-    description:
-      name: riverpod_lint
-      sha256: "97342543496f07c5172e0d1ce98c29499d8245776c94bfc837ceea5525c01ade"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.3"
   rxdart:
     dependency: transitive
     description:
@@ -664,14 +653,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
-  vm_service:
-    dependency: transitive
-    description:
-      name: vm_service
-      sha256: b3d56ff4341b8f182b96aceb2fa20e3dcb336b9f867bc0eafc0de10f1048e957
-      url: "https://pub.dev"
-    source: hosted
-    version: "13.0.0"
   watcher:
     dependency: transitive
     description:
@@ -706,4 +687,4 @@ packages:
     version: "3.1.2"
 sdks:
   dart: ">=3.1.0-185.0.dev <4.0.0"
-  flutter: ">=3.0.0"
+  flutter: ">=3.7.0"
