@@ -2,7 +2,7 @@ import 'package:flutter_engineer_codecheck/application_services/config/flavor.da
 import 'package:flutter_engineer_codecheck/application_services/const/enum/flavor.dart';
 import 'package:flutter_engineer_codecheck/domain/repository/search_api_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// DI は特別に外レイヤーをimportする
+// DI は特別に外レイヤーをimportできる
 import 'package:flutter_engineer_codecheck/infrastructure/search_github_api_repository.dart';
 import 'package:flutter_engineer_codecheck/infrastructure/search_fake_api_repository.dart';
 
