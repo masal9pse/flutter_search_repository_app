@@ -89,16 +89,6 @@ $ fvm flutter pub run build_runner build
 
 ```
 
-## 機能一覧
-- Must
-  - API検索
-  - 検索結果一覧
-  - 詳細ページ
-- Option
-  - 本番、テスト、開発の切り分け
-  - widgetテスト
-  - CI
-
 ### riverpodのproviderやwidgetの関係性グラフ
 
 ```mermaid
