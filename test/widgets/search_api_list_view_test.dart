@@ -20,9 +20,27 @@ void main() {
     const searchWord = 'Dart';
 
     group('正常系', () {
-      testWidgets('読み込み時のテスト',
+      testWidgets('読み込み時のテスト', (WidgetTester tester) async {
+        await tester.pumpWidget(
+          ProviderScope(
+            overrides: [
+              searchApiRepositoryProvider.overrideWithValue(
+                SearchFakeApiRepository(),
+              ),
+            ],
+            child: testMainViewWidget(),
+          ),
+        );
+
+        expect(find.text(PageInfoEnum.top.title), findsOneWidget);
+        expect(find.byKey(AppKeyName.topPageSearchTextField), findsOneWidget);
+        expect(find.byKey(AppKeyName.searchElevatedButton), findsOneWidget);
+        expect(find.byKey(AppKeyName.responseDetailCard(0)), findsNothing);
+      });
+
+      testWidgets('検索フォームに入力して、検索ボタンをタップすると一覧に表示される。',
           (WidgetTester tester) async {
-        await tester.runAsync(() async {
+        () async {
           await tester.pumpWidget(
             ProviderScope(
               overrides: [
@@ -34,120 +52,92 @@ void main() {
             ),
           );
 
-          expect(find.text(PageInfoEnum.top.title), findsOneWidget);
-          expect(find.byKey(AppKeyName.topPageSearchTextField), findsOneWidget);
-          expect(find.byKey(AppKeyName.searchElevatedButton), findsOneWidget);
-          expect(find.byKey(AppKeyName.responseDetailCard(0)), findsNothing);
-        });
+          await tester.enterText(
+            find.byKey(AppKeyName.topPageSearchTextField),
+            searchWord,
+          );
+          await tester.tap(
+            find.byKey(AppKeyName.searchElevatedButton),
+          );
+          await tester.pumpAndSettle();
+          expect(
+            find.byKey(AppKeyName.responseDetailCard(0)),
+            findsOneWidget,
+          );
+          expect(
+            find.byKey(AppKeyName.responseDetailCard(7)),
+            findsOneWidget,
+          );
+          expect(
+            find.byKey(AppKeyName.responseDetailCard(8)),
+            findsNothing,
+          );
+          await tester.tap(
+            find.byKey(AppKeyName.responseDetailCard(0)),
+          );
+          await tester.pumpAndSettle();
+          expect(find.text(PageInfoEnum.show.title), findsOneWidget);
+        };
       });
 
-      testWidgets('検索フォームに入力して、検索ボタンをタップすると一覧に表示される。',
-          (WidgetTester tester) async {
-        await tester.runAsync(
-          () async {
-            await tester.pumpWidget(
-              ProviderScope(
-                overrides: [
-                  searchApiRepositoryProvider.overrideWithValue(
-                    SearchFakeApiRepository(),
-                  ),
-                ],
-                child: testMainViewWidget(),
-              ),
-            );
+      testWidgets('項目をタップすると、詳細画面に遷移すること', (WidgetTester tester) async {
+        () async {
+          await tester.pumpWidget(
+            ProviderScope(
+              overrides: [
+                searchApiRepositoryProvider.overrideWithValue(
+                  SearchFakeApiRepository(),
+                ),
+              ],
+              child: testMainViewWidget(),
+            ),
+          );
 
-            await tester.enterText(
-              find.byKey(AppKeyName.topPageSearchTextField),
-              searchWord,
-            );
-            await tester.tap(
-              find.byKey(AppKeyName.searchElevatedButton),
-            );
-            await tester.pumpAndSettle();
-            expect(
-              find.byKey(AppKeyName.responseDetailCard(0)),
-              findsOneWidget,
-            );
-            expect(
-              find.byKey(AppKeyName.responseDetailCard(7)),
-              findsOneWidget,
-            );
-            expect(
-              find.byKey(AppKeyName.responseDetailCard(8)),
-              findsNothing,
-            );
-            await tester.tap(
-              find.byKey(AppKeyName.responseDetailCard(0)),
-            );
-            await tester.pumpAndSettle();
-            expect(find.text(PageInfoEnum.show.title), findsOneWidget);
-          },
-        );
-      });
-
-      testWidgets('項目をタップすると、詳細画面に遷移すること',
-          (WidgetTester tester) async {
-        await tester.runAsync(
-          () async {
-            await tester.pumpWidget(
-              ProviderScope(
-                overrides: [
-                  searchApiRepositoryProvider.overrideWithValue(
-                    SearchFakeApiRepository(),
-                  ),
-                ],
-                child: testMainViewWidget(),
-              ),
-            );
-
-            await tester.enterText(
-              find.byKey(AppKeyName.topPageSearchTextField),
-              searchWord,
-            );
-            await tester.tap(
-              find.byKey(AppKeyName.searchElevatedButton),
-            );
-            await tester.pumpAndSettle();
-            await tester.tap(
-              find.byKey(AppKeyName.responseDetailCard(0)),
-            );
-            await tester.pumpAndSettle();
-            expect(find.text(PageInfoEnum.show.title), findsOneWidget);
-          },
-        );
+          await tester.enterText(
+            find.byKey(AppKeyName.topPageSearchTextField),
+            searchWord,
+          );
+          await tester.tap(
+            find.byKey(AppKeyName.searchElevatedButton),
+          );
+          await tester.pumpAndSettle();
+          await tester.tap(
+            find.byKey(AppKeyName.responseDetailCard(0)),
+          );
+          await tester.pumpAndSettle();
+          expect(find.text(PageInfoEnum.show.title), findsOneWidget);
+        };
       });
     });
 
     group('異常系', () {
       testWidgets('検索ボタンをタップするとsnackbarに例外のメッセージが表示されることをテスト',
           (WidgetTester tester) async {
-        await tester.runAsync(
-          () async {
-            await tester.pumpWidget(
-              ProviderScope(
-                overrides: [
-                  searchApiRepositoryProvider.overrideWithValue(
-                    SearchFakeErrorApiRepository(),
-                  ),
-                ],
-                child: testMainViewWidget(),
-              ),
-            );
+        () async {
+          await tester.pumpWidget(
+            ProviderScope(
+              overrides: [
+                searchApiRepositoryProvider.overrideWithValue(
+                  SearchFakeErrorApiRepository(),
+                ),
+              ],
+              child: testMainViewWidget(),
+            ),
+          );
 
-            await tester.enterText(
-              find.byKey(AppKeyName.topPageSearchTextField),
-              searchWord,
-            );
-            await tester.tap(
-              find.byKey(AppKeyName.searchElevatedButton),
-            );
-            await tester.pumpAndSettle();
-            expect(
-              find.text(ResponseEnum.noConnection.message),
-              findsOneWidget,
-            );
-          },
-        );
+          await tester.enterText(
+            find.byKey(AppKeyName.topPageSearchTextField),
+            searchWord,
+          );
+          await tester.tap(
+            find.byKey(AppKeyName.searchElevatedButton),
+          );
+          await tester.pumpAndSettle();
+          expect(
+            find.text(ResponseEnum.noConnection.message),
+            findsOneWidget,
+          );
+        };
       });
     });
   });
