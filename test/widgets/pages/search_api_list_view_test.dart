@@ -7,6 +7,7 @@ import 'package:flutter_engineer_codecheck/application_services/const/enum/respo
 import 'package:flutter_engineer_codecheck/application_services/di/infrastructure.dart';
 import 'package:flutter_engineer_codecheck/application_services/state/mock_search_api_notifier.dart';
 import 'package:flutter_engineer_codecheck/application_services/state/search_api_notifier.dart';
+import 'package:flutter_engineer_codecheck/domain/model/search_api_model.dart';
 import 'package:flutter_engineer_codecheck/infrastructure/search_fake_api_repository.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/pages/search_api_list_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -100,14 +101,15 @@ void main() {
                 child: testMainViewWidget(),
               ),
             );
-            await tester.pumpAndSettle();
-            expect(find.text('Item1'), findsOneWidget);
-            expect(find.text('Item2'), findsOneWidget);
+            await tester.pumpAndSettle();            
             await tester.tap(
               find.byKey(AppKeyName.responseDetailCard(0)),
             );
             await tester.pumpAndSettle();
             expect(find.text(PageInfoEnum.show.title), findsOneWidget);
+            expect(find.text(SearchApiModel.mockData.items.first.name), findsOneWidget);
+            expect(find.text(SearchApiModel.mockData.items.first.language), findsOneWidget);
+            expect(find.text(SearchApiModel.mockData.items[1].language), findsNothing);
           },
         );
       });
