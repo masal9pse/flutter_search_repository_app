@@ -101,7 +101,8 @@ void main() {
               ),
             );
             await tester.pumpAndSettle();
-            expect(find.text('ruby'), findsWidgets);
+            expect(find.text('Item1'), findsOneWidget);
+            expect(find.text('Item2'), findsOneWidget);
             await tester.tap(
               find.byKey(AppKeyName.responseDetailCard(0)),
             );

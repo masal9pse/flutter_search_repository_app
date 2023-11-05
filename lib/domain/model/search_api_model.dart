@@ -12,6 +12,100 @@ class SearchApiModel with _$SearchApiModel {
     @Default(<Item>[]) List<Item> items,
   }) = _SearchApiModel;
 
+  static const mockData = SearchApiModel(
+    totalCount: 8,
+    items: [
+      Item(
+        name: "Item1",
+        stargazersCount: 10,
+        watchersCount: 5,
+        language: "js",
+        forksCount: 3,
+        openIssuesCount: 2,
+        owner: Owner(
+          avatarUrl: "https://avatars.githubusercontent.com/u/84199788?v=4",
+        ),
+      ),
+      Item(
+        name: "Item2",
+        stargazersCount: 10,
+        watchersCount: 5,
+        language: "python",
+        forksCount: 3,
+        openIssuesCount: 2,
+        owner: Owner(
+          avatarUrl: "https://example.com/avatar2.png",
+        ),
+      ),
+      Item(
+        name: "Item3",
+        stargazersCount: 10,
+        watchersCount: 5,
+        language: "js",
+        forksCount: 3,
+        openIssuesCount: 2,
+        owner: Owner(
+          avatarUrl: "https://example.com/avatar3.png",
+        ),
+      ),
+      Item(
+        name: "Item4",
+        stargazersCount: 10,
+        watchersCount: 5,
+        language: "js",
+        forksCount: 3,
+        openIssuesCount: 2,
+        owner: Owner(
+          avatarUrl: "https://example.com/avatar4.png",
+        ),
+      ),
+      Item(
+        name: "Item5",
+        stargazersCount: 10,
+        watchersCount: 5,
+        language: "js",
+        forksCount: 3,
+        openIssuesCount: 2,
+        owner: Owner(
+          avatarUrl: "https://example.com/avatar5.png",
+        ),
+      ),
+      Item(
+        name: "Item6",
+        stargazersCount: 10,
+        watchersCount: 5,
+        language: "js",
+        forksCount: 3,
+        openIssuesCount: 2,
+        owner: Owner(
+          avatarUrl: "https://example.com/avatar5.png",
+        ),
+      ),
+      Item(
+        name: "Item7",
+        stargazersCount: 10,
+        watchersCount: 5,
+        language: "js",
+        forksCount: 3,
+        openIssuesCount: 2,
+        owner: Owner(
+          avatarUrl: "https://example.com/avatar6.png",
+        ),
+      ),
+      Item(
+        name: "Item8",
+        stargazersCount: 10,
+        watchersCount: 5,
+        language: "js",
+        forksCount: 3,
+        openIssuesCount: 2,
+        owner: Owner(
+          avatarUrl: "https://example.com/avatar7.png",
+        ),
+      ),
+    ],
+  );
+
   factory SearchApiModel.fromJson(Map<String, dynamic> json) =>
       _$SearchApiModelFromJson(json);
 }

@@ -1,20 +1,14 @@
-import 'dart:convert';
-
 import 'package:flutter_engineer_codecheck/domain/model/error.dart';
 import 'package:flutter_engineer_codecheck/domain/model/result.dart';
 import 'package:flutter_engineer_codecheck/domain/model/search_api_model.dart';
 import 'package:flutter_engineer_codecheck/domain/repository/search_api_repository.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 class SearchFakeApiRepository implements SearchApiRepository {
   @override
   Future<ApiResults> getApiListInfo({
     required String input,
   }) async {
-    final loadedData = await rootBundle.loadString('assets/json/fake_api_mock_data.json');
-    final decodedData = jsonDecode(loadedData);
-    final convertedData = SearchApiModel.fromJson(decodedData);
-    return Future.value(Result.success(convertedData));
+    return Future.value(const Result.success(SearchApiModel.mockData));
   }
 }
 
