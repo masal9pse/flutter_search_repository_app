@@ -152,9 +152,9 @@ flowchart TB
 - Widget Testでユーザーが操作する観点のテストを記載しました。
 - CIの導入を行い、テストの実行忘れを防ぎました。
 
-### 今後特に調査したいこと
-- AsyncValueには、初回時に処理を行わない場合のフラグがないのでその判定をどうするか
- - 現状は、データ取得完了のデータをnull判定してnullであれば初回であるという感じにしています。
+### 今後調査したいこと
+- [ベストプラクティスが分からないissue一覧](https://github.com/masal9pse/flutter_search_repository_app/issues?q=is%3Aissue+is%3Aopen+label%3A%E3%83%99%E3%82%B9%E3%83%88%E3%83%97%E3%83%A9%E3%82%AF%E3%83%86%E3%82%A3%E3%82%B9%E4%B8%8D%E6%98%8E)
+- [対応したが、問題解消できなかったissue一覧](https://github.com/masal9pse/flutter_search_repository_app/issues?q=is%3Aissue+is%3Aopen+label%3A%E6%8A%80%E8%A1%93%E7%9A%84%E8%AA%B2%E9%A1%8C)
 
 ### 開発のやり方
 - 基本的には、まずissueを切って、コミットメッセージにissue番号を記載し飛べるようにする。
