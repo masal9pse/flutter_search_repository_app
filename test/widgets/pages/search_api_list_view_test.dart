@@ -5,6 +5,8 @@ import 'package:flutter_engineer_codecheck/application_services/const/enum/page_
 import 'package:flutter_engineer_codecheck/application_services/const/app_key_name.dart';
 import 'package:flutter_engineer_codecheck/application_services/const/enum/response_enum.dart';
 import 'package:flutter_engineer_codecheck/application_services/di/infrastructure.dart';
+import 'package:flutter_engineer_codecheck/application_services/state/mock_search_api_notifier.dart';
+import 'package:flutter_engineer_codecheck/application_services/state/search_api_notifier.dart';
 import 'package:flutter_engineer_codecheck/infrastructure/search_fake_api_repository.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/pages/search_api_list_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -93,22 +95,13 @@ void main() {
             await tester.pumpWidget(
               ProviderScope(
                 overrides: [
-                  searchApiRepositoryProvider.overrideWithValue(
-                    SearchFakeApiRepository(),
-                  ),
+                  searchApiNotifierProvider.overrideWith(() => MockSearchApiNotifier()),
                 ],
                 child: testMainViewWidget(),
               ),
             );
-
-            await tester.enterText(
-              find.byKey(AppKeyName.topPageSearchTextField),
-              searchWord,
-            );
-            await tester.tap(
-              find.byKey(AppKeyName.searchElevatedButton),
-            );
             await tester.pumpAndSettle();
+            expect(find.text('ruby'), findsWidgets);
             await tester.tap(
               find.byKey(AppKeyName.responseDetailCard(0)),
             );
