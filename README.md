@@ -38,7 +38,7 @@ Dart 2.18.6
 
 $ fvm flutter pub get
 
-vscodeから左の３番目からアプリを起動してください。
+launch.jsonの環境に応じてアプリを起動できます。
 
 ```
 
@@ -111,19 +111,21 @@ flowchart TB
     Provider[[provider]];
   end
 
-  searchGitHubDataProvider[["searchGitHubDataProvider"]];
+  searchGitHubDataUseCaseProvider[["searchGitHubDataUseCaseProvider"]];
   searchApiNotifierProvider[["searchApiNotifierProvider"]];
   searchApiRepositoryProvider[["searchApiRepositoryProvider"]];
   textEditingControllerProvider[["textEditingControllerProvider"]];
+  formKeyProvider[["formKeyProvider"]];
   SearchApiListPage((SearchApiListPage));
   ApiShowPage((ApiShowPage));
 
   searchApiNotifierProvider ==> SearchApiListPage;
   textEditingControllerProvider ==> SearchApiListPage;
-  searchGitHubDataProvider -.-> SearchApiListPage;
+  formKeyProvider ==> SearchApiListPage;
+  searchGitHubDataUseCaseProvider -.-> SearchApiListPage;
   searchApiNotifierProvider ==> ApiShowPage;
-  searchApiNotifierProvider ==> searchGitHubDataProvider;
-  searchApiRepositoryProvider ==> searchGitHubDataProvider;
+  searchApiNotifierProvider ==> searchGitHubDataUseCaseProvider;
+  searchApiRepositoryProvider ==> searchGitHubDataUseCaseProvider;
 ```
 
 ## １度目に提出したコードからの改善点
