@@ -5,5 +5,15 @@
   },
   "files.watcherExclude": {
     "**/.fvm": true
-  }
+  },
+  "cSpell.ignoreRegExpList": [
+    "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+",
+    "riverpod",
+    "codecheck",
+    "cupertino",
+    "lcov",
+    "genhtml",
+    "pubspec",
+    "yumemi"
+  ]
 }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/application/const/enum/response_item_enum.dart';
+import 'package:flutter_engineer_codecheck/application_services/const/enum/response_item_enum.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/molecules/response_icon_count.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/molecules/response_list_tile.dart';
 
+/// 検索結果
 class ResponseDetailCard extends StatelessWidget {
   const ResponseDetailCard({
     super.key,
@@ -36,7 +37,7 @@ class ResponseDetailCard extends StatelessWidget {
             ResponseListTile(
               image: Image.network(
                 url,
-                errorBuilder: (context, object, _) {
+                errorBuilder: (_, __, ___) {
                   return const Icon(
                     Icons.error,
                     color: Colors.red,
