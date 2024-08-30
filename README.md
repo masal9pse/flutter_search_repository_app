@@ -75,7 +75,7 @@ $ fvm flutter pub run build_runner build
 │       ├── const             # アプリで使用する共通の文言等
 │       ├── di                # riverpodのproviderを用いて、依存性注入を行う
 │       ├── state             # riverpodの状態管理(notifierとprovider)を担当
-│       ├── use_case          # ユーザーからみた振る舞いを定義
+│       ├── use_case          # ユーザーからみたシステムの振る舞いを定義
 │   ├── domain                # ビジネスロジックの実装とドメインモデルの管理
 │       ├── model             # ドメインモデルと共通で使用するモデル(Result、AppError型)の管理
 │       ├── repository        # 外部サービスの抽象クラス
