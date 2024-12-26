@@ -100,12 +100,18 @@ void main() {
         );
         await tester.pumpAndSettle();
         expect(find.text(PageInfoEnum.show.title), findsOneWidget);
-        expect(find.text(SearchApiModel.mockData.items.first.name),
-            findsOneWidget);
-        expect(find.text(SearchApiModel.mockData.items.first.language),
-            findsOneWidget);
         expect(
-            find.text(SearchApiModel.mockData.items[1].language), findsNothing);
+          find.text(SearchApiModel.mockData.items.first.name),
+          findsOneWidget,
+        );
+        expect(
+          find.text(SearchApiModel.mockData.items.first.language),
+          findsOneWidget,
+        );
+        expect(
+          find.text(SearchApiModel.mockData.items[1].language),
+          findsNothing,
+        );
       });
     });
 
