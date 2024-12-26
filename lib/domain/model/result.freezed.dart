@@ -12,7 +12,7 @@ part of 'result.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Result<T, E> {
@@ -72,6 +72,9 @@ class _$ResultCopyWithImpl<T, E, $Res, $Val extends Result<T, E>>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of Result
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -91,6 +94,8 @@ class __$$SuccessImplCopyWithImpl<T, E, $Res>
       _$SuccessImpl<T, E> _value, $Res Function(_$SuccessImpl<T, E>) _then)
       : super(_value, _then);
 
+  /// Create a copy of Result
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -119,7 +124,7 @@ class _$SuccessImpl<T, E> implements Success<T, E> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SuccessImpl<T, E> &&
@@ -130,7 +135,9 @@ class _$SuccessImpl<T, E> implements Success<T, E> {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(value));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Result
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SuccessImplCopyWith<T, E, _$SuccessImpl<T, E>> get copyWith =>
@@ -203,7 +210,10 @@ abstract class Success<T, E> implements Result<T, E> {
   const factory Success(final T value) = _$SuccessImpl<T, E>;
 
   T get value;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Result
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SuccessImplCopyWith<T, E, _$SuccessImpl<T, E>> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -225,6 +235,8 @@ class __$$FailureImplCopyWithImpl<T, E, $Res>
       _$FailureImpl<T, E> _value, $Res Function(_$FailureImpl<T, E>) _then)
       : super(_value, _then);
 
+  /// Create a copy of Result
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -253,7 +265,7 @@ class _$FailureImpl<T, E> implements Failure<T, E> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FailureImpl<T, E> &&
@@ -264,7 +276,9 @@ class _$FailureImpl<T, E> implements Failure<T, E> {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(error));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Result
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$FailureImplCopyWith<T, E, _$FailureImpl<T, E>> get copyWith =>
@@ -337,7 +351,10 @@ abstract class Failure<T, E> implements Result<T, E> {
   const factory Failure(final E error) = _$FailureImpl<T, E>;
 
   E get error;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Result
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FailureImplCopyWith<T, E, _$FailureImpl<T, E>> get copyWith =>
       throw _privateConstructorUsedError;
 }

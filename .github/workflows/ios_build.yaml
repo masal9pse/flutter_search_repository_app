@@ -18,6 +18,8 @@ jobs:
   - run: flutter --version
   - name: Install dependencies
     run: flutter pub get
+  - name: build_runner
+    run: dart run build_runner build
   - name: Analyze code
     run: flutter analyze
   - name: Run tests

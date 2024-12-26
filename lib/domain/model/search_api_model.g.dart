@@ -8,7 +8,7 @@ part of 'search_api_model.dart';
 
 _$SearchApiModelImpl _$$SearchApiModelImplFromJson(Map<String, dynamic> json) =>
     _$SearchApiModelImpl(
-      totalCount: json['total_count'] as int? ?? 0,
+      totalCount: (json['total_count'] as num?)?.toInt() ?? 0,
       items: (json['items'] as List<dynamic>?)
               ?.map((e) => Item.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -24,11 +24,11 @@ Map<String, dynamic> _$$SearchApiModelImplToJson(
 
 _$ItemImpl _$$ItemImplFromJson(Map<String, dynamic> json) => _$ItemImpl(
       name: json['name'] as String? ?? '',
-      stargazersCount: json['stargazers_count'] as int? ?? 0,
-      watchersCount: json['watchers_count'] as int? ?? 0,
+      stargazersCount: (json['stargazers_count'] as num?)?.toInt() ?? 0,
+      watchersCount: (json['watchers_count'] as num?)?.toInt() ?? 0,
       language: json['language'] as String? ?? '',
-      forksCount: json['forks_count'] as int? ?? 0,
-      openIssuesCount: json['open_issues_count'] as int? ?? 0,
+      forksCount: (json['forks_count'] as num?)?.toInt() ?? 0,
+      openIssuesCount: (json['open_issues_count'] as num?)?.toInt() ?? 0,
       owner: json['owner'] == null
           ? const Owner()
           : Owner.fromJson(json['owner'] as Map<String, dynamic>),
