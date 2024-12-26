@@ -12,7 +12,7 @@ part of 'search_api_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 SearchApiModel _$SearchApiModelFromJson(Map<String, dynamic> json) {
   return _SearchApiModel.fromJson(json);
@@ -23,8 +23,12 @@ mixin _$SearchApiModel {
   int get totalCount => throw _privateConstructorUsedError;
   List<Item> get items => throw _privateConstructorUsedError;
 
+  /// Serializes this SearchApiModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SearchApiModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SearchApiModelCopyWith<SearchApiModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +52,8 @@ class _$SearchApiModelCopyWithImpl<$Res, $Val extends SearchApiModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SearchApiModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -86,6 +92,8 @@ class __$$SearchApiModelImplCopyWithImpl<$Res>
       _$SearchApiModelImpl _value, $Res Function(_$SearchApiModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SearchApiModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -134,7 +142,7 @@ class _$SearchApiModelImpl implements _SearchApiModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SearchApiModelImpl &&
@@ -143,12 +151,14 @@ class _$SearchApiModelImpl implements _SearchApiModel {
             const DeepCollectionEquality().equals(other._items, _items));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, totalCount, const DeepCollectionEquality().hash(_items));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SearchApiModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SearchApiModelImplCopyWith<_$SearchApiModelImpl> get copyWith =>
@@ -174,8 +184,11 @@ abstract class _SearchApiModel implements SearchApiModel {
   int get totalCount;
   @override
   List<Item> get items;
+
+  /// Create a copy of SearchApiModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SearchApiModelImplCopyWith<_$SearchApiModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -194,8 +207,12 @@ mixin _$Item {
   int get openIssuesCount => throw _privateConstructorUsedError;
   Owner get owner => throw _privateConstructorUsedError;
 
+  /// Serializes this Item to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Item
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ItemCopyWith<Item> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -226,6 +243,8 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Item
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -269,6 +288,8 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
     ) as $Val);
   }
 
+  /// Create a copy of Item
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $OwnerCopyWith<$Res> get owner {
@@ -305,6 +326,8 @@ class __$$ItemImplCopyWithImpl<$Res>
   __$$ItemImplCopyWithImpl(_$ItemImpl _value, $Res Function(_$ItemImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Item
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -393,7 +416,7 @@ class _$ItemImpl implements _Item {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ItemImpl &&
@@ -411,12 +434,14 @@ class _$ItemImpl implements _Item {
             (identical(other.owner, owner) || other.owner == owner));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, stargazersCount,
       watchersCount, language, forksCount, openIssuesCount, owner);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Item
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ItemImplCopyWith<_$ItemImpl> get copyWith =>
@@ -456,8 +481,11 @@ abstract class _Item implements Item {
   int get openIssuesCount;
   @override
   Owner get owner;
+
+  /// Create a copy of Item
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ItemImplCopyWith<_$ItemImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -470,8 +498,12 @@ Owner _$OwnerFromJson(Map<String, dynamic> json) {
 mixin _$Owner {
   String get avatarUrl => throw _privateConstructorUsedError;
 
+  /// Serializes this Owner to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Owner
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $OwnerCopyWith<Owner> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -493,6 +525,8 @@ class _$OwnerCopyWithImpl<$Res, $Val extends Owner>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Owner
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -525,6 +559,8 @@ class __$$OwnerImplCopyWithImpl<$Res>
       _$OwnerImpl _value, $Res Function(_$OwnerImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Owner
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -558,7 +594,7 @@ class _$OwnerImpl implements _Owner {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OwnerImpl &&
@@ -566,11 +602,13 @@ class _$OwnerImpl implements _Owner {
                 other.avatarUrl == avatarUrl));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, avatarUrl);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Owner
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OwnerImplCopyWith<_$OwnerImpl> get copyWith =>
@@ -591,8 +629,11 @@ abstract class _Owner implements Owner {
 
   @override
   String get avatarUrl;
+
+  /// Create a copy of Owner
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OwnerImplCopyWith<_$OwnerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
