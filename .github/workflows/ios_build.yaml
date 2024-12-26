@@ -1,4 +1,4 @@
-name: Flutter CI for Android
+name: Flutter CI for iOS
 on:
  push:
  pull_request:
@@ -6,7 +6,7 @@ on:
    - main
 jobs:
  build-android:
-  runs-on: ubuntu-latest
+  runs-on: macos-latest
   steps:
   - name: Clone repository
     uses: actions/checkout@v4
@@ -25,8 +25,6 @@ jobs:
     run: flutter pub get
   - name: Run tests
     run: flutter test
-  - name: Build Android
-    run: flutter build apk --release
   - name: Build iOS
     run: flutter build ios
   
