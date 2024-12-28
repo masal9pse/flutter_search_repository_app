@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/application_services/const/enum/page_info_enum.dart';
 import 'package:flutter_engineer_codecheck/application_services/const/app_key_name.dart';
 import 'package:flutter_engineer_codecheck/application_services/const/enum/response_enum.dart';
 import 'package:flutter_engineer_codecheck/application_services/di/infrastructure.dart';
