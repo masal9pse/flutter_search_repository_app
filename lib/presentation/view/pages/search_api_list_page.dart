@@ -4,7 +4,6 @@ import 'package:flutter_engineer_codecheck/application_services/di/use_cases.dar
 import 'package:flutter_engineer_codecheck/application_services/state/form_key_provider.dart';
 import 'package:flutter_engineer_codecheck/application_services/state/search_api_notifier.dart';
 import 'package:flutter_engineer_codecheck/application_services/state/text_editing_controller_provider.dart';
-import 'package:flutter_engineer_codecheck/application_services/const/enum/page_info_enum.dart';
 import 'package:flutter_engineer_codecheck/application_services/const/enum/response_enum.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/device_center_widget.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/texts/normal_text.dart';
@@ -26,7 +25,7 @@ class SearchApiListPage extends ConsumerWidget {
     final formKey = ref.watch(formKeyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.helloWorld),
+        title: Text(AppLocalizations.of(context)!.topAppBarTitle),
       ),
       body: SingleChildScrollView(
         child: Form(

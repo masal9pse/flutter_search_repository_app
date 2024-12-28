@@ -1,6 +1,6 @@
 {
-  "helloWorld": "Hello World!",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
-  }
+  "topAppBarTitle": "Github Search App",
+  "@topAppBarTitle": {},
+  "showAppBarTitle": "Detail Page",
+  "@showAppBarTitle": {}
 }

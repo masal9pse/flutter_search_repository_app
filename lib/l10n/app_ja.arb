@@ -1,6 +1,6 @@
 {
-  "helloWorld": "こんにちは",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
-  }
+  "topAppBarTitle": "Github検索アプリ",
+  "@topAppBarTitle": {},
+  "showAppBarTitle": "詳細ページ",
+  "@showAppBarTitle": {}
 }
