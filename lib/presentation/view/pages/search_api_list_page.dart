@@ -13,6 +13,7 @@ import 'package:flutter_engineer_codecheck/presentation/view/components/organism
     as search;
 import 'package:flutter_engineer_codecheck/presentation/view/pages/api_show_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// トップページ
 class SearchApiListPage extends ConsumerWidget {
@@ -25,7 +26,7 @@ class SearchApiListPage extends ConsumerWidget {
     final formKey = ref.watch(formKeyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(PageInfoEnum.top.title),
+        title: Text(AppLocalizations.of(context)!.helloWorld),
       ),
       body: SingleChildScrollView(
         child: Form(
