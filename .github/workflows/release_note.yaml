@@ -1,0 +1,24 @@
+name: Generate Release Notes
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  generate-release-notes:
+    name: Generate Release Notes
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Generate release notes
+        id: release_notes
+        uses: release-drafter/release-drafter@v5
+        with:
+          config-name: release.yml
+
+      - name: Display generated release notes
+        run: echo "${{ steps.release_notes.outputs.tag_name }}"
