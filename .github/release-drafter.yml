@@ -1,18 +1,4 @@
-changelog:
-  exclude:
-    labels:
-      - ignore-for-release
-    authors:
-      - masal9pse
-  categories:
-    - title: Breaking Changes 🛠
-      labels:
-        - Semver-Major
-        - breaking-change
-    - title: Exciting New Features 🎉
-      labels:
-        - Semver-Minor
-        - enhancement
-    - title: Other Changes
-      labels:
-        - "*"
+template: |
+  ## What’s Changed
+
+  $CHANGES
