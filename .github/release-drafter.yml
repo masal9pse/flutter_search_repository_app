@@ -3,7 +3,7 @@ changelog:
     labels:
       - ignore-for-release
     authors:
-      - octocat
+      - masal9pse
   categories:
     - title: Breaking Changes 🛠
       labels:
