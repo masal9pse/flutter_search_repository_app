@@ -38,6 +38,6 @@ jobs:
         #   config-name: my-config.yml
         #   disable-autolabeler: true
         with: 
-          commitish: feature/add-releasesnote-text
+          commitish: feature/add-releasenote-text
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
