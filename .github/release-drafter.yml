@@ -1,10 +1,10 @@
 name-template: "Release v${{ nextReleaseVersion }}"
 tag-template: "v${{ nextReleaseVersion }}"
 categories:
-  - title: "🚀 New Features"
+  - title: "🚀 New Features2"
     labels:
       - feature
-  - title: "🐛 Bug Fixes"
+  - title: "🐛 Bug Fixes2"
     labels:
       - bug
 change-template: "- ${{ change }}"
