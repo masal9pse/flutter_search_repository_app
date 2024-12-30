@@ -9,7 +9,7 @@
             "request": "launch",
             "type": "dart",
             "args": [
-                "--dart-define=flavor=dev",
+                "--dart-define-from-file=define/dev-env.json",
             ]
         },
         {
@@ -17,7 +17,7 @@
             "request": "launch",
             "type": "dart",
             "args": [
-                "--dart-define=flavor=dev_stg",
+                "--dart-define-from-file=define/dev-stg-env.json",
             ]
         },
         {
@@ -26,7 +26,8 @@
             "type": "dart",
             "flutterMode": "profile",
             "args": [
-                "--dart-define=flavor=stg",
+                // "--dart-define=flavor=stg",
+                "--dart-define-from-file=define/stg-env.json",
             ]
         },
         {
@@ -35,7 +36,8 @@
             "type": "dart",
             "flutterMode": "release",
             "args": [
-                "--dart-define=flavor=prd",
+                // "--dart-define=flavor=prd",
+                "--dart-define-from-file=define/prd.json",
             ]
         }
     ]
