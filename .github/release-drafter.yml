@@ -11,3 +11,4 @@ change-template: "- ${{ change }}"
 template: |
   ## What's Changed
   $CHANGES
+commitish: feature/add-releasenote-text
