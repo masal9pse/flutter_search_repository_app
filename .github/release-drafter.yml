@@ -1,4 +1,14 @@
+name-template: "Release v${{ nextReleaseVersion }}"
+tag-template: "v${{ nextReleaseVersion }}"
+categories:
+  - title: "🚀 New Features2"
+    labels:
+      - feature
+  - title: "🐛 Bug Fixes2"
+    labels:
+      - bug
+change-template: "- ${{ change }}"
 template: |
-  ## What’s Changed
-
+  ## What's Changed
   $CHANGES
+commitish: feature/add-releasenote-text
