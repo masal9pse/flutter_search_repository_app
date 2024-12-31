@@ -1,5 +1,5 @@
 import 'package:flutter_engineer_codecheck/domain/model/search_api_model.dart';
-import 'package:flutter_engineer_codecheck/domain/repository/search_api_repository.dart';
+import 'package:flutter_engineer_codecheck/infrastructure/search_github_api_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'search_api_notifier.g.dart';
 
