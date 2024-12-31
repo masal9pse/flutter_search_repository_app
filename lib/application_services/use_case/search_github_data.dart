@@ -1,5 +1,5 @@
 import 'package:flutter_engineer_codecheck/application_services/state/search_api_notifier.dart';
-import 'package:flutter_engineer_codecheck/domain/repository/search_api_repository.dart';
+import 'package:flutter_engineer_codecheck/infrastructure/search_github_api_repository.dart';
 
 /// GitHubからレポジトリを検索する
 class SearchGitHubDataUseCase {
