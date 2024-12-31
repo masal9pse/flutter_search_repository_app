@@ -23,5 +23,5 @@ jobs:
         run: dart run build_runner build --delete-conflicting-outputs
       - name: Analyze code
         run: flutter analyze
-      # - name: Build iOS 
-      #   run: flutter build ios --no-codesign
+      - name: Build iOS 
+        run: flutter build ios --no-codesign
