@@ -9,7 +9,7 @@ class ApiShowPage extends ConsumerWidget {
   const ApiShowPage({
     super.key,
     // required this.id,
-    required this.item
+    required this.item,
   });
 
   // final int id;
@@ -17,7 +17,7 @@ class ApiShowPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final item = ref.watch(searchApiListPageNotifierProvider);    
+    // final item = ref.watch(searchApiListPageNotifierProvider);
     final owner = item.owner;
     final avatarUrl = owner.avatarUrl;
     final name = item.name;
