@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter_engineer_codecheck/domain/model/result.dart';
 import 'package:flutter_engineer_codecheck/domain/model/search_api_model.dart';
 import 'package:http/http.dart' as http;
-// typedef ApiResults = Result<SearchApiModel,AppError>;
 typedef ApiResults = Result<SearchApiModel,Exception>;
 
 class SearchApiRepository  {

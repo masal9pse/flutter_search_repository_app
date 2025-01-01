@@ -113,7 +113,8 @@ class _ApiResults extends HookConsumerWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => ApiShowPage(
-                  id: index,
+                  // id: index,
+                  item: item,
                 ),
               ),
             );

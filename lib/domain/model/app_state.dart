@@ -1,4 +1,3 @@
-import 'package:flutter_engineer_codecheck/domain/model/error.dart';
 import 'package:flutter_engineer_codecheck/domain/model/search_api_model.dart';
 
 sealed class AppState {
