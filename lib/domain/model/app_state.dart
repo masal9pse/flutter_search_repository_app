@@ -16,3 +16,12 @@ class Data extends AppState {
   const Data(this.searchApiModel);
   final SearchApiModel searchApiModel;
 }
+
+// class Error extends AppState {
+//   const Error(this.exception);
+//   final Exception exception;
+// }
+
+class Error extends AppState {
+  const Error();  
+}

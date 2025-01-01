@@ -57,7 +57,8 @@ class SearchApiListPage extends HookConsumerWidget {
                       Loading() => Center(child: CircularProgressIndicator()),
                       Data(searchApiModel: final data) => _ApiResults(
                           searchApiModel: data,
-                        )
+                        ),
+                      Error() => Text('エラーが発生しました'),
                     },
                   ],
                 ),
