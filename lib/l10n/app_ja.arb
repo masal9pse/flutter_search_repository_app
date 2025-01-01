@@ -1,6 +1,21 @@
 {
+  "@@locale": "ja",
   "topAppBarTitle": "Github検索アプリ",
   "@topAppBarTitle": {},
   "showAppBarTitle": "詳細ページ",
-  "@showAppBarTitle": {}
+  "@showAppBarTitle": {},
+  "invalidFormatError": "提供されたデータの形式が無効です。",
+  "@invalidFormatError": {},
+  "timeoutError": "リクエストがタイムアウトしました。後でもう一度お試しください。",
+  "@timeoutError": {},
+  "networkError": "ネットワークエラーが発生しました。接続を確認してください。",
+  "@networkError": {},
+  "httpError": "サーバーとの通信中にエラーが発生しました。",
+  "@httpError": {},
+  "unauthorizedError": "認証に失敗しました。再度ログインしてください。",
+  "@unauthorizedError": {},
+  "databaseError": "データベースエラーが発生しました。サポートにお問い合わせください。",
+  "@databaseError": {},
+  "unknownError": "不明なエラーが発生しました。後でもう一度お試しください。",
+  "@unknownError": {}
 }

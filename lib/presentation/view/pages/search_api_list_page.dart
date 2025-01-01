@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/application_services/config/app_error_message.dart';
 import 'package:flutter_engineer_codecheck/application_services/const/app_key_name.dart';
 import 'package:flutter_engineer_codecheck/application_services/state/form_key_provider.dart';
 import 'package:flutter_engineer_codecheck/application_services/state/search_api_list_page_notifier.dart';
@@ -58,7 +59,7 @@ class SearchApiListPage extends HookConsumerWidget {
                       Data(searchApiModel: final data) => _ApiResults(
                           searchApiModel: data,
                         ),
-                      Error() => Text('エラーが発生しました'),
+                      Error(exception: final error) => Text(createErrorMessage(error,context)),
                     },
                   ],
                 ),

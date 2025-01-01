@@ -1,6 +1,21 @@
 {
+  "@@locale": "en",
   "topAppBarTitle": "Github Search App",
   "@topAppBarTitle": {},
   "showAppBarTitle": "Detail Page",
-  "@showAppBarTitle": {}
+  "@showAppBarTitle": {},
+  "invalidFormatError": "The provided data has an invalid format.",
+  "@invalidFormatError": {},
+  "timeoutError": "The request has timed out. Please try again later.",
+  "@timeoutError": {},
+  "networkError": "A network error occurred. Check your connection.",
+  "@networkError": {},
+  "httpError": "An error occurred while communicating with the server.",
+  "@httpError": {},
+  "unauthorizedError": "Unauthorized access. Please log in again.",
+  "@unauthorizedError": {},
+  "databaseError": "A database error occurred. Please contact support.",
+  "@databaseError": {},
+  "unknownError": "An unknown error occurred. Please try again later.",
+  "@unknownError": {}
 }

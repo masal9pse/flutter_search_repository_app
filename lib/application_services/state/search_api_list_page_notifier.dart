@@ -21,7 +21,7 @@ class SearchApiListPageNotifier extends _$SearchApiListPageNotifier {
         state = Data(data);
       },
       failure: (error) {
-        state = Error();
+        state = Error(error);
       },
     );
   }

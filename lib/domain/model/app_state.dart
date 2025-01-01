@@ -1,3 +1,4 @@
+import 'package:flutter_engineer_codecheck/domain/model/error.dart';
 import 'package:flutter_engineer_codecheck/domain/model/search_api_model.dart';
 
 sealed class AppState {
@@ -17,11 +18,7 @@ class Data extends AppState {
   final SearchApiModel searchApiModel;
 }
 
-// class Error extends AppState {
-//   const Error(this.exception);
-//   final Exception exception;
-// }
-
 class Error extends AppState {
-  const Error();  
+  const Error(this.exception);
+  final Exception exception;
 }
