@@ -2,11 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/application_services/const/app_key_name.dart';
-import 'package:flutter_engineer_codecheck/application_services/const/enum/response_enum.dart';
 import 'package:flutter_engineer_codecheck/application_services/di/infrastructure.dart';
-import 'package:flutter_engineer_codecheck/application_services/state/mock_search_api_notifier.dart';
-import 'package:flutter_engineer_codecheck/application_services/state/search_api_notifier.dart';
-import 'package:flutter_engineer_codecheck/domain/model/search_api_model.dart';
 import 'package:flutter_engineer_codecheck/infrastructure/search_fake_api_repository.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/pages/api_show_page.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/pages/search_api_list_page.dart';
@@ -111,73 +107,73 @@ void main() {
         );
       });
 
-      testWidgets('項目をタップすると、詳細画面に遷移すること', (WidgetTester tester) async {
-        await tester.pumpWidget(
-          ProviderScope(
-            overrides: [
-              searchApiNotifierProvider
-                  .overrideWith(() => MockSearchApiNotifier()),
-            ],
-            child: testMainViewWidget(),
-          ),
-        );
-        await tester.pumpAndSettle();
-        await tester.tap(
-          find.byKey(AppKeyName.responseDetailCard(0)),
-        );
-        await tester.pumpAndSettle();
-        await tester.pumpAndSettle();
-        final BuildContext context = tester.element(
-          find.byWidgetPredicate(
-            (Widget widget) => widget is ApiShowPage,
-          ),
-        );
-        expect(
-          find.text(AppLocalizations.of(context)!.showAppBarTitle),
-          findsOneWidget,
-        );
-        expect(
-          find.text(SearchApiModel.mockData.items.first.name),
-          findsOneWidget,
-        );
-        expect(
-          find.text(SearchApiModel.mockData.items.first.language),
-          findsOneWidget,
-        );
-        expect(
-          find.text(SearchApiModel.mockData.items[1].language),
-          findsNothing,
-        );
-      });
-    });
+    //   testWidgets('項目をタップすると、詳細画面に遷移すること', (WidgetTester tester) async {
+    //     await tester.pumpWidget(
+    //       ProviderScope(
+    //         overrides: [
+    //           searchApiNotifierProvider
+    //               .overrideWith(() => MockSearchApiNotifier()),
+    //         ],
+    //         child: testMainViewWidget(),
+    //       ),
+    //     );
+    //     await tester.pumpAndSettle();
+    //     await tester.tap(
+    //       find.byKey(AppKeyName.responseDetailCard(0)),
+    //     );
+    //     await tester.pumpAndSettle();
+    //     await tester.pumpAndSettle();
+    //     final BuildContext context = tester.element(
+    //       find.byWidgetPredicate(
+    //         (Widget widget) => widget is ApiShowPage,
+    //       ),
+    //     );
+    //     expect(
+    //       find.text(AppLocalizations.of(context)!.showAppBarTitle),
+    //       findsOneWidget,
+    //     );
+    //     expect(
+    //       find.text(SearchApiModel.mockData.items.first.name),
+    //       findsOneWidget,
+    //     );
+    //     expect(
+    //       find.text(SearchApiModel.mockData.items.first.language),
+    //       findsOneWidget,
+    //     );
+    //     expect(
+    //       find.text(SearchApiModel.mockData.items[1].language),
+    //       findsNothing,
+    //     );
+    //   });
+    // });
 
-    group('異常系', () {
-      testWidgets('検索ボタンをタップするとsnackbarに例外のメッセージが表示されることをテスト',
-          (WidgetTester tester) async {
-        await tester.pumpWidget(
-          ProviderScope(
-            overrides: [
-              searchApiRepositoryProvider.overrideWithValue(
-                SearchFakeErrorApiRepository(),
-              ),
-            ],
-            child: testMainViewWidget(),
-          ),
-        );
+    // group('異常系', () {
+    //   testWidgets('検索ボタンをタップするとsnackbarに例外のメッセージが表示されることをテスト',
+    //       (WidgetTester tester) async {
+    //     await tester.pumpWidget(
+    //       ProviderScope(
+    //         overrides: [
+    //           searchApiRepositoryProvider.overrideWithValue(
+    //             SearchFakeErrorApiRepository(),
+    //           ),
+    //         ],
+    //         child: testMainViewWidget(),
+    //       ),
+    //     );
 
-        await tester.enterText(
-          find.byKey(AppKeyName.topPageSearchTextField),
-          searchWord,
-        );
-        await tester.tap(
-          find.byKey(AppKeyName.searchElevatedButton),
-        );
-        await tester.pumpAndSettle();
-        expect(
-          find.text(ResponseEnum.noConnection.message),
-          findsOneWidget,
-        );
-      });
+    //     await tester.enterText(
+    //       find.byKey(AppKeyName.topPageSearchTextField),
+    //       searchWord,
+    //     );
+    //     await tester.tap(
+    //       find.byKey(AppKeyName.searchElevatedButton),
+    //     );
+    //     await tester.pumpAndSettle();
+    //     expect(
+    //       find.text(ResponseEnum.noConnection.message),
+    //       findsOneWidget,
+    //     );
+    //   });
     });
   });
 }

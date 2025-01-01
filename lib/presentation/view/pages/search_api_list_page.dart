@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/application_services/config/app_error_message.dart';
 import 'package:flutter_engineer_codecheck/application_services/const/app_key_name.dart';
-import 'package:flutter_engineer_codecheck/application_services/di/use_cases.dart';
 import 'package:flutter_engineer_codecheck/application_services/state/form_key_provider.dart';
-import 'package:flutter_engineer_codecheck/application_services/state/search_api_notifier.dart';
+import 'package:flutter_engineer_codecheck/application_services/state/search_api_list_page_notifier.dart';
 import 'package:flutter_engineer_codecheck/application_services/const/enum/response_enum.dart';
+import 'package:flutter_engineer_codecheck/domain/model/app_state.dart';
+import 'package:flutter_engineer_codecheck/domain/model/search_api_model.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/device_center_widget.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/texts/normal_text.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/response_detail_card.dart';
@@ -16,12 +18,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 /// トップページ
 class SearchApiListPage extends HookConsumerWidget {
-
   const SearchApiListPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final searchApiResults = ref.watch(searchApiNotifierProvider);
     final textEditingController = useTextEditingController();
+    final searchApiListPageState = ref.watch(searchApiListPageNotifierProvider);
 
     final formKey = ref.watch(formKeyProvider);
     return Scaffold(
@@ -42,77 +43,24 @@ class SearchApiListPage extends HookConsumerWidget {
                       controller: textEditingController,
                       callback: () async {
                         if (formKey.currentState!.validate()) {
-                          final useCase = ref.read(searchGitHubDataUseCaseProvider);
-                          await useCase
-                              .searchGitHubData(textEditingController.text);
+                          ref
+                              .read(searchApiListPageNotifierProvider.notifier)
+                              .search(textEditingController.text);
                         }
                       },
                     ),
-                    searchApiResults.when(
-                      data: (value) {
-                        if (value == null) {
-                          return DeviceCenterWidget(
-                            child: NormalText(
-                              text: ResponseEnum.notYetSearched.message,
-                            ),
-                          );
-                        }
-                        if (value.items.isEmpty) {
-                          return DeviceCenterWidget(
-                            child: NormalText(
-                              text: ResponseEnum.zeroData.message,
-                            ),
-                          );
-                        }
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: value.items.length,
-                          itemBuilder: (context, index) {
-                            final item = value.items[index];
-                            final owner = item.owner;
-                            final avatarUrl = owner.avatarUrl;
-                            final name = item.name;
-                            final language = item.language;
-                            final stargazersCount =
-                                item.stargazersCount.toString();
-                            final watchersCount = item.watchersCount.toString();
-                            final forksCount = item.forksCount.toString();
-                            final openIssuesCount =
-                                item.openIssuesCount.toString();
-
-                            return ResponseDetailCard(
-                              key: AppKeyName.responseDetailCard(index),
-                              url: avatarUrl,
-                              title: name,
-                              subtitle: language,
-                              stargazersCount: stargazersCount,
-                              watchersCount: watchersCount,
-                              forksCount: forksCount,
-                              openIssuesCount: openIssuesCount,
-                              callback: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ApiShowPage(
-                                      id: index,
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        );
-                      },
-                      error: (error, stack) {
-                        return DeviceCenterWidget(
-                          child: Text(ResponseEnum.noConnection.message),
-                        );
-                      },
-                      loading: () => const DeviceCenterWidget(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ),
+                    switch (searchApiListPageState) {
+                      Idle() => DeviceCenterWidget(
+                          child: NormalText(
+                            text: ResponseEnum.notYetSearched.message,
+                          ),
+                        ),
+                      Loading() => Center(child: CircularProgressIndicator()),
+                      Data(searchApiModel: final data) => _ApiResults(
+                          searchApiModel: data,
+                        ),
+                      Error(exception: final error) => Text(createErrorMessage(error,context)),
+                    },
                   ],
                 ),
               ),
@@ -120,6 +68,59 @@ class SearchApiListPage extends HookConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _ApiResults extends HookConsumerWidget {
+  const _ApiResults({required this.searchApiModel});
+  final SearchApiModel searchApiModel;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (searchApiModel.items.isEmpty) {
+      return DeviceCenterWidget(
+        child: NormalText(
+          text: ResponseEnum.zeroData.message,
+        ),
+      );
+    }
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: searchApiModel.items.length,
+      itemBuilder: (context, index) {
+        final item = searchApiModel.items[index];
+        final owner = item.owner;
+        final avatarUrl = owner.avatarUrl;
+        final name = item.name;
+        final language = item.language;
+        final stargazersCount = item.stargazersCount.toString();
+        final watchersCount = item.watchersCount.toString();
+        final forksCount = item.forksCount.toString();
+        final openIssuesCount = item.openIssuesCount.toString();
+
+        return ResponseDetailCard(
+          key: AppKeyName.responseDetailCard(index),
+          url: avatarUrl,
+          title: name,
+          subtitle: language,
+          stargazersCount: stargazersCount,
+          watchersCount: watchersCount,
+          forksCount: forksCount,
+          openIssuesCount: openIssuesCount,
+          callback: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ApiShowPage(
+                  // id: index,
+                  item: item,
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
