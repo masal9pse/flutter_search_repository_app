@@ -72,7 +72,7 @@ class SearchApiListPage extends HookConsumerWidget {
   }
 }
 
-class _ApiResults extends HookConsumerWidget {
+class _ApiResults extends ConsumerWidget {
   const _ApiResults({required this.searchApiModel});
   final SearchApiModel searchApiModel;
   @override

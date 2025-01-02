@@ -1,5 +1,6 @@
-import 'package:flutter_engineer_codecheck/application_services/di/infrastructure.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_engineer_codecheck/domain/model/app_state.dart';
+import 'package:flutter_engineer_codecheck/infrastructure/search_github_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'dart:async';
 part 'search_api_list_page_notifier.g.dart';
@@ -13,16 +14,12 @@ class SearchApiListPageNotifier extends _$SearchApiListPageNotifier {
 
   Future<void> search(String input) async {
     state = Loading();
-    final datas = await ref
-        .read(searchApiRepositoryProvider)
-        .getApiListInfo(input: input);
-    datas.when(
-      success: (data) {
-        state = Data(data);
-      },
-      failure: (error) {
-        state = Error(error);
-      },
-    );
+    final dio = Dio();
+    final client = SearchGithubRepository(dio);
+    client.getApiListInfo(input).then((value) {
+      state = Data(value);
+    }).catchError((error) {
+      state = Error(error);
+    });
   }
 }
