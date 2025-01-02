@@ -1,28 +1,28 @@
-import 'dart:async';
-import 'dart:io';
-
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 String createErrorMessage(Object error, BuildContext context) {
   final appLocalizations = AppLocalizations.of(context)!;
 
-  if (error is Exception) {
-    if (error is FormatException) {
-      return appLocalizations.invalidFormatError;
-    }
-    if (error is TimeoutException) {
-      return appLocalizations.timeoutError;
-    }
-    if (error is SocketException) {
-      return appLocalizations.networkError;
-    }
-    if (error is HttpException) {
-      return appLocalizations.httpError;
-    }
-    if (error is PlatformException) {
-      return appLocalizations.httpError;
+  if (error is DioException) {
+    switch(error.type) {
+      case DioExceptionType.connectionTimeout:
+        return appLocalizations.connectionTimeoutError;
+      case DioExceptionType.sendTimeout:
+        return appLocalizations.sendTimeoutError;
+      case DioExceptionType.receiveTimeout:
+        return appLocalizations.receiveTimeoutError;
+      case DioExceptionType.badCertificate:
+        return appLocalizations.badCertificateError;
+      case DioExceptionType.badResponse:
+        return appLocalizations.badResponseError;
+      case DioExceptionType.cancel:
+        return appLocalizations.cancelError;
+      case DioExceptionType.connectionError:
+        return appLocalizations.connectionError;
+      case DioExceptionType.unknown:
+        return appLocalizations.unknownError;
     }
   }
   return appLocalizations.unknownError;

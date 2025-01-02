@@ -1,24 +1,27 @@
 import 'dart:async';
-import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:flutter_engineer_codecheck/domain/model/result.dart';
 import 'package:flutter_engineer_codecheck/domain/model/search_api_model.dart';
-import 'package:http/http.dart' as http;
-typedef ApiResults = Result<SearchApiModel,Exception>;
 
-class SearchApiRepository  {
+typedef ApiResults = Result<SearchApiModel, DioException>;
+
+class SearchApiRepository {
   Future<ApiResults> getApiListInfo({
     required String input,
   }) async {
+    final dio = Dio(
+      BaseOptions(
+        connectTimeout: Duration(seconds: 2),
+        receiveTimeout: Duration(seconds: 3),
+      ),
+    );
     try {
-      final url =
-          Uri.parse('https://api.github.com/search/repositories?q=$input');
-      const timeOutCount = 5;
+      // throw DioException.connectionError(requestOptions: RequestOptions(), reason: 'abc');
       final response =
-          await http.get(url).timeout(const Duration(seconds: timeOutCount));
-      final decoded = json.decode(response.body) as Map<String, dynamic>;
-        final searchApiModel = SearchApiModel.fromJson(decoded);
+          await dio.get('https://api.github.com/search/repositories?q=$input');
+      final searchApiModel = SearchApiModel.fromJson(response.data);
       return Result.success(searchApiModel);
-    } on Exception catch (e) {
+    } on DioException catch (e) {
       return Result.failure(e);
     }
   }
