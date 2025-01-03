@@ -6,40 +6,23 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
-final goRouter = GoRouter(
-  initialLocation: '/',
+final _goRouter = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      name: 'top_page',
-      pageBuilder: (context, state) {
-        return MaterialPage(
-          // key: state.pageKey,
-          child: const SearchApiListPage(),
-        );
+      builder: (context, state) {
+        return SearchApiListPage();
       },
       routes: [
         GoRoute(
           path: '/show',
-          name: 'show_page',
-          pageBuilder: (context, state) {
-            return MaterialPage(
-              key: state.pageKey,
-              child: ApiShowPage(item: state.extra as Item),
-            );
+          builder: (context, state) {
+            return ApiShowPage(item: state.extra as Item);
           },
         ),
       ],
     ),
   ],
-  errorPageBuilder: (context, state) => MaterialPage(
-    key: state.pageKey,
-    child: Scaffold(
-      body: Center(
-        child: Text(state.error.toString()),
-      ),
-    ),
-  ),
 );
 
 class App extends StatelessWidget {
@@ -47,7 +30,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerConfig: goRouter,
+      routerConfig: _goRouter,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -62,7 +45,6 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.white,
       ),
-      // home: const SearchApiListPage(),
     );
   }
 }
