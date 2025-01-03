@@ -11,9 +11,9 @@ import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/te
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/response_detail_card.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/search_bar.dart'
     as search;
-import 'package:flutter_engineer_codecheck/presentation/view/pages/api_show_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 /// トップページ
@@ -109,15 +109,7 @@ class _ApiResults extends ConsumerWidget {
           forksCount: forksCount,
           openIssuesCount: openIssuesCount,
           callback: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ApiShowPage(
-                  // id: index,
-                  item: item,
-                ),
-              ),
-            );
+            GoRouter.of(context).go('/show',extra: item);
           },
         );
       },
