@@ -22,7 +22,9 @@ class TextStyleExtension extends ThemeExtension<TextStyleExtension> {
 
   @override
   ThemeExtension<TextStyleExtension> lerp(
-      ThemeExtension<TextStyleExtension>? other, double t) {
+    ThemeExtension<TextStyleExtension>? other,
+    double t,
+  ) {
     if (other is! TextStyleExtension) {
       return this;
     }
