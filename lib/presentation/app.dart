@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/domain/model/search_api_model.dart';
+import 'package:flutter_engineer_codecheck/presentation/theme_extention.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/pages/api_show_page.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/pages/search_api_list_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -43,10 +44,12 @@ class App extends StatelessWidget {
       ],
       theme: ThemeData(
         colorSchemeSeed: Colors.blue,
+        extensions: [TextStyleExtension(color: Colors.red,fontSize: 30)],
       ),
       darkTheme: ThemeData(
         colorSchemeSeed: Colors.blue,
         brightness: Brightness.dark,
+        extensions: [TextStyleExtension(color: Colors.blue,fontSize: 30)],
       ),
     );
   }
