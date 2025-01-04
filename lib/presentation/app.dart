@@ -42,8 +42,11 @@ class App extends StatelessWidget {
         Locale('ja'),
       ],
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.white,
+        colorSchemeSeed: Colors.blue,
+      ),
+      darkTheme: ThemeData(
+        colorSchemeSeed: Colors.blue,
+        brightness: Brightness.dark,
       ),
     );
   }
