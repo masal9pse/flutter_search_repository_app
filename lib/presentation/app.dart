@@ -42,11 +42,9 @@ class App extends StatelessWidget {
         Locale('ja'),
       ],
       theme: ThemeData(
-        useMaterial3: true,
         colorSchemeSeed: Colors.blue,
       ),
       darkTheme: ThemeData(
-        useMaterial3: true,
         colorSchemeSeed: Colors.blue,
         brightness: Brightness.dark,
       ),
