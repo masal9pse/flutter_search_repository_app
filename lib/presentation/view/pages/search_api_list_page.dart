@@ -6,6 +6,7 @@ import 'package:flutter_engineer_codecheck/application_services/state/search_api
 import 'package:flutter_engineer_codecheck/application_services/const/enum/response_enum.dart';
 import 'package:flutter_engineer_codecheck/domain/model/app_state.dart';
 import 'package:flutter_engineer_codecheck/domain/model/search_api_model.dart';
+import 'package:flutter_engineer_codecheck/presentation/theme_extention.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/device_center_widget.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/texts/normal_text.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/response_detail_card.dart';
@@ -23,11 +24,18 @@ class SearchApiListPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final textEditingController = useTextEditingController();
     final searchApiListPageState = ref.watch(searchApiListPageNotifierProvider);
+    final appBarTitleStyle = Theme.of(context).extension<TextStyleExtension>()!;
 
     final formKey = ref.watch(formKeyProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.topAppBarTitle),
+        title: Text(
+          AppLocalizations.of(context)!.topAppBarTitle,
+          style: TextStyle(
+            color: appBarTitleStyle.color,
+            fontSize: appBarTitleStyle.fontSize,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -59,7 +67,8 @@ class SearchApiListPage extends HookConsumerWidget {
                       Data(searchApiModel: final data) => _ApiResults(
                           searchApiModel: data,
                         ),
-                      Error(exception: final error) => Text(createErrorMessage(error,context)),
+                      Error(exception: final error) =>
+                        Text(createErrorMessage(error, context)),
                     },
                   ],
                 ),
@@ -109,7 +118,7 @@ class _ApiResults extends ConsumerWidget {
           forksCount: forksCount,
           openIssuesCount: openIssuesCount,
           callback: () {
-            GoRouter.of(context).go('/show',extra: item);
+            GoRouter.of(context).go('/show', extra: item);
           },
         );
       },
