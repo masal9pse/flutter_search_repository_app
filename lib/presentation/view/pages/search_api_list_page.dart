@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/application_services/config/app_error_message.dart';
 import 'package:flutter_engineer_codecheck/application_services/const/app_key_name.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_engineer_codecheck/application_services/state/search_api
 import 'package:flutter_engineer_codecheck/application_services/const/enum/response_enum.dart';
 import 'package:flutter_engineer_codecheck/domain/model/app_state.dart';
 import 'package:flutter_engineer_codecheck/domain/model/search_api_model.dart';
+import 'package:flutter_engineer_codecheck/presentation/router/router.gr.dart';
 import 'package:flutter_engineer_codecheck/presentation/theme_extention.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/device_center_widget.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/texts/normal_text.dart';
@@ -14,10 +16,10 @@ import 'package:flutter_engineer_codecheck/presentation/view/components/organism
     as search;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 /// トップページ
+@RoutePage()
 class SearchApiListPage extends HookConsumerWidget {
   const SearchApiListPage({super.key});
   @override
@@ -118,7 +120,7 @@ class _ApiResults extends ConsumerWidget {
           forksCount: forksCount,
           openIssuesCount: openIssuesCount,
           callback: () {
-            GoRouter.of(context).go('/show', extra: item);
+            context.router.push(ApiShowRoute(item: item));
           },
         );
       },
