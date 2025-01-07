@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/application_services/const/enum/response_item_enum.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/molecules/response_icon_count.dart';
@@ -64,7 +65,7 @@ class ResponseDetailCard extends StatelessWidget {
                   icon: ResponseItemEnum.forksCount.icon,
                   count: forksCount,
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 8),                
                 ResponseIconCount(
                   icon: ResponseItemEnum.openIssuesCount.icon,
                   count: openIssuesCount,

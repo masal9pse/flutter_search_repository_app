@@ -20,6 +20,10 @@ class ApiShowPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final item = ref.watch(searchApiListPageNotifierProvider);
+    // final a = context.router.canPop();
+    // final b = context.router.maybePop().then((value) {
+    //   print(123);
+    // });
     final owner = item.owner;
     final avatarUrl = owner.avatarUrl;
     final name = item.name;
