@@ -64,7 +64,7 @@ class ResponseDetailCard extends StatelessWidget {
                   icon: ResponseItemEnum.forksCount.icon,
                   count: forksCount,
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 8),                
                 ResponseIconCount(
                   icon: ResponseItemEnum.openIssuesCount.icon,
                   count: openIssuesCount,
