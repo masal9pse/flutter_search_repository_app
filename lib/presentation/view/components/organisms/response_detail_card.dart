@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/application_services/const/enum/response_item_enum.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/molecules/response_icon_count.dart';
