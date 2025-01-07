@@ -8,7 +8,21 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(page: SearchApiListRoute.page, initial: true),
+        // AutoRoute(page: SearchApiListRoute.page, initial: true),
+        AutoRoute(
+          path: '/',
+          page: RootRoute.page,
+          children: [
+            AutoRoute(
+              path: 'home',
+              page: SearchApiListRoute.page,
+            ),
+            AutoRoute(
+              path: 'mypage',
+              page: MyRoute.page,
+            ),
+          ],
+        ),
         AutoRoute(page: ApiShowRoute.page),
-    ];
+  ];
 }
