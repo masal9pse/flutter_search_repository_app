@@ -49,6 +49,13 @@ class SearchApiListPage extends HookConsumerWidget {
                 padding: const EdgeInsets.only(top: 15),
                 child: Column(
                   children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        context.navigateTo(FavoriteRoute());
+                        // context.router.push(FavoriteRoute()); // これをいいね詳細にならない
+                      },
+                      child: Text('お気に入り'),
+                    ),
                     search.SearchBar(
                       controller: textEditingController,
                       callback: () async {

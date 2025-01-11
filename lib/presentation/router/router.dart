@@ -16,6 +16,9 @@ class AppRouter extends RootStackRouter {
             AutoRoute(
               path: 'home',
               page: SearchApiListRoute.page,
+              children: [
+                AutoRoute(page: FavoriteRoute.page),
+              ],
             ),
             AutoRoute(
               path: 'mypage',
