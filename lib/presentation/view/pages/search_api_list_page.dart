@@ -18,6 +18,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+@RoutePage()
+class HomeRouterPage extends AutoRouter {
+  const HomeRouterPage({super.key});
+}
+
 /// トップページ
 @RoutePage()
 class SearchApiListPage extends HookConsumerWidget {
@@ -49,6 +54,13 @@ class SearchApiListPage extends HookConsumerWidget {
                 padding: const EdgeInsets.only(top: 15),
                 child: Column(
                   children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        context.navigateTo(FavoriteRoute());
+                        // context.router.push(FavoriteRoute()); // これをいいね詳細にならない
+                      },
+                      child: Text('お気に入り1'),
+                    ),
                     search.SearchBar(
                       controller: textEditingController,
                       callback: () async {
@@ -72,6 +84,13 @@ class SearchApiListPage extends HookConsumerWidget {
                       Error(exception: final error) =>
                         Text(createErrorMessage(error, context)),
                     },
+                    ElevatedButton(
+                      onPressed: () {
+                        context.navigateTo(FavoriteRoute());
+                        // context.router.push(FavoriteRoute()); // これをいいね詳細にならない
+                      },
+                      child: Text('お気に入り2'),
+                    ),
                   ],
                 ),
               ),
@@ -120,7 +139,8 @@ class _ApiResults extends ConsumerWidget {
           forksCount: forksCount,
           openIssuesCount: openIssuesCount,
           callback: () {
-            context.router.push(ApiShowRoute(item: item));
+            // context.router.push(ApiShowRoute(name: item.name));
+            context.navigateTo(ApiShowRoute(name: item.name));
           },
         );
       },
