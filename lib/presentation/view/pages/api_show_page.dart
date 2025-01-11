@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+// @RoutePage()
+// class ApiShowRouterPage extends AutoRouter {
+//   const ApiShowRouterPage({super.key});
+// }
+
 /// 詳細ページ
 @RoutePage()
 class ApiShowPage extends ConsumerWidget {
