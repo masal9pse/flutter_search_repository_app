@@ -17,11 +17,11 @@ import 'package:flutter_engineer_codecheck/presentation/view/pages/api_show_page
 import 'package:flutter_engineer_codecheck/presentation/view/pages/favorite_page.dart'
     as _i2;
 import 'package:flutter_engineer_codecheck/presentation/view/pages/my_page.dart'
-    as _i3;
-import 'package:flutter_engineer_codecheck/presentation/view/pages/root_page.dart'
     as _i4;
-import 'package:flutter_engineer_codecheck/presentation/view/pages/search_api_list_page.dart'
+import 'package:flutter_engineer_codecheck/presentation/view/pages/root_page.dart'
     as _i5;
+import 'package:flutter_engineer_codecheck/presentation/view/pages/search_api_list_page.dart'
+    as _i3;
 
 /// generated route for
 /// [_i1.ApiShowPage]
@@ -89,7 +89,26 @@ class FavoriteRoute extends _i6.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i3.MyPage]
+/// [_i3.HomeRouterPage]
+class HomeRouterRoute extends _i6.PageRouteInfo<void> {
+  const HomeRouterRoute({List<_i6.PageRouteInfo>? children})
+      : super(
+          HomeRouterRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HomeRouterRoute';
+
+  static _i6.PageInfo page = _i6.PageInfo(
+    name,
+    builder: (data) {
+      return const _i3.HomeRouterPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i4.MyPage]
 class MyRoute extends _i6.PageRouteInfo<void> {
   const MyRoute({List<_i6.PageRouteInfo>? children})
       : super(
@@ -102,13 +121,13 @@ class MyRoute extends _i6.PageRouteInfo<void> {
   static _i6.PageInfo page = _i6.PageInfo(
     name,
     builder: (data) {
-      return const _i3.MyPage();
+      return const _i4.MyPage();
     },
   );
 }
 
 /// generated route for
-/// [_i4.RootPage]
+/// [_i5.RootPage]
 class RootRoute extends _i6.PageRouteInfo<void> {
   const RootRoute({List<_i6.PageRouteInfo>? children})
       : super(
@@ -121,13 +140,13 @@ class RootRoute extends _i6.PageRouteInfo<void> {
   static _i6.PageInfo page = _i6.PageInfo(
     name,
     builder: (data) {
-      return const _i4.RootPage();
+      return const _i5.RootPage();
     },
   );
 }
 
 /// generated route for
-/// [_i5.SearchApiListPage]
+/// [_i3.SearchApiListPage]
 class SearchApiListRoute extends _i6.PageRouteInfo<void> {
   const SearchApiListRoute({List<_i6.PageRouteInfo>? children})
       : super(
@@ -140,7 +159,7 @@ class SearchApiListRoute extends _i6.PageRouteInfo<void> {
   static _i6.PageInfo page = _i6.PageInfo(
     name,
     builder: (data) {
-      return const _i5.SearchApiListPage();
+      return const _i3.SearchApiListPage();
     },
   );
 }

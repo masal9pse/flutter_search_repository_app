@@ -8,15 +8,16 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => [
-        // AutoRoute(page: SearchApiListRoute.page, initial: true),
         AutoRoute(
           path: '/',
           page: RootRoute.page,
           children: [
             AutoRoute(
               path: 'home',
-              page: SearchApiListRoute.page,
+              // ページじゃなくてrouteプロパティの方がよくない？
+              page: HomeRouterRoute.page,
               children: [
+                AutoRoute(initial: true, page: SearchApiListRoute.page),
                 AutoRoute(page: FavoriteRoute.page),
               ],
             ),
@@ -27,5 +28,5 @@ class AppRouter extends RootStackRouter {
           ],
         ),
         AutoRoute(page: ApiShowRoute.page),
-  ];
+      ];
 }
