@@ -139,7 +139,7 @@ class _ApiResults extends ConsumerWidget {
           forksCount: forksCount,
           openIssuesCount: openIssuesCount,
           callback: () {
-            context.router.push(ApiShowRoute(item: item));
+            context.router.push(ApiShowRoute(name: item.name));
           },
         );
       },
