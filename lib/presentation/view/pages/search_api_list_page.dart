@@ -29,6 +29,11 @@ class SearchApiListPage extends HookConsumerWidget {
   const SearchApiListPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    useEffect(() {
+      final a = context.router.stack;
+      final v = 3;
+    },[]);
+
     final textEditingController = useTextEditingController();
     final searchApiListPageState = ref.watch(searchApiListPageNotifierProvider);
     final appBarTitleStyle = Theme.of(context).extension<TextStyleExtension>()!;

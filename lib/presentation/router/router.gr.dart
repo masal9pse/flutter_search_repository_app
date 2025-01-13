@@ -8,26 +8,32 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i6;
-import 'package:flutter/material.dart' as _i7;
+import 'package:auto_route/auto_route.dart' as _i9;
+import 'package:flutter/material.dart' as _i10;
 import 'package:flutter_engineer_codecheck/presentation/view/pages/api_show_page.dart'
     as _i1;
 import 'package:flutter_engineer_codecheck/presentation/view/pages/favorite_page.dart'
     as _i2;
 import 'package:flutter_engineer_codecheck/presentation/view/pages/my_page.dart'
     as _i4;
-import 'package:flutter_engineer_codecheck/presentation/view/pages/root_page.dart'
+import 'package:flutter_engineer_codecheck/presentation/view/pages/posts_page.dart'
     as _i5;
+import 'package:flutter_engineer_codecheck/presentation/view/pages/root_page.dart'
+    as _i6;
 import 'package:flutter_engineer_codecheck/presentation/view/pages/search_api_list_page.dart'
     as _i3;
+import 'package:flutter_engineer_codecheck/presentation/view/pages/unknown_page.dart'
+    as _i7;
+import 'package:flutter_engineer_codecheck/presentation/view/pages/users_page.dart'
+    as _i8;
 
 /// generated route for
 /// [_i1.ApiShowPage]
-class ApiShowRoute extends _i6.PageRouteInfo<ApiShowRouteArgs> {
+class ApiShowRoute extends _i9.PageRouteInfo<ApiShowRouteArgs> {
   ApiShowRoute({
-    _i7.Key? key,
+    _i10.Key? key,
     String name = 'masato is god',
-    List<_i6.PageRouteInfo>? children,
+    List<_i9.PageRouteInfo>? children,
   }) : super(
           ApiShowRoute.name,
           args: ApiShowRouteArgs(
@@ -40,7 +46,7 @@ class ApiShowRoute extends _i6.PageRouteInfo<ApiShowRouteArgs> {
 
   static const String name = 'ApiShowRoute';
 
-  static _i6.PageInfo page = _i6.PageInfo(
+  static _i9.PageInfo page = _i9.PageInfo(
     name,
     builder: (data) {
       final queryParams = data.queryParams;
@@ -64,7 +70,7 @@ class ApiShowRouteArgs {
     this.name = 'masato is god',
   });
 
-  final _i7.Key? key;
+  final _i10.Key? key;
 
   final String name;
 
@@ -76,8 +82,8 @@ class ApiShowRouteArgs {
 
 /// generated route for
 /// [_i2.FavoritePage]
-class FavoriteRoute extends _i6.PageRouteInfo<void> {
-  const FavoriteRoute({List<_i6.PageRouteInfo>? children})
+class FavoriteRoute extends _i9.PageRouteInfo<void> {
+  const FavoriteRoute({List<_i9.PageRouteInfo>? children})
       : super(
           FavoriteRoute.name,
           initialChildren: children,
@@ -85,7 +91,7 @@ class FavoriteRoute extends _i6.PageRouteInfo<void> {
 
   static const String name = 'FavoriteRoute';
 
-  static _i6.PageInfo page = _i6.PageInfo(
+  static _i9.PageInfo page = _i9.PageInfo(
     name,
     builder: (data) {
       return const _i2.FavoritePage();
@@ -95,8 +101,8 @@ class FavoriteRoute extends _i6.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.HomeRouterPage]
-class HomeRouterRoute extends _i6.PageRouteInfo<void> {
-  const HomeRouterRoute({List<_i6.PageRouteInfo>? children})
+class HomeRouterRoute extends _i9.PageRouteInfo<void> {
+  const HomeRouterRoute({List<_i9.PageRouteInfo>? children})
       : super(
           HomeRouterRoute.name,
           initialChildren: children,
@@ -104,7 +110,7 @@ class HomeRouterRoute extends _i6.PageRouteInfo<void> {
 
   static const String name = 'HomeRouterRoute';
 
-  static _i6.PageInfo page = _i6.PageInfo(
+  static _i9.PageInfo page = _i9.PageInfo(
     name,
     builder: (data) {
       return const _i3.HomeRouterPage();
@@ -114,8 +120,8 @@ class HomeRouterRoute extends _i6.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.MyPage]
-class MyRoute extends _i6.PageRouteInfo<void> {
-  const MyRoute({List<_i6.PageRouteInfo>? children})
+class MyRoute extends _i9.PageRouteInfo<void> {
+  const MyRoute({List<_i9.PageRouteInfo>? children})
       : super(
           MyRoute.name,
           initialChildren: children,
@@ -123,7 +129,7 @@ class MyRoute extends _i6.PageRouteInfo<void> {
 
   static const String name = 'MyRoute';
 
-  static _i6.PageInfo page = _i6.PageInfo(
+  static _i9.PageInfo page = _i9.PageInfo(
     name,
     builder: (data) {
       return const _i4.MyPage();
@@ -132,9 +138,28 @@ class MyRoute extends _i6.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i5.RootPage]
-class RootRoute extends _i6.PageRouteInfo<void> {
-  const RootRoute({List<_i6.PageRouteInfo>? children})
+/// [_i5.PostsPage]
+class PostsRoute extends _i9.PageRouteInfo<void> {
+  const PostsRoute({List<_i9.PageRouteInfo>? children})
+      : super(
+          PostsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PostsRoute';
+
+  static _i9.PageInfo page = _i9.PageInfo(
+    name,
+    builder: (data) {
+      return const _i5.PostsPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i6.RootPage]
+class RootRoute extends _i9.PageRouteInfo<void> {
+  const RootRoute({List<_i9.PageRouteInfo>? children})
       : super(
           RootRoute.name,
           initialChildren: children,
@@ -142,18 +167,18 @@ class RootRoute extends _i6.PageRouteInfo<void> {
 
   static const String name = 'RootRoute';
 
-  static _i6.PageInfo page = _i6.PageInfo(
+  static _i9.PageInfo page = _i9.PageInfo(
     name,
     builder: (data) {
-      return const _i5.RootPage();
+      return const _i6.RootPage();
     },
   );
 }
 
 /// generated route for
 /// [_i3.SearchApiListPage]
-class SearchApiListRoute extends _i6.PageRouteInfo<void> {
-  const SearchApiListRoute({List<_i6.PageRouteInfo>? children})
+class SearchApiListRoute extends _i9.PageRouteInfo<void> {
+  const SearchApiListRoute({List<_i9.PageRouteInfo>? children})
       : super(
           SearchApiListRoute.name,
           initialChildren: children,
@@ -161,10 +186,48 @@ class SearchApiListRoute extends _i6.PageRouteInfo<void> {
 
   static const String name = 'SearchApiListRoute';
 
-  static _i6.PageInfo page = _i6.PageInfo(
+  static _i9.PageInfo page = _i9.PageInfo(
     name,
     builder: (data) {
       return const _i3.SearchApiListPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i7.UnknownPage]
+class UnknownRoute extends _i9.PageRouteInfo<void> {
+  const UnknownRoute({List<_i9.PageRouteInfo>? children})
+      : super(
+          UnknownRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'UnknownRoute';
+
+  static _i9.PageInfo page = _i9.PageInfo(
+    name,
+    builder: (data) {
+      return const _i7.UnknownPage();
+    },
+  );
+}
+
+/// generated route for
+/// [_i8.UsersPage]
+class UsersRoute extends _i9.PageRouteInfo<void> {
+  const UsersRoute({List<_i9.PageRouteInfo>? children})
+      : super(
+          UsersRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'UsersRoute';
+
+  static _i9.PageInfo page = _i9.PageInfo(
+    name,
+    builder: (data) {
+      return const _i8.UsersPage();
     },
   );
 }
