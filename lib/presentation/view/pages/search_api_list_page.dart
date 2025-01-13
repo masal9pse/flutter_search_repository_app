@@ -108,6 +108,12 @@ class SearchApiListPage extends HookConsumerWidget {
                       },
                       child: Text('try AutoTabsRouter.pageView'),
                     ),
+                    ElevatedButton(
+                      onPressed: () {
+                        context.router.push(UpperDashboardRouterRoute());
+                      },
+                      child: Text('try AutoTabsRouter.tabBar'),
+                    ),
                   ],
                 ),
               ),

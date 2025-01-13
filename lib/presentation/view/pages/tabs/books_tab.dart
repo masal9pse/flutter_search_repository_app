@@ -7,10 +7,11 @@ class BooksTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('book tab'),
-      ),
-    );
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: const Text('book tab'),
+    //   ),
+    // );
+    return Center(child: Text('book tab'));
   }
 }
