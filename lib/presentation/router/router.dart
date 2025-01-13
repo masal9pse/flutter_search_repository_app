@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_engineer_codecheck/presentation/router/router.gr.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/pages/swipe_router.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/pages/upper_dashboard_page.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Page,Route')
 class AppRouter extends RootStackRouter {
@@ -21,35 +23,41 @@ class AppRouter extends RootStackRouter {
                 AutoRoute(
                   initial: true,
                   page: SearchApiListRoute.page,
-                  // children: [
-                  //   AutoRoute(page: ApiShowRoute.page),
-                  // ]        
-                  // children: [ // URLが表示されるだけ
-                  //   AutoRoute(
-                  //     page: ApiShowRouterRoute.page,
-                  //     children: [
-                  //       AutoRoute(page: ApiShowRoute.page),
-                  //     ],
-                  //   ),
-                  // ],
                 ),
-                // AutoRoute(
-                //   page: ApiShowRouterRoute.page,
-                //   children: [
-                //     AutoRoute(page: ApiShowRoute.page),
-                //   ],
-                // ),
                 // TODO: webで直接リンクから詳細画面に遷移する際に、戻るボタンを押すと一覧画面に遷移したい。
-                AutoRoute(page: ApiShowRoute.page), // 遷移するが、一覧と同じ階層なので戻る対応はできない。
+                AutoRoute(
+                  page: ApiShowRoute.page,
+                ), // 遷移するが、一覧と同じ階層なので戻る対応はできない。
                 AutoRoute(page: FavoriteRoute.page),
               ],
             ),
             AutoRoute(
-              path: 'mypage',
+              // path: 'mypage',
               page: MyRoute.page,
             ),
           ],
         ),
-        // AutoRoute(page: ApiShowRoute.page),
+        AutoRoute(
+          page: DashboardRouterRoute.page,
+          children: [
+            AutoRoute(page: UsersRoute.page),
+            AutoRoute(page: PostsRoute.page),
+          ],
+        ),
+        AutoRoute(
+          page: SwipeRoute.page,
+          children: [
+            AutoRoute(page: BooksTab.page),
+            AutoRoute(page: ProfileTab.page),
+          ],
+        ),
+        AutoRoute(
+          page: UpperDashboardRouterRoute.page,
+          children: [
+            AutoRoute(page: BooksTab.page),
+            AutoRoute(page: ProfileTab.page),
+            AutoRoute(page: SettingsTab.page),
+          ],
+        ),
       ];
 }

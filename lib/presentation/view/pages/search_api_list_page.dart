@@ -14,6 +14,7 @@ import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/te
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/response_detail_card.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/search_bar.dart'
     as search;
+import 'package:flutter_engineer_codecheck/presentation/view/pages/swipe_router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -91,6 +92,28 @@ class SearchApiListPage extends HookConsumerWidget {
                       },
                       child: Text('お気に入り2'),
                     ),
+                    ElevatedButton(
+                      onPressed: () {
+                        // context.navigateTo(DashboardRouterRoute());
+                        context.navigateTo(DashboardRouterRoute(children: [PostsRoute(id: 3)]));
+                        // context.router.push(FavoriteRoute()); // これをいいね詳細にならない
+                      },
+                      child: Text('tab'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        // context.navigateTo(DashboardRouterRoute());
+                        context.navigateTo(SwipeRoute());
+                        // context.router.push(FavoriteRoute()); // これをいいね詳細にならない
+                      },
+                      child: Text('try AutoTabsRouter.pageView'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        context.router.push(UpperDashboardRouterRoute());
+                      },
+                      child: Text('try AutoTabsRouter.tabBar'),
+                    ),
                   ],
                 ),
               ),
@@ -139,8 +162,9 @@ class _ApiResults extends ConsumerWidget {
           forksCount: forksCount,
           openIssuesCount: openIssuesCount,
           callback: () {
-            // context.router.push(ApiShowRoute(name: item.name));
-            context.navigateTo(ApiShowRoute(name: item.name));
+            context.router.push(ApiShowRoute(name: item.name));
+            // context.navigateTo(ApiShowRoute(name: item.name));
+            // context.router.navigate(ApiShowRouterRoute());
           },
         );
       },
