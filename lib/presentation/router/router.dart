@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_engineer_codecheck/presentation/router/router.gr.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/pages/swipe_router.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Page,Route')
 class AppRouter extends RootStackRouter {
@@ -40,6 +41,13 @@ class AppRouter extends RootStackRouter {
           children: [
             AutoRoute(page: UsersRoute.page),
             AutoRoute(page: PostsRoute.page),
+          ],
+        ),
+        AutoRoute(
+          page: SwipeRoute.page,
+          children: [
+            AutoRoute(page: BooksTab.page),
+            AutoRoute(page: ProfileTab.page),
           ],
         )
       ];
