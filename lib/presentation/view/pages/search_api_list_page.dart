@@ -93,7 +93,8 @@ class SearchApiListPage extends HookConsumerWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        context.navigateTo(DashboardRouterRoute());
+                        // context.navigateTo(DashboardRouterRoute());
+                        context.navigateTo(DashboardRouterRoute(children: [PostsRoute(id: 3)]));
                         // context.router.push(FavoriteRoute()); // これをいいね詳細にならない
                       },
                       child: Text('tab'),

@@ -113,7 +113,7 @@ class DashboardRouterRoute extends _i9.PageRouteInfo<void> {
   static _i9.PageInfo page = _i9.PageInfo(
     name,
     builder: (data) {
-      return _i2.DashboardRouterPage();
+      return const _i2.DashboardRouterPage();
     },
   );
 }
@@ -177,10 +177,17 @@ class MyRoute extends _i9.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.PostsPage]
-class PostsRoute extends _i9.PageRouteInfo<void> {
-  const PostsRoute({List<_i9.PageRouteInfo>? children})
-      : super(
+class PostsRoute extends _i9.PageRouteInfo<PostsRouteArgs> {
+  PostsRoute({
+    _i10.Key? key,
+    int id = -1,
+    List<_i9.PageRouteInfo>? children,
+  }) : super(
           PostsRoute.name,
+          args: PostsRouteArgs(
+            key: key,
+            id: id,
+          ),
           initialChildren: children,
         );
 
@@ -189,9 +196,30 @@ class PostsRoute extends _i9.PageRouteInfo<void> {
   static _i9.PageInfo page = _i9.PageInfo(
     name,
     builder: (data) {
-      return const _i6.PostsPage();
+      final args =
+          data.argsAs<PostsRouteArgs>(orElse: () => const PostsRouteArgs());
+      return _i6.PostsPage(
+        key: args.key,
+        id: args.id,
+      );
     },
   );
+}
+
+class PostsRouteArgs {
+  const PostsRouteArgs({
+    this.key,
+    this.id = -1,
+  });
+
+  final _i10.Key? key;
+
+  final int id;
+
+  @override
+  String toString() {
+    return 'PostsRouteArgs{key: $key, id: $id}';
+  }
 }
 
 /// generated route for

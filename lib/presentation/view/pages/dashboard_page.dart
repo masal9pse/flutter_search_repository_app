@@ -9,8 +9,8 @@ class DashboardRouterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
-      routes: const [
-        UsersRoute(),
+      routes: [
+        const UsersRoute(),
         PostsRoute(),
         // SettingsRoute(),
       ],
