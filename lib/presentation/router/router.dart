@@ -36,15 +36,17 @@ class AppRouter extends RootStackRouter {
         // RootRoute >> ApiShowRoute
         // 親ルーターとして、RootStackRooterを取得する、RootStackRooterから子ルータを見つけられる。
         //　つまりぶら下がっているのはRootRoute >> ApiShowRoute、router.stackで確認できる。
-        // AutoRoute(
-        //   path: '/dashboard',
-        //   page: DashboardRoute.page,
-        //   children: [
-        //     AutoRoute(path: 'users', page: UsersRoute.page),
-        //     AutoRoute(path: 'posts', page: PostsRoute.page),
-        //     // AutoRoute(path: 'settings', page: SettingsRoute.page),
-        //   ],
-        // ),
+        AutoRoute(
+          path: '/dashboard',
+          page: DashboardRoute.page,
+          children: [
+            // AutoRoute(path: 'users', page: UsersRoute.page,initial: true),
+            AutoRoute(path: 'users', page: UsersRoute.page),
+            // AutoRoute(path: 'posts', page: PostsRoute.page),
+            AutoRoute(path: 'posts', page: PostsRoute.page,initial: true),
+            // AutoRoute(path: 'settings', page: SettingsRoute.page),
+          ],
+        ),
         // AutoRoute(path: '/login', page: LoginRoute.page),
         AutoRoute(
           path: '*',
