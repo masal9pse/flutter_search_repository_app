@@ -91,6 +91,13 @@ class SearchApiListPage extends HookConsumerWidget {
                       },
                       child: Text('お気に入り2'),
                     ),
+                    ElevatedButton(
+                      onPressed: () {
+                        context.navigateTo(DashboardRouterRoute());
+                        // context.router.push(FavoriteRoute()); // これをいいね詳細にならない
+                      },
+                      child: Text('tab'),
+                    ),
                   ],
                 ),
               ),
@@ -139,8 +146,9 @@ class _ApiResults extends ConsumerWidget {
           forksCount: forksCount,
           openIssuesCount: openIssuesCount,
           callback: () {
-            // context.router.push(ApiShowRoute(name: item.name));
-            context.navigateTo(ApiShowRoute(name: item.name));
+            context.router.push(ApiShowRoute(name: item.name));
+            // context.navigateTo(ApiShowRoute(name: item.name));
+            // context.router.navigate(ApiShowRouterRoute());
           },
         );
       },

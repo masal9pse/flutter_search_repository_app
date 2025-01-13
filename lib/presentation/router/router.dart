@@ -21,35 +21,26 @@ class AppRouter extends RootStackRouter {
                 AutoRoute(
                   initial: true,
                   page: SearchApiListRoute.page,
-                  // children: [
-                  //   AutoRoute(page: ApiShowRoute.page),
-                  // ]        
-                  // children: [ // URLが表示されるだけ
-                  //   AutoRoute(
-                  //     page: ApiShowRouterRoute.page,
-                  //     children: [
-                  //       AutoRoute(page: ApiShowRoute.page),
-                  //     ],
-                  //   ),
-                  // ],
                 ),
-                // AutoRoute(
-                //   page: ApiShowRouterRoute.page,
-                //   children: [
-                //     AutoRoute(page: ApiShowRoute.page),
-                //   ],
-                // ),
                 // TODO: webで直接リンクから詳細画面に遷移する際に、戻るボタンを押すと一覧画面に遷移したい。
-                AutoRoute(page: ApiShowRoute.page), // 遷移するが、一覧と同じ階層なので戻る対応はできない。
+                AutoRoute(
+                  page: ApiShowRoute.page,
+                ), // 遷移するが、一覧と同じ階層なので戻る対応はできない。
                 AutoRoute(page: FavoriteRoute.page),
               ],
             ),
             AutoRoute(
-              path: 'mypage',
+              // path: 'mypage',
               page: MyRoute.page,
             ),
           ],
         ),
-        // AutoRoute(page: ApiShowRoute.page),
+        AutoRoute(
+          page: DashboardRouterRoute.page,
+          children: [
+            AutoRoute(page: UsersRoute.page),
+            AutoRoute(page: PostsRoute.page),
+          ],
+        )
       ];
 }
