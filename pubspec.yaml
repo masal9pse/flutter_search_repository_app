@@ -23,6 +23,7 @@ dependencies:
   retrofit: ^4.4.2
   flutter_dotenv: ^5.2.1
   auto_route: ^9.2.2
+  app_links: ^6.3.3
 
 dev_dependencies:
   flutter_test:
