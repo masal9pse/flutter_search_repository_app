@@ -14,33 +14,35 @@ class App extends StatelessWidget {
   const App({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MyHomePage(),
-    );
-    // return MaterialApp.router(
-    //   routerConfig: _appRouter.config(
-    //     navigatorObservers: () => [MyObserver()],
-    //   ),
-    //   localizationsDelegates: const [
-    //     AppLocalizations.delegate,
-    //     GlobalMaterialLocalizations.delegate,
-    //     GlobalWidgetsLocalizations.delegate,
-    //     GlobalCupertinoLocalizations.delegate,
-    //   ],
-    //   supportedLocales: const [
-    //     Locale('en'),
-    //     Locale('ja'),
-    //   ],
-    //   theme: ThemeData(
-    //     colorSchemeSeed: Colors.blue,
-    //     extensions: [TextStyleExtension(color: Colors.red, fontSize: 30)],
-    //   ),
-    //   darkTheme: ThemeData(
-    //     colorSchemeSeed: Colors.blue,
-    //     brightness: Brightness.dark,
-    //     extensions: [TextStyleExtension(color: Colors.blue, fontSize: 30)],
-    //   ),
+    // deeplink check
+    // return MaterialApp(
+    //   home: MyHomePage(),
     // );
+
+    return MaterialApp.router(
+      routerConfig: _appRouter.config(
+        navigatorObservers: () => [MyObserver()],
+      ),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ja'),
+      ],
+      theme: ThemeData(
+        colorSchemeSeed: Colors.blue,
+        extensions: [TextStyleExtension(color: Colors.red, fontSize: 30)],
+      ),
+      darkTheme: ThemeData(
+        colorSchemeSeed: Colors.blue,
+        brightness: Brightness.dark,
+        extensions: [TextStyleExtension(color: Colors.blue, fontSize: 30)],
+      ),
+    );
   }
 }
 
