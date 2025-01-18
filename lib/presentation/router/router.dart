@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_engineer_codecheck/presentation/router/router.gr.dart';
-import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/sheet.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:sheet/route.dart';
+// import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/sheet.dart';
+// import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+// import 'package:sheet/route.dart';
+import 'package:sheet/sheet.dart';
 // import 'package:flutter_engineer_codecheck/presentation/view/pages/swipe_router.dart';
 // import 'package:flutter_engineer_codecheck/presentation/view/pages/upper_dashboard_page.dart';
 
@@ -92,23 +95,20 @@ class AppRouter extends RootStackRouter {
         //     // },
         //   )
         // ])
-        AutoRoute(page: HomeRoute.page, initial: true),
+        CustomRoute(
+          page: HomeRoute.page,
+          initial: true,
+          customRouteBuilder: <T>(context, child, page) {
+            return CupertinoExtendedPageRoute(
+              settings: page,
+              builder: (_) => child,
+            );
+          },
+        ),
         CustomRoute(
           page: SheetSampleRoute.page,
           customRouteBuilder: modalSheetBuilder,
         ),
-
-        // CustomRoute(
-        //   page: SheetSampleRoute.page,
-        //   customRouteBuilder: <T>(context, child, page) {
-        //     return CupertinoSheetRoute(
-        //       settings: page,
-        //       builder: (_) {
-        //         return child;
-        //       },
-        //     );
-        //   },
-        // )
       ];
 }
 
@@ -117,13 +117,8 @@ Route<T> modalSheetBuilder<T>(
   Widget child,
   RouteSettings page,
 ) {
-  return CupertinoModalBottomSheetRoute(
+  return CupertinoSheetRoute(
     settings: page,
-    builder: (_) => child,
-    expanded: false,
+    builder: (context) => child,
   );
 }
-
-// void a() {
-//   CupertinoModalBottomSheetRoute
-// }
