@@ -21,8 +21,8 @@ class CupertinoSheetApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return const CupertinoApp(title: 'Cupertino Sheet', home: HomePage());
-    return const MaterialApp(title: 'Cupertino Sheet', home: HomePage());
+    return const CupertinoApp(title: 'Cupertino Sheet', home: HomePage());
+    // return const MaterialApp(title: 'Cupertino Sheet', home: HomePage());
   }
 }
 
@@ -31,9 +31,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text('aaaa'),),
-        body: Center(
+    return CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(),
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -87,11 +87,11 @@ class _SheetScaffold extends StatelessWidget {
             const Text('You can also close this sheet by dragging downwards'),
             CupertinoButton.filled(
               onPressed: () {
-                // Navigator.of(context).push(
-                //   CupertinoSheetRoute<void>(
-                //     builder: (BuildContext context) => const _SheetScaffold(),
-                //   ),
-                // );
+                Navigator.of(context).push(
+                  CupertinoSheetRoute<void>(
+                    builder: (BuildContext context) => const _SheetScaffold(),
+                  ),
+                );
               },
               child: const Text('Push Another Sheet'),
             ),
