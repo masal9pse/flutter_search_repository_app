@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_engineer_codecheck/presentation/router/router.gr.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/sheet.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 // import 'package:flutter_engineer_codecheck/presentation/view/pages/swipe_router.dart';
 // import 'package:flutter_engineer_codecheck/presentation/view/pages/upper_dashboard_page.dart';
 
@@ -76,22 +77,27 @@ class AppRouter extends RootStackRouter {
         //       // customRouteBuilder: modalSheetBuilder,
         //   )
         // ]),
-        AutoRoute(page: HomeRouterRoute.page,initial: true, children: [
-          AutoRoute(page: HomeRoute.page, initial: true),
-          CustomRoute(
-            page: SheetSampleRoute.page,
-            customRouteBuilder: modalSheetBuilder
-            // customRouteBuilder: <T>(context, child, page) {
-            //   return CupertinoSheetRoute(
-            //     settings: page,
-            //     builder: (_) {
-            //       return child;
-            //     },
-            //   );
-            // },
-          )
-        ])
-        // AutoRoute(page: HomeRoute.page, initial: true),
+        // AutoRoute(page: HomeRouterRoute.page,initial: true, children: [
+        //   AutoRoute(page: HomeRoute.page, initial: true),
+        //   CustomRoute(
+        //     page: SheetSampleRoute.page,
+        //     customRouteBuilder: modalSheetBuilder
+        //     // customRouteBuilder: <T>(context, child, page) {
+        //     //   return CupertinoSheetRoute(
+        //     //     settings: page,
+        //     //     builder: (_) {
+        //     //       return child;
+        //     //     },
+        //     //   );
+        //     // },
+        //   )
+        // ])
+        AutoRoute(page: HomeRoute.page, initial: true),
+        CustomRoute(
+          page: SheetSampleRoute.page,
+          customRouteBuilder: modalSheetBuilder,
+        ),
+
         // CustomRoute(
         //   page: SheetSampleRoute.page,
         //   customRouteBuilder: <T>(context, child, page) {
@@ -111,8 +117,13 @@ Route<T> modalSheetBuilder<T>(
   Widget child,
   RouteSettings page,
 ) {
-  return CupertinoSheetRoute(
+  return CupertinoModalBottomSheetRoute(
     settings: page,
     builder: (_) => child,
+    expanded: false,
   );
 }
+
+// void a() {
+//   CupertinoModalBottomSheetRoute
+// }

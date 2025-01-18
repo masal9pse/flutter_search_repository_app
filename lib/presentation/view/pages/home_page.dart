@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/presentation/router/router.gr.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/sheet.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 // class EmptyRouterPage extends 
 @RoutePage()
@@ -16,12 +17,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-        navigationBar: const CupertinoNavigationBar(
-          middle: Text('Sheet Example'),
-          automaticBackgroundVisibility: false,
-        ),
-        child: Center(
+    // return CupertinoPageScaffold(
+    return CupertinoScaffold(
+        // navigationBar: const CupertinoNavigationBar(
+        //   middle: Text('Sheet Example'),
+        //   automaticBackgroundVisibility: false,
+        // ),
+        body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

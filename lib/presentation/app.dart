@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app_links/app_links.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/presentation/router/route_observer.dart';
 import 'package:flutter_engineer_codecheck/presentation/router/router.dart';
@@ -19,7 +20,8 @@ class App extends StatelessWidget {
     //   home: MyHomePage(),
     // );
 
-    return MaterialApp.router(
+    // return MaterialApp.router(
+    return CupertinoApp.router(
       routerConfig: _appRouter.config(
         navigatorObservers: () => [MyObserver()],
       ),
@@ -33,15 +35,15 @@ class App extends StatelessWidget {
         Locale('en'),
         Locale('ja'),
       ],
-      theme: ThemeData(
-        colorSchemeSeed: Colors.blue,
-        extensions: [TextStyleExtension(color: Colors.red, fontSize: 30)],
-      ),
-      darkTheme: ThemeData(
-        colorSchemeSeed: Colors.blue,
-        brightness: Brightness.dark,
-        extensions: [TextStyleExtension(color: Colors.blue, fontSize: 30)],
-      ),
+      // theme: ThemeData(
+      //   colorSchemeSeed: Colors.blue,
+      //   extensions: [TextStyleExtension(color: Colors.red, fontSize: 30)],
+      // ),
+      // darkTheme: ThemeData(
+      //   colorSchemeSeed: Colors.blue,
+      //   brightness: Brightness.dark,
+      //   extensions: [TextStyleExtension(color: Colors.blue, fontSize: 30)],
+      // ),
     );
   }
 }
