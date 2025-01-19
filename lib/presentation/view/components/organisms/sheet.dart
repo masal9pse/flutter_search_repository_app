@@ -96,6 +96,8 @@ class CupertinoSheetTransition extends StatefulWidget {
   ///
   /// If a [CupertinoSheetRoute] already exists in the stack, then it will
   /// slide the previous sheet upwards instead.
+  /// 
+  /// コメント全部消して空コンテナを返して動作確認するとベースの後ろの画面が消えた。
   static Widget delegateTransition(
     BuildContext context,
     Animation<double> animation,
@@ -103,64 +105,65 @@ class CupertinoSheetTransition extends StatefulWidget {
     bool allowSnapshotting,
     Widget? child,
   ) {
-    if (CupertinoSheetRoute.hasParentSheet(context)) {
-      return _delegatedCoverSheetSecondaryTransition(secondaryAnimation, child);
-    }
-    final bool linear = Navigator.of(context).userGestureInProgress;
+    return Container();
+    // if (CupertinoSheetRoute.hasParentSheet(context)) {
+    //   return _delegatedCoverSheetSecondaryTransition(secondaryAnimation, child);
+    // }
+    // final bool linear = Navigator.of(context).userGestureInProgress;
 
-    final Curve curve = linear ? Curves.linear : Curves.linearToEaseOut;
-    final Curve reverseCurve = linear ? Curves.linear : Curves.easeInToLinear;
-    final CurvedAnimation curvedAnimation = CurvedAnimation(
-      curve: curve,
-      reverseCurve: reverseCurve,
-      parent: secondaryAnimation,
-    );
-    final double deviceCornerRadius = MediaQuery.maybeViewPaddingOf(context)?.top ?? 0;
+    // final Curve curve = linear ? Curves.linear : Curves.linearToEaseOut;
+    // final Curve reverseCurve = linear ? Curves.linear : Curves.easeInToLinear;
+    // final CurvedAnimation curvedAnimation = CurvedAnimation(
+    //   curve: curve,
+    //   reverseCurve: reverseCurve,
+    //   parent: secondaryAnimation,
+    // );
+    // final double deviceCornerRadius = MediaQuery.maybeViewPaddingOf(context)?.top ?? 0;
 
-    final Animatable<BorderRadiusGeometry> decorationTween = Tween<BorderRadiusGeometry>(
-      begin: BorderRadius.circular(deviceCornerRadius),
-      end: BorderRadius.circular(12),
-    );
+    // final Animatable<BorderRadiusGeometry> decorationTween = Tween<BorderRadiusGeometry>(
+    //   begin: BorderRadius.circular(deviceCornerRadius),
+    //   end: BorderRadius.circular(12),
+    // );
 
-    final Animation<BorderRadiusGeometry> radiusAnimation = curvedAnimation.drive(decorationTween);
-    final Animation<double> opacityAnimation = curvedAnimation.drive(_kOpacityTween);
-    final Animation<Offset> slideAnimation = curvedAnimation.drive(_kTopDownTween);
-    final Animation<double> scaleAnimation = curvedAnimation.drive(_kScaleTween);
-    curvedAnimation.dispose();
+    // final Animation<BorderRadiusGeometry> radiusAnimation = curvedAnimation.drive(decorationTween);
+    // final Animation<double> opacityAnimation = curvedAnimation.drive(_kOpacityTween);
+    // final Animation<Offset> slideAnimation = curvedAnimation.drive(_kTopDownTween);
+    // final Animation<double> scaleAnimation = curvedAnimation.drive(_kScaleTween);
+    // curvedAnimation.dispose();
 
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
-    final bool isDarkMode = CupertinoTheme.brightnessOf(context) == Brightness.dark;
-    final Color overlayColor = isDarkMode ? const Color(0xFFc8c8c8) : const Color(0xFF000000);
+    // final bool isDarkMode = CupertinoTheme.brightnessOf(context) == Brightness.dark;
+    // final Color overlayColor = isDarkMode ? const Color(0xFFc8c8c8) : const Color(0xFF000000);
 
-    final Widget? contrastedChild =
-        child != null && !secondaryAnimation.isDismissed
-            ? Stack(
-              children: <Widget>[
-                child,
-                FadeTransition(
-                  opacity: opacityAnimation,
-                  child: ColoredBox(color: overlayColor, child: const SizedBox.expand()),
-                ),
-              ],
-            )
-            : child;
+    // final Widget? contrastedChild =
+    //     child != null && !secondaryAnimation.isDismissed
+    //         ? Stack(
+    //           children: <Widget>[
+    //             child,
+    //             FadeTransition(
+    //               opacity: opacityAnimation,
+    //               child: ColoredBox(color: overlayColor, child: const SizedBox.expand()),
+    //             ),
+    //           ],
+    //         )
+    //         : child;
 
-    return SlideTransition(
-      position: slideAnimation,
-      child: ScaleTransition(
-        scale: scaleAnimation,
-        filterQuality: FilterQuality.medium,
-        alignment: Alignment.topCenter,
-        child: AnimatedBuilder(
-          animation: radiusAnimation,
-          child: child,
-          builder: (BuildContext context, Widget? child) {
-            return ClipRRect(borderRadius: radiusAnimation.value, child: contrastedChild);
-          },
-        ),
-      ),
-    );
+    // return SlideTransition(
+    //   position: slideAnimation,
+    //   child: ScaleTransition(
+    //     scale: scaleAnimation,
+    //     filterQuality: FilterQuality.medium,
+    //     alignment: Alignment.topCenter,
+    //     child: AnimatedBuilder(
+    //       animation: radiusAnimation,
+    //       child: child,
+    //       builder: (BuildContext context, Widget? child) {
+    //         return ClipRRect(borderRadius: radiusAnimation.value, child: contrastedChild);
+    //       },
+    //     ),
+    //   ),
+    // );
   }
 
   static Widget _delegatedCoverSheetSecondaryTransition(
