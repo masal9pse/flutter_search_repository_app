@@ -113,3 +113,9 @@ flowchart TB
   searchApiNotifierProvider ==> searchGitHubDataUseCaseProvider;
   searchApiRepositoryProvider ==> searchGitHubDataUseCaseProvider;
 ```
+
+### App links実行コマンド
+  adb shell 'am start -a android.intent.action.VIEW \
+    -c android.intent.category.BROWSABLE \
+    -d "http://masal9pse.github.io"' \
+    com.example.flutter_engineer_codecheck
