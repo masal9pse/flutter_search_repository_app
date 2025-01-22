@@ -11,6 +11,9 @@ class SheetSamplePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        middle: Text('sample sheet'),
+        trailing: Text('aaaa'),),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

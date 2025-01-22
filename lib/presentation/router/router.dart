@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_engineer_codecheck/presentation/router/router.gr.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/sheet.dart';
+import 'package:sheet/route.dart';
 // import 'package:sheet/route.dart';
 // import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/sheet.dart';
 // import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -70,7 +71,7 @@ class AppRouter extends RootStackRouter {
           page: HomeRoute.page,
           initial: true,
           customRouteBuilder: <T>(context, child, page) {
-            return CupertinoPageRoute(
+            return CupertinoExtendedPageRoute(
               settings: page,
               builder: (_) => child,
             );

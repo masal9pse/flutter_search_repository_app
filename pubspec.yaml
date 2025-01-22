@@ -24,7 +24,7 @@ dependencies:
   flutter_dotenv: ^5.2.1
   auto_route: ^9.2.2
   app_links: ^6.3.3
-  # sheet: ^1.0.0
+  sheet: ^1.0.0
   # modal_bottom_sheet: ^3.0.0
 
 dev_dependencies:
