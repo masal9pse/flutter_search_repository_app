@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Custom Transition Demo',
+      title: 'Custom Modal Demo',
       home: const HomePage(),
     );
   }
@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
           onPressed: () {
             showModalBottomSheet(
               context: context,
-              isScrollControlled: true, // モーダルが画面全体を使用できるようにする
+              isScrollControlled: true, // 高さをカスタマイズするために必要
               backgroundColor: Colors.transparent, // 背景を透過
               builder: (context) => const CustomModal(),
             );
@@ -47,42 +47,32 @@ class CustomModal extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return Stack(
-      children: [
-        GestureDetector(
-          onTap: () => Navigator.of(context).pop(), // モーダル外をタップで閉じる
-          child: Container(
-            color: Colors.black.withOpacity(0.5), // 背景を薄暗くする
+    return DraggableScrollableSheet(
+      initialChildSize: 0.9, // 初期サイズ：90%
+      minChildSize: 0.9, // 最小サイズ：90%
+      maxChildSize: 0.9, // 最大サイズ：90%
+      builder: (context, scrollController) {
+        return Container(
+          height: screenHeight * 0.9, // 高さを明示的に指定
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
           ),
-        ),
-        DraggableScrollableSheet(
-          initialChildSize: 0.8, // 初期サイズ（画面の高さ80%）
-          minChildSize: 0.5, // 最小サイズ（50%）
-          maxChildSize: 0.8, // 最大サイズ（80%）
-          builder: (context, scrollController) {
-            return Container(
-              height: screenHeight * 0.8,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+          child: ListView(
+            controller: scrollController, // スクロール可能にする
+            children: const [
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  'This modal fills 90% of the screen height.',
+                  style: TextStyle(fontSize: 18),
+                ),
               ),
-              child: ListView(
-                controller: scrollController, // スクロール可能にする
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(
-                      'This is a custom modal sheet.',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                  // 必要に応じてウィジェットを追加
-                ],
-              ),
-            );
-          },
-        ),
-      ],
+              // 必要に応じてさらにウィジェットを追加可能
+            ],
+          ),
+        );
+      },
     );
   }
 }
