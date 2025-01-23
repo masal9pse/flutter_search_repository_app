@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Custom Modal Demo',
+      title: 'Shared View Demo',
       home: const HomePage(),
     );
   }
@@ -26,53 +26,68 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            showModalBottomSheet(
-              context: context,
-              isScrollControlled: true, // 高さをカスタマイズするために必要
-              backgroundColor: Colors.transparent, // 背景を透過
-              builder: (context) => const CustomModal(),
-            );
+            Navigator.of(context).push(_createRoute());
           },
-          child: const Text('Show Modal'),
+          child: const Text('Go to Detail Page'),
         ),
       ),
     );
   }
 }
 
-class CustomModal extends StatelessWidget {
-  const CustomModal({super.key});
+Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const DetailPage(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      // 元画面のスケールダウンアニメーション
+      const beginScale = 1.0;
+      const endScale = 0.9; // 背景を縮小
+      const curve = Curves.easeInOut;
+
+      final scaleTween = Tween(begin: beginScale, end: endScale)
+          .chain(CurveTween(curve: curve));
+      final scaleAnimation = animation.drive(scaleTween);
+
+      // 新しい画面のフェードインアニメーション
+      const beginOpacity = 0.0;
+      const endOpacity = 1.0;
+      final opacityTween = Tween(begin: beginOpacity, end: endOpacity)
+          .chain(CurveTween(curve: curve));
+      final opacityAnimation = animation.drive(opacityTween);
+
+      return Stack(
+        children: [
+          // 背景画面のアニメーション
+          ScaleTransition(
+            scale: scaleAnimation,
+            child: FadeTransition(
+              opacity: animation,
+              child: Container(
+                color: Colors.black.withOpacity(0.2), // 背景ぼかし
+              ),
+            ),
+          ),
+          // 新しい画面のフェードイン
+          FadeTransition(
+            opacity: opacityAnimation,
+            child: child,
+          ),
+        ],
+      );
+    },
+  );
+}
+
+class DetailPage extends StatelessWidget {
+  const DetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-
-    return DraggableScrollableSheet(
-      initialChildSize: 0.9, // 初期サイズ：90%
-      minChildSize: 0.9, // 最小サイズ：90%
-      maxChildSize: 0.9, // 最大サイズ：90%
-      builder: (context, scrollController) {
-        return Container(
-          height: screenHeight * 0.9, // 高さを明示的に指定
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-          ),
-          child: ListView(
-            controller: scrollController, // スクロール可能にする
-            children: const [
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text(
-                  'This modal fills 90% of the screen height.',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              // 必要に応じてさらにウィジェットを追加可能
-            ],
-          ),
-        );
-      },
+    return Scaffold(
+      appBar: AppBar(title: const Text('Detail Page')),
+      body: const Center(
+        child: Text('This is the Detail Page'),
+      ),
     );
   }
 }
