@@ -22,64 +22,67 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('Home Page')),
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            Navigator.of(context).push(_customPageRoute(const SecondPage()));
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true, // モーダルが画面全体を使用できるようにする
+              backgroundColor: Colors.transparent, // 背景を透過
+              builder: (context) => const CustomModal(),
+            );
           },
-          child: const Text('Show Animated Page'),
+          child: const Text('Show Modal'),
         ),
       ),
     );
   }
-
-  Route _customPageRoute(Widget page) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(0.0, 1.0); // 下から上へのスライド
-        const end = Offset(0.0, 0.1);   // 高さの80%位置で止める
-        const curve = Curves.easeInOut;
-
-        final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        final offsetAnimation = animation.drive(tween);
-
-        return SlideTransition(
-          position: offsetAnimation,
-          child: child,
-        );
-      },
-      fullscreenDialog: true, // ダイアログ風に表示
-    );
-  }
 }
 
-class SecondPage extends StatelessWidget {
-  const SecondPage({super.key});
+class CustomModal extends StatelessWidget {
+  const CustomModal({super.key});
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      backgroundColor: Colors.transparent, // 背景を透過
-      body: Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          // height: screenHeight * 0.8,
-          height: screenHeight,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-          ),
-          child: const Center(
-            child: Text(
-              'This is the second page!',
-              style: TextStyle(fontSize: 18),
-            ),
+    return Stack(
+      children: [
+        GestureDetector(
+          onTap: () => Navigator.of(context).pop(), // モーダル外をタップで閉じる
+          child: Container(
+            color: Colors.black.withOpacity(0.5), // 背景を薄暗くする
           ),
         ),
-      ),
+        DraggableScrollableSheet(
+          initialChildSize: 0.8, // 初期サイズ（画面の高さ80%）
+          minChildSize: 0.5, // 最小サイズ（50%）
+          maxChildSize: 0.8, // 最大サイズ（80%）
+          builder: (context, scrollController) {
+            return Container(
+              height: screenHeight * 0.8,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+              ),
+              child: ListView(
+                controller: scrollController, // スクロール可能にする
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                      'This is a custom modal sheet.',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  // 必要に応じてウィジェットを追加
+                ],
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }
