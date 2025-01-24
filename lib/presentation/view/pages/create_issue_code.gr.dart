@@ -444,6 +444,25 @@ class SwipeRoute extends _i15.PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [_i2.TopPage]
+class TopRoute extends _i15.PageRouteInfo<void> {
+  const TopRoute({List<_i15.PageRouteInfo>? children})
+      : super(
+          TopRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TopRoute';
+
+  static _i15.PageInfo page = _i15.PageInfo(
+    name,
+    builder: (data) {
+      return const _i2.TopPage();
+    },
+  );
+}
+
+/// generated route for
 /// [_i13.UpperDashboardRouterPage]
 class UpperDashboardRouterRoute extends _i15.PageRouteInfo<void> {
   const UpperDashboardRouterRoute({List<_i15.PageRouteInfo>? children})

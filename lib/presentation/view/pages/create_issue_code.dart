@@ -25,6 +25,7 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => [
+        AutoRoute(page: TopRoute.page, initial: true),
         AutoRoute(
           path: '/',
           page: BoardRouterRoute.page,
@@ -33,7 +34,6 @@ class AppRouter extends RootStackRouter {
               page: FirstRouterRoute.page,
               children: [
                 AutoRoute(
-                  initial: true,
                   page: FirstRoute.page,
                 ),
                 // AutoRoute(page: FirstDetailRoute.page),
@@ -49,6 +49,36 @@ class AppRouter extends RootStackRouter {
 }
 
 @RoutePage()
+class TopPage extends StatelessWidget {
+  const TopPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Top Page'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                // context.router.push(FirstRoute());
+                context.router.navigate(BoardRouterRoute(children: [
+                  FirstRouterRoute(children: [FirstRoute()])
+                ]));
+              },
+              child: Text('go to First detail page'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+@RoutePage()
 class BoardRouterPage extends StatelessWidget {
   const BoardRouterPage({super.key});
 
@@ -56,7 +86,7 @@ class BoardRouterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
       routes: [
-        FirstRoute(),
+        FirstRouterRoute(),
         SecondRoute(),
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
@@ -64,8 +94,8 @@ class BoardRouterPage extends StatelessWidget {
           currentIndex: tabsRouter.activeIndex,
           onTap: tabsRouter.setActiveIndex,
           items: const [
-            BottomNavigationBarItem(label: 'first', icon: Text('first')),
-            BottomNavigationBarItem(label: 'second', icon: Text('second')),
+            BottomNavigationBarItem(label: '', icon: Text('first')),
+            BottomNavigationBarItem(label: '', icon: Text('second')),
           ],
         );
       },
@@ -86,6 +116,19 @@ class FirstPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        // leading: BackButton(onPressed: context.router.maybePop,),
+        // leading: AutoLeadingButton(
+        //   ignorePagelessRoutes: true,
+        //   color: Colors.amber,
+        // ),
+        // leading: AutoLeadingButton(
+        //   showIfParentCanPop: false,
+        //   showIfChildCanPop: false,
+        //   ignorePagelessRoutes: true,
+        //   // builder: (context, leadingType, action) {
+
+        //   // },
+        // ),
         title: Text('First Page'),
       ),
       body: Center(
@@ -98,6 +141,7 @@ class FirstPage extends StatelessWidget {
               },
               child: Text('go to First detail page'),
             ),
+            BackButton(),
           ],
         ),
       ),
