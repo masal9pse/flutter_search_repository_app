@@ -32,7 +32,10 @@ class HomePage extends StatelessWidget {
         automaticBackgroundVisibility: false,
       ),
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(onPressed: (){},child: Icon(Icons.add),),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: Icon(Icons.add),
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -60,10 +63,18 @@ class _SheetScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(onPressed: (){},child: Icon(Icons.add),),
-        body: Center(
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+      ),
+      body: CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          leading: CupertinoNavigationBarBackButton(
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
