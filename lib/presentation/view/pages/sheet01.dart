@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/sheet.dart';
 
 /// Flutter code sample for [CupertinoSheetRoute].
@@ -15,7 +16,8 @@ class CupertinoSheetApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CupertinoApp(title: 'Cupertino Sheet', home: HomePage());
+    // return const CupertinoApp(title: 'Cupertino Sheet', home: HomePage());
+    return MaterialApp(title: 'Cupertino Sheet', home: HomePage());
   }
 }
 
@@ -55,28 +57,20 @@ class _SheetScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      child: Center(
+    // return CupertinoPageScaffold(
+    return Scaffold(
+      // child: Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('CupertinoSheetRoute'),
             CupertinoButton.filled(
               onPressed: () {
-                Navigator.of(context).maybePop();
+                // Navigator.of(context).maybePop();
+                Navigator.of(context).pop();
               },
               child: const Text('Go Back'),
-            ),
-            const Text('You can also close this sheet by dragging downwards'),
-            CupertinoButton.filled(
-              onPressed: () {
-                Navigator.of(context).push(
-                  CupertinoSheetRoute<void>(
-                    builder: (BuildContext context) => const _SheetScaffold(),
-                  ),
-                );
-              },
-              child: const Text('Push Another Sheet'),
             ),
           ],
         ),
