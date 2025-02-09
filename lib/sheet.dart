@@ -1,16 +1,8 @@
-// Copyright 2014 The Flutter Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-// Tween for animating a Cupertino sheet onto the screen.
-//
-// Begins fully offscreen below the screen and ends onscreen with a small gap at
-// the top of the screen. Values found from eyeballing a simulator running iOS 18.0.
 final Animatable<Offset> _kBottomUpTween = Tween<Offset>(
   begin: const Offset(0.0, 1.0),
   end: const Offset(0.0, 0.08),
@@ -60,102 +52,8 @@ const double _kSheetScaleFactor = 0.0835;
 
 final Animatable<double> _kScaleTween = Tween<double>(begin: 1.0, end: 1.0 - _kSheetScaleFactor);
 
-/// Shows a Cupertino-style sheet widget that slides up from the bottom of the
-/// screen and stacks the previous route behind the new sheet.
-///
-/// This is a convenience method for displaying [CupertinoSheetRoute] for common,
-/// straightforward use cases. The Widget returned from `pageBuilder` will be
-/// used to display the content on the [CupertinoSheetRoute].
-///
-/// `useNestedNavigation` allows new routes to be pushed inside of a [CupertinoSheetRoute]
-/// by adding a new [Navigator] inside of the [CupertinoSheetRoute].
-///
-/// When `useNestedNavigation` is set to `true`, any route pushed to the stack
-/// from within the context of the [CupertinoSheetRoute] will display within that
-/// sheet. System back gestures and programatic pops on the initial route in a
-/// sheet will also be intercepted to pop the whole [CupertinoSheetRoute]. If
-/// a custom [Navigator] setup is needed, like for example to enable named routes
-/// or the pages API, then it is recommended to directly push a [CupertinoSheetRoute]
-/// to the stack with whatever configuration needed. See [CupertinoSheetRoute] for
-/// an example that manually sets up nested navigation.
-///
-/// The whole sheet can be popped at once by either dragging down on the sheet,
-/// or calling [CupertinoSheetRoute.popSheet].
-///
-/// iOS sheet widgets are generally designed to be tightly coupled to the context
-/// of the widget that opened the sheet. As such, it is not recommended to push
-/// a non-sheet route that covers the sheet without first popping the sheet. If
-/// necessary however, it can be done by pushing to the root [Navigator].
-///
-/// If `useNestedNavigation` is `false` (the default), then a [CupertinoSheetRoute]
-/// will be shown with no [Navigator] widget. Multiple calls to `showCupertinoSheet`
-/// can still be made to show multiple stacked sheets, if desired.
-///
-/// `showCupertinoSheet` always pushes the [CupertinoSheetRoute] to the root
-/// [Navigator]. This is to ensure the previous route animates correctly.
-///
-/// Returns a [Future] that resolves to the value (if any) that was passed to
-/// [Navigator.pop] when the sheet was closed.
-///
-/// {@tool dartpad}
-/// This example shows how to navigate to use [showCupertinoSheet] to display a
-/// Cupertino sheet widget with nested navigation.
-///
-/// ** See code in examples/api/lib/cupertino/sheet/cupertino_sheet.1.dart **
-/// {@end-tool}
-///
-/// See also:
-///
-///  * [CupertinoSheetRoute] the basic route version of the sheet view.
-///  * [showCupertinoDialog] which displays an iOS-styled dialog.
-///  * <https://developer.apple.com/design/human-interface-guidelines/sheets>
-Future<T?> showCupertinoSheet<T>({
-  required BuildContext context,
-  required WidgetBuilder pageBuilder,
-  bool useNestedNavigation = false,
-}) {
-  final WidgetBuilder builder;
-  final GlobalKey<NavigatorState> nestedNavigatorKey = GlobalKey<NavigatorState>();
-  if (!useNestedNavigation) {
-    builder = pageBuilder;
-  } else {
-    builder = (BuildContext context) {
-      return NavigatorPopHandler(
-        onPopWithResult: (T? result) {
-          nestedNavigatorKey.currentState!.maybePop();
-        },
-        child: Navigator(
-          key: nestedNavigatorKey,
-          initialRoute: '/',
-          onGenerateInitialRoutes: (NavigatorState navigator, String initialRouteName) {
-            return <Route<void>>[
-              CupertinoPageRoute<void>(
-                builder: (BuildContext context) {
-                  return PopScope(
-                    canPop: false,
-                    onPopInvokedWithResult: (bool didPop, Object? result) {
-                      if (didPop) {
-                        return;
-                      }
-                      Navigator.of(context, rootNavigator: true).pop(result);
-                    },
-                    child: pageBuilder(context),
-                  );
-                },
-              ),
-            ];
-          },
-        ),
-      );
-    };
-  }
 
-  return Navigator.of(
-    context,
-    rootNavigator: true,
-  ).push<T>(CupertinoSheetRoute<T>(builder: builder));
-}
-
+/// このクラスを消すと、モーダル遷移の挙動が普通の遷移になった。
 /// Provides an iOS-style sheet transition.
 ///
 /// The page slides up and stops below the top of the screen. When covered by
@@ -443,16 +341,6 @@ class CupertinoSheetRoute<T> extends PageRoute<T> with _CupertinoSheetRouteTrans
   static bool hasParentSheet(BuildContext context) {
     // return _CupertinoSheetScope.maybeOf(context) != null;
     return false;
-  }
-
-  /// Pops the entire [CupertinoSheetRoute], if a sheet route exists in the stack.
-  ///
-  /// Used if to pop an entire sheet at once, if there is nested navigtion within
-  /// that sheet.
-  static void popSheet(BuildContext context) {
-    if (hasParentSheet(context)) {
-      Navigator.of(context, rootNavigator: true).pop();
-    }
   }
 
   @override
