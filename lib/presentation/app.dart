@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:app_links/app_links.dart';
+// import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/presentation/router/route_observer.dart';
 import 'package:flutter_engineer_codecheck/presentation/router/router.dart';
@@ -42,80 +42,80 @@ class App extends StatelessWidget {
 }
 
 
-class MyHomePage extends StatefulWidget {
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+// class MyHomePage extends StatefulWidget {
+//   @override
+//   State<MyHomePage> createState() => _MyHomePageState();
+// }
 
-class _MyHomePageState extends State<MyHomePage> {
-  late AppLinks _appLinks;
-  StreamSubscription<Uri>? _linkSubscription;
-  String? catchLink;
-  String? parameter;
+// class _MyHomePageState extends State<MyHomePage> {
+//   late AppLinks _appLinks;
+//   StreamSubscription<Uri>? _linkSubscription;
+//   String? catchLink;
+//   String? parameter;
 
-  @override
-  void initState() {
-    super.initState();
-    initAppLinks();
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     initAppLinks();
+//   }
 
-  Future<void> initAppLinks() async {
-    // AppLinksインスタンスを作成
-    _appLinks = AppLinks();
+//   Future<void> initAppLinks() async {
+//     // AppLinksインスタンスを作成
+//     _appLinks = AppLinks();
 
-    // Deep Linkのリッスンを開始
-    _linkSubscription = _appLinks.uriLinkStream.listen((Uri? uri) {
-      if (uri != null) {
-        // キャッチしたリンクを処理
-        catchLink = uri.toString();
-        parameter = getQueryParameter(uri);
-        setState(() {});
-      }
-    }, onError: (err) {
-      print(err);
-    });
+//     // Deep Linkのリッスンを開始
+//     _linkSubscription = _appLinks.uriLinkStream.listen((Uri? uri) {
+//       if (uri != null) {
+//         // キャッチしたリンクを処理
+//         catchLink = uri.toString();
+//         parameter = getQueryParameter(uri);
+//         setState(() {});
+//       }
+//     }, onError: (err) {
+//       print(err);
+//     });
 
-    // アプリが再開されたときに取得したリンクを処理
-    // final initialUri = await _appLinks.getInitialAppLink();
-    final initialUri = await _appLinks.getInitialLink();
-    if (initialUri != null) {
-      catchLink = initialUri.toString();
-      parameter = getQueryParameter(initialUri);
-      setState(() {});
-    }
-  }
+//     // アプリが再開されたときに取得したリンクを処理
+//     // final initialUri = await _appLinks.getInitialAppLink();
+//     final initialUri = await _appLinks.getInitialLink();
+//     if (initialUri != null) {
+//       catchLink = initialUri.toString();
+//       parameter = getQueryParameter(initialUri);
+//       setState(() {});
+//     }
+//   }
 
-  String? getQueryParameter(Uri uri) {
-    // flutterUniversity://user/?name=matsumaru のパラメータを取得
-    return uri.queryParameters['name'];
-  }
+//   String? getQueryParameter(Uri uri) {
+//     // flutterUniversity://user/?name=matsumaru のパラメータを取得
+//     return uri.queryParameters['name'];
+//   }
 
-  @override
-  void dispose() {
-    // リソースを解放
-    _linkSubscription?.cancel();
-    super.dispose();
-  }
+//   @override
+//   void dispose() {
+//     // リソースを解放
+//     _linkSubscription?.cancel();
+//     super.dispose();
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'リンク：$catchLink',
-              // style: Theme.of(context).textTheme.headline4,
-            ),
-            Text(
-              'パラメーター：$parameter',
-              // style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(),
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             Text(
+//               'リンク：$catchLink',
+//               // style: Theme.of(context).textTheme.headline4,
+//             ),
+//             Text(
+//               'パラメーター：$parameter',
+//               // style: Theme.of(context).textTheme.headline4,
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
