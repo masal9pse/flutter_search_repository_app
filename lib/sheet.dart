@@ -291,40 +291,7 @@ class _CupertinoSheetTransitionState extends State<CupertinoSheetTransition> {
   }
 }
 
-/// Route for displaying an iOS sheet styled page.
-///
-/// The `CupertinoSheetRoute` will slide up from the bottom of the screen and stop
-/// below the top of the screen. If the previous route is a non-sheet route, then
-/// it will animate downwards to stack behind the new sheet. If the previous route
-/// is a sheet route, then it will animate slightly upwards to look like it is laying
-/// on top of the previous stack of sheets.
-///
-/// Typically called by [showCupertinoSheet], which provides some boilerplate for
-/// pushing the `CupertinoSheetRoute` to the root navigator and providing simple
-/// nested navigation.
-///
-/// The sheet will be dismissed by dragging downwards on the screen, or a call to
-/// [CupertinoSheetRoute.popSheet].
-///
-/// {@tool dartpad}
-/// This example shows how to navigate to [CupertinoSheetRoute] by using it the
-/// same as a regular route.
-///
-/// ** See code in examples/api/lib/cupertino/sheet/cupertino_sheet.0.dart **
-/// {@end-tool}
-///
-/// {@tool dartpad}
-/// This example shows how to show a Cupertino Sheet with nested navigation manually
-/// set up in order to enable restorable state.
-///
-/// ** See code in examples/api/lib/cupertino/sheet/cupertino_sheet.2.dart **
-/// {@end-tool}
-///
-/// See also:
-///   * [showCupertinoSheet], which is a convenience method for pushing a
-///     `CupertinoSheetRoute`, with optional nested navigation built in.
 class CupertinoSheetRoute<T> extends PageRoute<T> with _CupertinoSheetRouteTransitionMixin<T> {
-// class CupertinoSheetRoute<T> extends PageRoute<T> {
   /// Creates a page route that displays an iOS styled sheet.
   CupertinoSheetRoute({required this.builder});
 
@@ -409,7 +376,9 @@ mixin _CupertinoSheetRouteTransitionMixin<T> on PageRoute<T> {
       secondaryRouteAnimation: secondaryAnimation,
       linearTransition: linearTransition,
       child: _CupertinoDownGestureDetector<T>(
+        // enableCallbackをfalseにするとドラッグできなくなる。
         enabledCallback: () => true,
+        // enabledCallback: () => false,
         onStartPopGesture: () => _startPopGesture<T>(route),
         child: child,
       ),
