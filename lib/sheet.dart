@@ -10,6 +10,94 @@ const double _kSheetScaleFactor = 0.0835;
 final Animatable<double> _kScaleTween =
     Tween<double>(begin: 1.0, end: 1.0 - _kSheetScaleFactor);
 
+class CupertinoSheetRoute<T> extends PageRoute<T> {
+  /// Creates a page route that displays an iOS styled sheet.
+  CupertinoSheetRoute({required this.builder});
+
+  /// Builds the primary contents of the sheet route.
+  final WidgetBuilder builder;
+
+  // @override
+  Widget buildContent(BuildContext context) {
+    return builder(context);
+  }
+
+  /// Checks if a Cupertino sheet view exists in the widget tree above the current
+  /// context.
+  static bool hasParentSheet(BuildContext context) {
+    // return _CupertinoSheetScope.maybeOf(context) != null;
+    return false;
+  }
+
+  @override
+  Color? get barrierColor => CupertinoColors.transparent;
+
+  @override
+  bool get barrierDismissible => false;
+
+  @override
+  String? get barrierLabel => null;
+
+  @override
+  bool get maintainState => true;
+
+  @override
+  bool get opaque => false;
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 500);
+
+  @override
+  DelegatedTransitionBuilder? get delegatedTransition =>
+      _CupertinoSheetTransition.delegateTransition;
+
+  @override
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
+    return buildContent(context);
+  }
+
+  @override
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    // final t = barrierColor;
+    return buildPageTransitions<T>(
+      this,
+      context,
+      animation,
+      secondaryAnimation,
+      child,
+    );
+  }
+
+  /// Returns a [_CupertinoSheetTransition].
+  static Widget buildPageTransitions<T>(
+    ModalRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+
+    /// staticはメンバーにアクセスできない
+    // final t = barrierColor;
+    final bool linearTransition = route.popGestureInProgress;
+    return _CupertinoSheetTransition(
+      primaryRouteAnimation: animation,
+      secondaryRouteAnimation: secondaryAnimation,
+      linearTransition: linearTransition,
+      child: child,
+    );
+  }
+}
+
 /// このクラスを消すと、モーダル遷移の挙動が普通の遷移になった。
 /// Provides an iOS-style sheet transition.
 ///
@@ -264,7 +352,6 @@ class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
   @override
   Widget build(BuildContext context) {
     // このコードだとシートを積み上げる際に本体が上に上がっていかない
-    // return SizedBox.expand(
     return SizedBox(
         child: _coverSheetPrimaryTransition(
       context,
@@ -275,81 +362,5 @@ class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
         child: widget.child,
       ),
     ));
-  }
-}
-
-class CupertinoSheetRoute<T> extends PageRoute<T> {
-  /// Creates a page route that displays an iOS styled sheet.
-  CupertinoSheetRoute({required this.builder});
-
-  /// Builds the primary contents of the sheet route.
-  final WidgetBuilder builder;
-
-  // @override
-  Widget buildContent(BuildContext context) {
-    return builder(context);
-  }
-
-  /// Checks if a Cupertino sheet view exists in the widget tree above the current
-  /// context.
-  static bool hasParentSheet(BuildContext context) {
-    // return _CupertinoSheetScope.maybeOf(context) != null;
-    return false;
-  }
-
-  @override
-  Color? get barrierColor => CupertinoColors.transparent;
-
-  @override
-  bool get barrierDismissible => false;
-
-  @override
-  String? get barrierLabel => null;
-
-  @override
-  bool get maintainState => true;
-
-  @override
-  bool get opaque => false;
-
-  @override
-  Duration get transitionDuration => const Duration(milliseconds: 500);
-
-  @override
-  DelegatedTransitionBuilder? get delegatedTransition =>
-      _CupertinoSheetTransition.delegateTransition;
-
-  @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
-    return buildContent(context);
-  }
-
-  /// Returns a [_CupertinoSheetTransition].
-  static Widget buildPageTransitions<T>(
-    ModalRoute<T> route,
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
-  ) {
-    final bool linearTransition = route.popGestureInProgress;
-    return _CupertinoSheetTransition(
-      primaryRouteAnimation: animation,
-      secondaryRouteAnimation: secondaryAnimation,
-      linearTransition: linearTransition,
-      child: child,
-    );
-  }
-
-  @override
-  Widget buildTransitions(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
-  ) {
-    return buildPageTransitions<T>(
-        this, context, animation, secondaryAnimation, child);
   }
 }
