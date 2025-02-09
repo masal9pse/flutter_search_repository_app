@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 final Animatable<Offset> _kBottomUpTween = Tween<Offset>(
   begin: const Offset(0.0, 1.0),
@@ -36,14 +34,6 @@ final Animatable<Offset> _kTopDownTween = Tween<Offset>(
 // a simulator running iOS 18.0.
 final Animatable<double> _kOpacityTween = Tween<double>(begin: 0.0, end: 0.10);
 
-// The minimum velocity needed for a drag downwards to dismiss the sheet. Eyeballed
-// from a comparison against a simulator running iOS 18.0.
-const double _kMinFlingVelocity = 2.0; // Screen heights per second.
-
-// The duration for a page to animate when the user releases it mid-swipe. Eyeballed
-// from a comparison against a simulator running iOS 18.0.
-const Duration _kDroppedSheetDragAnimationDuration = Duration(milliseconds: 300);
-
 // Amount the sheet in the background scales down. Found by measuring the width
 // of the sheet in the background and comparing against the screen width on the
 // iOS simulator showing an iPhone 16 pro running iOS 18.0. The scale transition
@@ -59,10 +49,9 @@ final Animatable<double> _kScaleTween = Tween<double>(begin: 1.0, end: 1.0 - _kS
 /// The page slides up and stops below the top of the screen. When covered by
 /// another sheet view, it will slide slightly up and scale down to appear
 /// stacked behind the new sheet.
-class CupertinoSheetTransition extends StatefulWidget {
+class _CupertinoSheetTransition extends StatefulWidget {
   /// Creates an iOS style sheet transition.
-  const CupertinoSheetTransition({
-    super.key,
+  const _CupertinoSheetTransition({
     required this.primaryRouteAnimation,
     required this.secondaryRouteAnimation,
     required this.child,
@@ -190,15 +179,10 @@ class CupertinoSheetTransition extends StatefulWidget {
   }
 
   @override
-  State<CupertinoSheetTransition> createState() => _CupertinoSheetTransitionState();
+  State<_CupertinoSheetTransition> createState() => _CupertinoSheetTransitionState();
 }
 
-class _CupertinoSheetTransitionState extends State<CupertinoSheetTransition> {
-  // The offset animation when this page is being covered by another sheet.
-  late Animation<Offset> _secondaryPositionAnimation;
-
-  // The scale animation when this page is being covered by another sheet.
-  late Animation<double> _secondaryScaleAnimation;
+class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
 
   // Curve of primary page which is coming in to cover another route.
   CurvedAnimation? _primaryPositionCurve;
@@ -213,7 +197,7 @@ class _CupertinoSheetTransitionState extends State<CupertinoSheetTransition> {
   }
 
   @override
-  void didUpdateWidget(covariant CupertinoSheetTransition oldWidget) {
+  void didUpdateWidget(covariant _CupertinoSheetTransition oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.primaryRouteAnimation != widget.primaryRouteAnimation ||
         oldWidget.secondaryRouteAnimation != widget.secondaryRouteAnimation) {
@@ -239,8 +223,6 @@ class _CupertinoSheetTransitionState extends State<CupertinoSheetTransition> {
       reverseCurve: Curves.easeInToLinear,
       parent: widget.secondaryRouteAnimation,
     );
-    _secondaryPositionAnimation = _secondaryPositionCurve!.drive(_kMidUpTween);
-    _secondaryScaleAnimation = _secondaryPositionCurve!.drive(_kScaleTween);
   }
 
   void _disposeCurve() {
@@ -292,6 +274,7 @@ class _CupertinoSheetTransitionState extends State<CupertinoSheetTransition> {
 }
 
 class CupertinoSheetRoute<T> extends PageRoute<T> with _CupertinoSheetRouteTransitionMixin<T> {
+// class CupertinoSheetRoute<T> extends PageRoute<T> {
   /// Creates a page route that displays an iOS styled sheet.
   CupertinoSheetRoute({required this.builder});
 
@@ -342,7 +325,7 @@ mixin _CupertinoSheetRouteTransitionMixin<T> on PageRoute<T> {
 
   @override
   DelegatedTransitionBuilder? get delegatedTransition =>
-      CupertinoSheetTransition.delegateTransition;
+      _CupertinoSheetTransition.delegateTransition;
 
   @override
   Widget buildPage(
@@ -353,7 +336,7 @@ mixin _CupertinoSheetRouteTransitionMixin<T> on PageRoute<T> {
     return buildContent(context);
   }
 
-  /// Returns a [CupertinoSheetTransition].
+  /// Returns a [_CupertinoSheetTransition].
   static Widget buildPageTransitions<T>(
     ModalRoute<T> route,
     BuildContext context,
@@ -362,7 +345,7 @@ mixin _CupertinoSheetRouteTransitionMixin<T> on PageRoute<T> {
     Widget child,
   ) {
     final bool linearTransition = route.popGestureInProgress;
-    return CupertinoSheetTransition(
+    return _CupertinoSheetTransition(
       primaryRouteAnimation: animation,
       secondaryRouteAnimation: secondaryAnimation,
       linearTransition: linearTransition,
