@@ -376,28 +376,11 @@ class _CupertinoSheetTransitionState extends State<CupertinoSheetTransition> {
     return SlideTransition(position: positionAnimation, child: child);
   }
 
-  Widget _coverSheetSecondaryTransition(Animation<double> secondaryAnimation, Widget? child) {
-    return SlideTransition(
-      position: _secondaryPositionAnimation,
-      transformHitTests: false,
-      child: ScaleTransition(
-        scale: _secondaryScaleAnimation,
-        filterQuality: FilterQuality.medium,
-        alignment: Alignment.topCenter,
-        child: ClipRRect(
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-          child: child,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    // このコードだとシートを積み上げる際に本体が上に上がっていかない
     return SizedBox.expand(
-      child: _coverSheetSecondaryTransition(
-        widget.secondaryRouteAnimation,
-        _coverSheetPrimaryTransition(
+      child: _coverSheetPrimaryTransition(
           context,
           widget.primaryRouteAnimation,
           widget.linearTransition,
@@ -405,8 +388,7 @@ class _CupertinoSheetTransitionState extends State<CupertinoSheetTransition> {
             borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
             child: widget.child,
           ),
-        ),
-      ),
+        )
     );
   }
 }
@@ -444,6 +426,7 @@ class _CupertinoSheetTransitionState extends State<CupertinoSheetTransition> {
 ///   * [showCupertinoSheet], which is a convenience method for pushing a
 ///     `CupertinoSheetRoute`, with optional nested navigation built in.
 class CupertinoSheetRoute<T> extends PageRoute<T> with _CupertinoSheetRouteTransitionMixin<T> {
+// class CupertinoSheetRoute<T> extends PageRoute<T> {
   /// Creates a page route that displays an iOS styled sheet.
   CupertinoSheetRoute({required this.builder});
 
