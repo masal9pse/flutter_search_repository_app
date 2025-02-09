@@ -273,15 +273,15 @@ class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
   }
 }
 
-class CupertinoSheetRoute<T> extends PageRoute<T> with _CupertinoSheetRouteTransitionMixin<T> {
-// class CupertinoSheetRoute<T> extends PageRoute<T> {
+// class CupertinoSheetRoute<T> extends PageRoute<T> with _CupertinoSheetRouteTransitionMixin<T> {
+class CupertinoSheetRoute<T> extends PageRoute<T> {
   /// Creates a page route that displays an iOS styled sheet.
   CupertinoSheetRoute({required this.builder});
 
   /// Builds the primary contents of the sheet route.
   final WidgetBuilder builder;
 
-  @override
+  // @override
   Widget buildContent(BuildContext context) {
     return builder(context);
   }
@@ -307,8 +307,53 @@ class CupertinoSheetRoute<T> extends PageRoute<T> with _CupertinoSheetRouteTrans
 
   @override
   bool get opaque => false;
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 500);
+
+  @override
+  DelegatedTransitionBuilder? get delegatedTransition =>
+      _CupertinoSheetTransition.delegateTransition;
+  
+  @override
+  Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+    return buildContent(context);
+  }
+
+  /// Returns a [_CupertinoSheetTransition].
+  static Widget buildPageTransitions<T>(
+    ModalRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    final bool linearTransition = route.popGestureInProgress;
+    return _CupertinoSheetTransition(
+      primaryRouteAnimation: animation,
+      secondaryRouteAnimation: secondaryAnimation,
+      linearTransition: linearTransition,
+      child: child,
+    );
+  }
+
+  @override
+  bool canTransitionTo(TransitionRoute<dynamic> nextRoute) {
+    return nextRoute is _CupertinoSheetRouteTransitionMixin;
+  }
+
+  @override
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    return buildPageTransitions<T>(this, context, animation, secondaryAnimation, child);
+  }
 }
 
+/// シートの遷移の際のアニメーションをここで定義
 /// A mixin that replaces the entire screen with an iOS sheet transition for a
 /// [PageRoute].
 ///
