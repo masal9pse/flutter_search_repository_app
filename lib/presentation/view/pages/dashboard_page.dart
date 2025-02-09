@@ -10,7 +10,7 @@ class DashboardRouterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
       routes: [
-        const UsersRoute(),
+        // const UsersRoute(),
         PostsRoute(),
         // SettingsRoute(),
       ],

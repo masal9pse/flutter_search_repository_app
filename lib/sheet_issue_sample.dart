@@ -31,27 +31,21 @@ class HomePage extends StatelessWidget {
         middle: Text('Sheet Example'),
         automaticBackgroundVisibility: false,
       ),
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.add),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              CupertinoButton.filled(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    CupertinoSheetRoute<void>(
-                      builder: (BuildContext context) => const _SheetScaffold(),
-                    ),
-                  );
-                },
-                child: const Text('Open Bottom Sheet'),
-              ),
-            ],
-          ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CupertinoButton.filled(
+              onPressed: () {
+                Navigator.of(context).push(
+                  CupertinoSheetRoute<void>(
+                    builder: (BuildContext context) => const _SheetScaffold(),
+                  ),
+                );
+              },
+              child: const Text('Open Bottom Sheet'),
+            ),
+          ],
         ),
       ),
     );
@@ -68,36 +62,29 @@ class _SheetScaffold extends StatelessWidget {
         onPressed: () {},
         child: Icon(Icons.add),
       ),
-      body: CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          leading: CupertinoNavigationBarBackButton(
-            onPressed: () => Navigator.pop(context),
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text('CupertinoSheetRoute'),
-              CupertinoButton.filled(
-                onPressed: () {
-                  Navigator.of(context).maybePop();
-                },
-                child: const Text('Go Back'),
-              ),
-              const Text('You can also close this sheet by dragging downwards'),
-              CupertinoButton.filled(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    CupertinoSheetRoute<void>(
-                      builder: (BuildContext context) => const _SheetScaffold(),
-                    ),
-                  );
-                },
-                child: const Text('Push Another Sheet'),
-              ),
-            ],
-          ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text('CupertinoSheetRoute'),
+            CupertinoButton.filled(
+              onPressed: () {
+                Navigator.of(context).maybePop();
+              },
+              child: const Text('Go Back'),
+            ),
+            const Text('You can also close this sheet by dragging downwards'),
+            CupertinoButton.filled(
+              onPressed: () {
+                Navigator.of(context).push(
+                  CupertinoSheetRoute<void>(
+                    builder: (BuildContext context) => const _SheetScaffold(),
+                  ),
+                );
+              },
+              child: const Text('Push Another Sheet'),
+            ),
+          ],
         ),
       ),
     );

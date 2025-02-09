@@ -2,9 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
+
+// The distance from the top of the open sheet to the top of the screen, as a ratio
+// of the total height of the screen. Found from eyeballing a simulator running
+// iOS 18.0.
+const double _kTopGapRatio = 0.08;
 
 // Tween for animating a Cupertino sheet onto the screen.
 //
@@ -12,7 +18,7 @@ import 'package:flutter/cupertino.dart';
 // the top of the screen. Values found from eyeballing a simulator running iOS 18.0.
 final Animatable<Offset> _kBottomUpTween = Tween<Offset>(
   begin: const Offset(0.0, 1.0),
-  end: const Offset(0.0, 0.08),
+  end: const Offset(0.0, _kTopGapRatio),
 );
 
 // Offset change for when a new sheet covers another sheet. '0.0' represents the
@@ -451,9 +457,19 @@ class CupertinoSheetRoute<T> extends PageRoute<T> with _CupertinoSheetRouteTrans
 
   @override
   Widget buildContent(BuildContext context) {
-    return CupertinoUserInterfaceLevel(
-      data: CupertinoUserInterfaceLevelData.elevated,
-      child: _CupertinoSheetScope(child: builder(context)),
+    final double bottomPadding = MediaQuery.sizeOf(context).height * _kTopGapRatio;
+
+    return MediaQuery.removePadding(
+      context: context,
+      removeTop: true,
+      removeBottom: true,
+      child: Padding(
+        padding: EdgeInsets.only(bottom: bottomPadding),
+        child: CupertinoUserInterfaceLevel(
+          data: CupertinoUserInterfaceLevelData.elevated,
+          child: _CupertinoSheetScope(child: builder(context)),
+        ),
+      ),
     );
   }
 
@@ -633,11 +649,9 @@ class _CupertinoDownGestureDetectorState<T> extends State<_CupertinoDownGestureD
   void _handleDragUpdate(DragUpdateDetails details) {
     assert(mounted);
     assert(_downGestureController != null);
-    final double topGapRatio = (_kBottomUpTween as Tween<Offset>).end?.dy ?? 0.08;
     _downGestureController!.dragUpdate(
-      // Devide by size of the sheet. The gap between the top of the sheet and
-      // top of the screen is 0.08.
-      details.primaryDelta! / (context.size!.height - (context.size!.height * topGapRatio)),
+      // Divide by size of the sheet.
+      details.primaryDelta! / (context.size!.height - (context.size!.height * _kTopGapRatio)),
     );
   }
 
