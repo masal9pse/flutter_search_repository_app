@@ -84,15 +84,10 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
     Animation<double> animation,
     Animation<double> secondaryAnimation,
     Widget child,
-  ) {
-
-    /// staticはメンバーにアクセスできない
-    // final t = barrierColor;
-    final bool linearTransition = route.popGestureInProgress;
+  ) {    
     return _CupertinoSheetTransition(
       primaryRouteAnimation: animation,
-      secondaryRouteAnimation: secondaryAnimation,
-      linearTransition: linearTransition,
+      secondaryRouteAnimation: secondaryAnimation,      
       child: child,
     );
   }
@@ -110,7 +105,6 @@ class _CupertinoSheetTransition extends StatefulWidget {
     required this.primaryRouteAnimation,
     required this.secondaryRouteAnimation,
     required this.child,
-    required this.linearTransition,
   });
 
   /// `primaryRouteAnimation` is a linear route animation from 0.0 to 1.0 when
@@ -127,7 +121,8 @@ class _CupertinoSheetTransition extends StatefulWidget {
   /// Whether to perform the transition linearly.
   ///
   /// Used to respond to a drag gesture.
-  final bool linearTransition;
+  /// falseだと今まで通りの挙動、trueだと遅い
+  final bool linearTransition = false;
 
   /// The primary delegated transition. Will slide a non [CupertinoSheetRoute] page down.
   ///
