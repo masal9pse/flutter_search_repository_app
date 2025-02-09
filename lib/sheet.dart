@@ -108,7 +108,9 @@ class _CupertinoSheetTransition extends StatefulWidget {
                   FadeTransition(
                     opacity: opacityAnimation,
                     child: ColoredBox(
-                        color: overlayColor, child: const SizedBox.expand()),
+                      color: overlayColor,
+                      child: const SizedBox(),
+                    ),
                   ),
                 ],
               )
@@ -262,7 +264,8 @@ class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
   @override
   Widget build(BuildContext context) {
     // このコードだとシートを積み上げる際に本体が上に上がっていかない
-    return SizedBox.expand(
+    // return SizedBox.expand(
+    return SizedBox(
         child: _coverSheetPrimaryTransition(
       context,
       widget.primaryRouteAnimation,
