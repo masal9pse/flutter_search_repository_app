@@ -452,11 +452,7 @@ class CupertinoSheetRoute<T> extends PageRoute<T> with _CupertinoSheetRouteTrans
 
   @override
   Widget buildContent(BuildContext context) {
-    return CupertinoUserInterfaceLevel(
-      data: CupertinoUserInterfaceLevelData.elevated,
-      // child: _CupertinoSheetScope(child: builder(context)),
-      child: builder(context),
-    );
+    return builder(context);
   }
 
   /// Checks if a Cupertino sheet view exists in the widget tree above the current
@@ -491,18 +487,6 @@ class CupertinoSheetRoute<T> extends PageRoute<T> with _CupertinoSheetRouteTrans
   @override
   bool get opaque => false;
 }
-
-// Internally used to see if another sheet is in the tree already.
-// class _CupertinoSheetScope extends InheritedWidget {
-//   const _CupertinoSheetScope({required super.child});
-
-//   static _CupertinoSheetScope? maybeOf(BuildContext context) {
-//     return context.getInheritedWidgetOfExactType<_CupertinoSheetScope>();
-//   }
-
-//   @override
-//   bool updateShouldNotify(_CupertinoSheetScope oldWidget) => false;
-// }
 
 /// A mixin that replaces the entire screen with an iOS sheet transition for a
 /// [PageRoute].
