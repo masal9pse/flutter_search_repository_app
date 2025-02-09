@@ -1,47 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
-final Animatable<Offset> _kBottomUpTween = Tween<Offset>(
-  begin: const Offset(0.0, 1.0),
-  end: const Offset(0.0, 0.08),
-);
-
-// Offset change for when a new sheet covers another sheet. '0.0' represents the
-// top of the space available for the new sheet, but because the previous sheet
-// was lowered slightly, the new sheet needs to go slightly higher than that.
-// Values found from eyeballing a simulator running iOS 18.0.
-final Animatable<Offset> _kBottomUpTweenWhenCoveringOtherSheet = Tween<Offset>(
-  begin: const Offset(0.0, 1.0),
-  end: const Offset(0.0, -0.02),
-);
-
-// Tween that animates a sheet slightly up when it is covered by a new sheet.
-// Values found from eyeballing a simulator running iOS 18.0.
-final Animatable<Offset> _kMidUpTween = Tween<Offset>(
-  begin: Offset.zero,
-  end: const Offset(0.0, -0.005),
-);
-
-// Offset from top of screen to slightly down when a fullscreen page is covered
-// by a sheet. Values found from eyeballing a simulator running iOS 18.0.
-final Animatable<Offset> _kTopDownTween = Tween<Offset>(
-  begin: Offset.zero,
-  end: const Offset(0.0, 0.07),
-);
-
-// Opacity of the overlay color put over the sheet as it moves into the background.
-// Used to distinguish the sheet from the background. Value derived from eyeballing
-// a simulator running iOS 18.0.
-final Animatable<double> _kOpacityTween = Tween<double>(begin: 0.0, end: 0.10);
-
 // Amount the sheet in the background scales down. Found by measuring the width
 // of the sheet in the background and comparing against the screen width on the
 // iOS simulator showing an iPhone 16 pro running iOS 18.0. The scale transition
 // will go from a default of 1.0 to 1.0 - _kSheetScaleFactor.
 const double _kSheetScaleFactor = 0.0835;
 
-final Animatable<double> _kScaleTween = Tween<double>(begin: 1.0, end: 1.0 - _kSheetScaleFactor);
-
+final Animatable<double> _kScaleTween =
+    Tween<double>(begin: 1.0, end: 1.0 - _kSheetScaleFactor);
 
 /// このクラスを消すと、モーダル遷移の挙動が普通の遷移になった。
 /// Provides an iOS-style sheet transition.
@@ -99,35 +66,52 @@ class _CupertinoSheetTransition extends StatefulWidget {
       reverseCurve: reverseCurve,
       parent: secondaryAnimation,
     );
-    final double deviceCornerRadius = MediaQuery.maybeViewPaddingOf(context)?.top ?? 0;
+    final double deviceCornerRadius =
+        MediaQuery.maybeViewPaddingOf(context)?.top ?? 0;
 
-    final Animatable<BorderRadiusGeometry> decorationTween = Tween<BorderRadiusGeometry>(
+    final Animatable<BorderRadiusGeometry> decorationTween =
+        Tween<BorderRadiusGeometry>(
       begin: BorderRadius.circular(deviceCornerRadius),
       end: BorderRadius.circular(12),
     );
 
-    final Animation<BorderRadiusGeometry> radiusAnimation = curvedAnimation.drive(decorationTween);
-    final Animation<double> opacityAnimation = curvedAnimation.drive(_kOpacityTween);
-    final Animation<Offset> slideAnimation = curvedAnimation.drive(_kTopDownTween);
-    final Animation<double> scaleAnimation = curvedAnimation.drive(_kScaleTween);
+    final Animatable<Offset> kTopDownTween = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(0.0, 0.07),
+    );
+
+    final Animatable<double> kOpacityTween =
+        Tween<double>(begin: 0.0, end: 0.10);
+
+    final Animation<BorderRadiusGeometry> radiusAnimation =
+        curvedAnimation.drive(decorationTween);
+    final Animation<double> opacityAnimation =
+        curvedAnimation.drive(kOpacityTween);
+    final Animation<Offset> slideAnimation =
+        curvedAnimation.drive(kTopDownTween);
+    final Animation<double> scaleAnimation =
+        curvedAnimation.drive(_kScaleTween);
     curvedAnimation.dispose();
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
-    final bool isDarkMode = CupertinoTheme.brightnessOf(context) == Brightness.dark;
-    final Color overlayColor = isDarkMode ? const Color(0xFFc8c8c8) : const Color(0xFF000000);
+    final bool isDarkMode =
+        CupertinoTheme.brightnessOf(context) == Brightness.dark;
+    final Color overlayColor =
+        isDarkMode ? const Color(0xFFc8c8c8) : const Color(0xFF000000);
 
     final Widget? contrastedChild =
         child != null && !secondaryAnimation.isDismissed
             ? Stack(
-              children: <Widget>[
-                child,
-                FadeTransition(
-                  opacity: opacityAnimation,
-                  child: ColoredBox(color: overlayColor, child: const SizedBox.expand()),
-                ),
-              ],
-            )
+                children: <Widget>[
+                  child,
+                  FadeTransition(
+                    opacity: opacityAnimation,
+                    child: ColoredBox(
+                        color: overlayColor, child: const SizedBox.expand()),
+                  ),
+                ],
+              )
             : child;
 
     return SlideTransition(
@@ -140,7 +124,8 @@ class _CupertinoSheetTransition extends StatefulWidget {
           animation: radiusAnimation,
           child: child,
           builder: (BuildContext context, Widget? child) {
-            return ClipRRect(borderRadius: radiusAnimation.value, child: contrastedChild);
+            return ClipRRect(
+                borderRadius: radiusAnimation.value, child: contrastedChild);
           },
         ),
       ),
@@ -158,9 +143,14 @@ class _CupertinoSheetTransition extends StatefulWidget {
       reverseCurve: reverseCurve,
       parent: secondaryAnimation,
     );
+    final kMidUpTween = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(0.0, -0.005),
+    );
 
-    final Animation<Offset> slideAnimation = curvedAnimation.drive(_kMidUpTween);
-    final Animation<double> scaleAnimation = curvedAnimation.drive(_kScaleTween);
+    final Animation<Offset> slideAnimation = curvedAnimation.drive(kMidUpTween);
+    final Animation<double> scaleAnimation =
+        curvedAnimation.drive(_kScaleTween);
     curvedAnimation.dispose();
 
     return SlideTransition(
@@ -179,11 +169,11 @@ class _CupertinoSheetTransition extends StatefulWidget {
   }
 
   @override
-  State<_CupertinoSheetTransition> createState() => _CupertinoSheetTransitionState();
+  State<_CupertinoSheetTransition> createState() =>
+      _CupertinoSheetTransitionState();
 }
 
 class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
-
   // Curve of primary page which is coming in to cover another route.
   CurvedAnimation? _primaryPositionCurve;
 
@@ -238,18 +228,31 @@ class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
     bool linearTransition,
     Widget? child,
   ) {
+    final Animatable<Offset> kBottomUpTween = Tween<Offset>(
+      begin: const Offset(0.0, 1.0),
+      end: const Offset(0.0, 0.08),
+    );
+
+    final Animatable<Offset> kBottomUpTweenWhenCoveringOtherSheet =
+        Tween<Offset>(
+      begin: const Offset(0.0, 1.0),
+      end: const Offset(0.0, -0.02),
+    );
     final Animatable<Offset> offsetTween =
         CupertinoSheetRoute.hasParentSheet(context)
-            ? _kBottomUpTweenWhenCoveringOtherSheet
-            : _kBottomUpTween;
+            ? kBottomUpTweenWhenCoveringOtherSheet
+            : kBottomUpTween;
 
     final CurvedAnimation curvedAnimation = CurvedAnimation(
       parent: animation,
       curve: linearTransition ? Curves.linear : Curves.fastEaseInToSlowEaseOut,
-      reverseCurve: linearTransition ? Curves.linear : Curves.fastEaseInToSlowEaseOut.flipped,
+      reverseCurve: linearTransition
+          ? Curves.linear
+          : Curves.fastEaseInToSlowEaseOut.flipped,
     );
 
-    final Animation<Offset> positionAnimation = curvedAnimation.drive(offsetTween);
+    final Animation<Offset> positionAnimation =
+        curvedAnimation.drive(offsetTween);
 
     curvedAnimation.dispose();
 
@@ -260,20 +263,18 @@ class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
   Widget build(BuildContext context) {
     // このコードだとシートを積み上げる際に本体が上に上がっていかない
     return SizedBox.expand(
-      child: _coverSheetPrimaryTransition(
-          context,
-          widget.primaryRouteAnimation,
-          widget.linearTransition,
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            child: widget.child,
-          ),
-        )
-    );
+        child: _coverSheetPrimaryTransition(
+      context,
+      widget.primaryRouteAnimation,
+      widget.linearTransition,
+      ClipRRect(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+        child: widget.child,
+      ),
+    ));
   }
 }
 
-// class CupertinoSheetRoute<T> extends PageRoute<T> with _CupertinoSheetRouteTransitionMixin<T> {
 class CupertinoSheetRoute<T> extends PageRoute<T> {
   /// Creates a page route that displays an iOS styled sheet.
   CupertinoSheetRoute({required this.builder});
@@ -314,9 +315,10 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
   @override
   DelegatedTransitionBuilder? get delegatedTransition =>
       _CupertinoSheetTransition.delegateTransition;
-  
+
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+  Widget buildPage(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation) {
     return buildContent(context);
   }
 
@@ -338,78 +340,13 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
   }
 
   @override
-  bool canTransitionTo(TransitionRoute<dynamic> nextRoute) {
-    return nextRoute is _CupertinoSheetRouteTransitionMixin;
-  }
-
-  @override
   Widget buildTransitions(
     BuildContext context,
     Animation<double> animation,
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    return buildPageTransitions<T>(this, context, animation, secondaryAnimation, child);
-  }
-}
-
-/// シートの遷移の際のアニメーションをここで定義
-/// A mixin that replaces the entire screen with an iOS sheet transition for a
-/// [PageRoute].
-///
-/// See also:
-///
-///  * [CupertinoSheetRoute], which is a [PageRoute] that leverages this mixin.
-mixin _CupertinoSheetRouteTransitionMixin<T> on PageRoute<T> {
-  /// Builds the primary contents of the route.
-  @protected
-  Widget buildContent(BuildContext context);
-
-  @override
-  Duration get transitionDuration => const Duration(milliseconds: 500);
-
-  @override
-  DelegatedTransitionBuilder? get delegatedTransition =>
-      _CupertinoSheetTransition.delegateTransition;
-
-  @override
-  Widget buildPage(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-  ) {
-    return buildContent(context);
-  }
-
-  /// Returns a [_CupertinoSheetTransition].
-  static Widget buildPageTransitions<T>(
-    ModalRoute<T> route,
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
-  ) {
-    final bool linearTransition = route.popGestureInProgress;
-    return _CupertinoSheetTransition(
-      primaryRouteAnimation: animation,
-      secondaryRouteAnimation: secondaryAnimation,
-      linearTransition: linearTransition,
-      child: child,
-    );
-  }
-
-  @override
-  bool canTransitionTo(TransitionRoute<dynamic> nextRoute) {
-    return nextRoute is _CupertinoSheetRouteTransitionMixin;
-  }
-
-  @override
-  Widget buildTransitions(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
-  ) {
-    return buildPageTransitions<T>(this, context, animation, secondaryAnimation, child);
+    return buildPageTransitions<T>(
+        this, context, animation, secondaryAnimation, child);
   }
 }
