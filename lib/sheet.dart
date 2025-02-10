@@ -1,28 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
-// Amount the sheet in the background scales down. Found by measuring the width
-// of the sheet in the background and comparing against the screen width on the
-// iOS simulator showing an iPhone 16 pro running iOS 18.0. The scale transition
-// will go from a default of 1.0 to 1.0 - _kSheetScaleFactor.
-const double _kSheetScaleFactor = 0.0835;
-
-final Animatable<double> _kScaleTween =
-    Tween<double>(begin: 1.0, end: 1.0 - _kSheetScaleFactor);
-
 class CupertinoSheetRoute<T> extends PageRoute<T> {
   /// Creates a page route that displays an iOS styled sheet.
   CupertinoSheetRoute({required this.builder});
 
   /// Builds the primary contents of the sheet route.
   final WidgetBuilder builder;
-
-  /// Checks if a Cupertino sheet view exists in the widget tree above the current
-  /// context.
-  static bool hasParentSheet(BuildContext context) {
-    // return _CupertinoSheetScope.maybeOf(context) != null;
-    return false;
-  }
 
   @override
   // Color? get barrierColor => CupertinoColors.transparent;
@@ -131,8 +115,13 @@ class _CupertinoSheetTransition extends StatelessWidget {
         curvedAnimation.drive(kOpacityTween);
     final Animation<Offset> slideAnimation =
         curvedAnimation.drive(kTopDownTween);
+
+    const double kSheetScaleFactor = 0.0835;
+
+    final Animatable<double> kScaleTween =
+        Tween<double>(begin: 1.0, end: 1.0 - kSheetScaleFactor);
     final Animation<double> scaleAnimation =
-        curvedAnimation.drive(_kScaleTween);
+        curvedAnimation.drive(kScaleTween);
     curvedAnimation.dispose();
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
@@ -186,6 +175,7 @@ class _CupertinoSheetTransition extends StatelessWidget {
     );
   }
 
+  // まずここをみるか
   static Widget _coverSheetPrimaryTransition(
     BuildContext context,
     Animation<double> animation,
@@ -196,16 +186,6 @@ class _CupertinoSheetTransition extends StatelessWidget {
       end: const Offset(0.0, 0.08),
     );
 
-    final Animatable<Offset> kBottomUpTweenWhenCoveringOtherSheet =
-        Tween<Offset>(
-      begin: const Offset(0.0, 1.0),
-      end: const Offset(0.0, -0.02),
-    );
-    final Animatable<Offset> offsetTween =
-        CupertinoSheetRoute.hasParentSheet(context)
-            ? kBottomUpTweenWhenCoveringOtherSheet
-            : kBottomUpTween;
-
     final CurvedAnimation curvedAnimation = CurvedAnimation(
       parent: animation,
       curve: Curves.fastEaseInToSlowEaseOut,
@@ -213,7 +193,7 @@ class _CupertinoSheetTransition extends StatelessWidget {
     );
 
     final Animation<Offset> positionAnimation =
-        curvedAnimation.drive(offsetTween);
+        curvedAnimation.drive(kBottomUpTween);
 
     curvedAnimation.dispose();
 
