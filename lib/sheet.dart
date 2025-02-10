@@ -33,16 +33,10 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
   Color? get barrierColor => CupertinoColors.transparent;
 
   @override
-  bool get barrierDismissible => false;
-
-  @override
   String? get barrierLabel => null;
 
   @override
   bool get maintainState => true;
-
-  @override
-  bool get opaque => false;
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 500);
@@ -60,6 +54,7 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
     return buildContent(context);
   }
 
+  // これをコメントアウトするとアニメーションのないpush遷移になる。
   @override
   Widget buildTransitions(
     BuildContext context,
@@ -67,27 +62,9 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    // final t = barrierColor;
-    return buildPageTransitions<T>(
-      this,
-      context,
-      animation,
-      secondaryAnimation,
-      child,
-    );
-  }
-
-  /// Returns a [_CupertinoSheetTransition].
-  static Widget buildPageTransitions<T>(
-    ModalRoute<T> route,
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
-  ) {    
     return _CupertinoSheetTransition(
       primaryRouteAnimation: animation,
-      secondaryRouteAnimation: secondaryAnimation,      
+      secondaryRouteAnimation: secondaryAnimation,
       child: child,
     );
   }
