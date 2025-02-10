@@ -193,43 +193,21 @@ class _CupertinoSheetTransition extends StatefulWidget {
       _CupertinoSheetTransitionState();
 }
 
-class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {  
-  // Curve of secondary page which is becoming covered by another sheet.
-  CurvedAnimation? _secondaryPositionCurve;
+class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
 
   @override
   void initState() {
     super.initState();
-    _setupAnimation();
   }
 
   @override
   void didUpdateWidget(covariant _CupertinoSheetTransition oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.primaryRouteAnimation != widget.primaryRouteAnimation ||
-        oldWidget.secondaryRouteAnimation != widget.secondaryRouteAnimation) {
-      _disposeCurve();
-      _setupAnimation();
-    }
+    super.didUpdateWidget(oldWidget);    
   }
 
   @override
-  void dispose() {
-    _disposeCurve();
+  void dispose() {   
     super.dispose();
-  }
-
-  void _setupAnimation() {
-    _secondaryPositionCurve = CurvedAnimation(
-      curve: Curves.linearToEaseOut,
-      reverseCurve: Curves.easeInToLinear,
-      parent: widget.secondaryRouteAnimation,
-    );
-  }
-
-  void _disposeCurve() {    
-    _secondaryPositionCurve?.dispose();
-    _secondaryPositionCurve = null;
   }
 
   Widget _coverSheetPrimaryTransition(
