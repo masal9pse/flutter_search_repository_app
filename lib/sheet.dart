@@ -80,7 +80,8 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
 /// The page slides up and stops below the top of the screen. When covered by
 /// another sheet view, it will slide slightly up and scale down to appear
 /// stacked behind the new sheet.
-class _CupertinoSheetTransition extends StatefulWidget {
+// class _CupertinoSheetTransition extends StatefulWidget {
+class _CupertinoSheetTransition extends StatelessWidget {
   /// Creates an iOS style sheet transition.
   const _CupertinoSheetTransition({
     required this.primaryRouteAnimation,
@@ -189,25 +190,23 @@ class _CupertinoSheetTransition extends StatefulWidget {
   }
 
   @override
-  State<_CupertinoSheetTransition> createState() =>
-      _CupertinoSheetTransitionState();
-}
+  Widget build(BuildContext context) {
+    // これだとpush遷移
+    // return ClipRRect(
+    //   borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+    //   child: child,
+    // );
 
-class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didUpdateWidget(covariant _CupertinoSheetTransition oldWidget) {
-    super.didUpdateWidget(oldWidget);    
-  }
-
-  @override
-  void dispose() {   
-    super.dispose();
+    return SizedBox(
+      child: _coverSheetPrimaryTransition(
+        context,
+        primaryRouteAnimation,
+        ClipRRect(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+          child: child,
+        ),
+      ),
+    );
   }
 
   Widget _coverSheetPrimaryTransition(
@@ -242,20 +241,5 @@ class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
     curvedAnimation.dispose();
 
     return SlideTransition(position: positionAnimation, child: child);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // このコードだとシートを複数枚積み上げる際に本体が上に上がっていかない
-    return SizedBox(
-      child: _coverSheetPrimaryTransition(
-        context,
-        widget.primaryRouteAnimation,
-        ClipRRect(
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-          child: widget.child,
-        ),
-      ),
-    );
   }
 }
