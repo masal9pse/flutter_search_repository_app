@@ -47,9 +47,10 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
   @override
   Duration get transitionDuration => const Duration(milliseconds: 500);
 
+  // これをコメントアウトするとアニメーションのないpush遷移になる。
+  // 掘っていくと初期値nullが定義されていた。
   @override
-  DelegatedTransitionBuilder? get delegatedTransition =>
-      _CupertinoSheetTransition.delegateTransition;
+  DelegatedTransitionBuilder? get delegatedTransition => _CupertinoSheetTransition.delegateTransition;
 
   @override
   Widget buildPage(
@@ -120,9 +121,6 @@ class _CupertinoSheetTransition extends StatefulWidget {
     bool allowSnapshotting,
     Widget? child,
   ) {
-    if (CupertinoSheetRoute.hasParentSheet(context)) {
-      return _delegatedCoverSheetSecondaryTransition(secondaryAnimation, child);
-    }
     final bool linear = Navigator.of(context).userGestureInProgress;
 
     final Curve curve = linear ? Curves.linear : Curves.linearToEaseOut;
@@ -195,42 +193,6 @@ class _CupertinoSheetTransition extends StatefulWidget {
             return ClipRRect(
                 borderRadius: radiusAnimation.value, child: contrastedChild);
           },
-        ),
-      ),
-    );
-  }
-
-  static Widget _delegatedCoverSheetSecondaryTransition(
-    Animation<double> secondaryAnimation,
-    Widget? child,
-  ) {
-    const Curve curve = Curves.linearToEaseOut;
-    const Curve reverseCurve = Curves.easeInToLinear;
-    final CurvedAnimation curvedAnimation = CurvedAnimation(
-      curve: curve,
-      reverseCurve: reverseCurve,
-      parent: secondaryAnimation,
-    );
-    final kMidUpTween = Tween<Offset>(
-      begin: Offset.zero,
-      end: const Offset(0.0, -0.005),
-    );
-
-    final Animation<Offset> slideAnimation = curvedAnimation.drive(kMidUpTween);
-    final Animation<double> scaleAnimation =
-        curvedAnimation.drive(_kScaleTween);
-    curvedAnimation.dispose();
-
-    return SlideTransition(
-      position: slideAnimation,
-      transformHitTests: false,
-      child: ScaleTransition(
-        scale: scaleAnimation,
-        filterQuality: FilterQuality.medium,
-        alignment: Alignment.topCenter,
-        child: ClipRRect(
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-          child: child,
         ),
       ),
     );
