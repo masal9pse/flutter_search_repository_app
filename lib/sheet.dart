@@ -30,7 +30,11 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
   }
 
   @override
-  Color? get barrierColor => CupertinoColors.transparent;
+  // Color? get barrierColor => CupertinoColors.transparent;
+  Color? get barrierColor => null;
+
+  @override
+  bool get opaque => false; // これを消すと、遷移したあとに後ろの画面が消える。
 
   @override
   String? get barrierLabel => null;
