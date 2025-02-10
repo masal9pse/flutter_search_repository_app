@@ -102,12 +102,6 @@ class _CupertinoSheetTransition extends StatefulWidget {
   /// The widget below this widget in the tree.
   final Widget child;
 
-  /// Whether to perform the transition linearly.
-  ///
-  /// Used to respond to a drag gesture.
-  /// falseだと今まで通りの挙動、trueだと遅い
-  final bool linearTransition = false;
-
   /// The primary delegated transition. Will slide a non [CupertinoSheetRoute] page down.
   ///
   /// Provided to the previous route to coordinate transitions between routes.
@@ -255,7 +249,6 @@ class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
   Widget _coverSheetPrimaryTransition(
     BuildContext context,
     Animation<double> animation,
-    bool linearTransition,
     Widget? child,
   ) {
     final Animatable<Offset> kBottomUpTween = Tween<Offset>(
@@ -275,10 +268,8 @@ class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
 
     final CurvedAnimation curvedAnimation = CurvedAnimation(
       parent: animation,
-      curve: linearTransition ? Curves.linear : Curves.fastEaseInToSlowEaseOut,
-      reverseCurve: linearTransition
-          ? Curves.linear
-          : Curves.fastEaseInToSlowEaseOut.flipped,
+      curve: Curves.fastEaseInToSlowEaseOut,      
+      reverseCurve: Curves.fastEaseInToSlowEaseOut.flipped,
     );
 
     final Animation<Offset> positionAnimation =
@@ -291,12 +282,11 @@ class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
 
   @override
   Widget build(BuildContext context) {
-    // このコードだとシートを積み上げる際に本体が上に上がっていかない
+    // このコードだとシートを複数枚積み上げる際に本体が上に上がっていかない
     return SizedBox(
         child: _coverSheetPrimaryTransition(
       context,
       widget.primaryRouteAnimation,
-      widget.linearTransition,
       ClipRRect(
         borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
         child: widget.child,
