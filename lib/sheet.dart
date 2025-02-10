@@ -74,13 +74,6 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
   }
 }
 
-/// このクラスを消すと、モーダル遷移の挙動が普通の遷移になった。
-/// Provides an iOS-style sheet transition.
-///
-/// The page slides up and stops below the top of the screen. When covered by
-/// another sheet view, it will slide slightly up and scale down to appear
-/// stacked behind the new sheet.
-// class _CupertinoSheetTransition extends StatefulWidget {
 class _CupertinoSheetTransition extends StatelessWidget {
   /// Creates an iOS style sheet transition.
   const _CupertinoSheetTransition({
@@ -101,12 +94,6 @@ class _CupertinoSheetTransition extends StatelessWidget {
   final Widget child;
 
   // staticメソッドだからどこに定義しても挙動は変わらん。
-  /// The primary delegated transition. Will slide a non [CupertinoSheetRoute] page down.
-  ///
-  /// Provided to the previous route to coordinate transitions between routes.
-  ///
-  /// If a [CupertinoSheetRoute] already exists in the stack, then it will
-  /// slide the previous sheet upwards instead.
   static Widget delegateTransition(
     BuildContext context,
     Animation<double> animation,
@@ -150,26 +137,20 @@ class _CupertinoSheetTransition extends StatelessWidget {
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
-    final bool isDarkMode =
-        CupertinoTheme.brightnessOf(context) == Brightness.dark;
-    final Color overlayColor =
-        isDarkMode ? const Color(0xFFc8c8c8) : const Color(0xFF000000);
+    final Color overlayColor = const Color(0xFF000000);
 
-    final Widget? contrastedChild =
-        child != null && !secondaryAnimation.isDismissed
-            ? Stack(
-                children: <Widget>[
-                  child,
-                  FadeTransition(
-                    opacity: opacityAnimation,
-                    child: ColoredBox(
-                      color: overlayColor,
-                      child: const SizedBox(),
-                    ),
-                  ),
-                ],
-              )
-            : child;
+    final Widget contrastedChild = Stack(
+      children: <Widget>[
+        child!,
+        FadeTransition(
+          opacity: opacityAnimation,
+          child: ColoredBox(
+            color: overlayColor,
+            child: const SizedBox(),
+          ),
+        ),
+      ],
+    );
 
     return SlideTransition(
       position: slideAnimation,
@@ -182,7 +163,9 @@ class _CupertinoSheetTransition extends StatelessWidget {
           child: child,
           builder: (BuildContext context, Widget? child) {
             return ClipRRect(
-                borderRadius: radiusAnimation.value, child: contrastedChild);
+              borderRadius: radiusAnimation.value,
+              child: contrastedChild,
+            );
           },
         ),
       ),
@@ -191,12 +174,6 @@ class _CupertinoSheetTransition extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // これだとpush遷移
-    // return ClipRRect(
-    //   borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-    //   child: child,
-    // );
-
     return SizedBox(
       child: _coverSheetPrimaryTransition(
         context,
@@ -209,7 +186,7 @@ class _CupertinoSheetTransition extends StatelessWidget {
     );
   }
 
-  Widget _coverSheetPrimaryTransition(
+  static Widget _coverSheetPrimaryTransition(
     BuildContext context,
     Animation<double> animation,
     Widget? child,
