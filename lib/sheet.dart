@@ -40,19 +40,21 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
   bool get maintainState => true;
 
   @override
-  Duration get transitionDuration => const Duration(milliseconds: 500);
+  Duration get transitionDuration =>
+      const Duration(milliseconds: 500); // 遷移が完了するまでの時間
 
   // これをコメントアウトするとアニメーションのないpush遷移になる。
   // 掘っていくと初期値nullが定義されていた。
   @override
-  DelegatedTransitionBuilder? get delegatedTransition => _CupertinoSheetTransition.delegateTransition;
+  DelegatedTransitionBuilder? get delegatedTransition =>
+      _CupertinoSheetTransition.delegateTransition;
 
   @override
   Widget buildPage(
     BuildContext context,
     Animation<double> animation,
     Animation<double> secondaryAnimation,
-  ) {    
+  ) {
     return builder(context);
   }
 
@@ -97,6 +99,7 @@ class _CupertinoSheetTransition extends StatefulWidget {
   /// The widget below this widget in the tree.
   final Widget child;
 
+  // staticメソッドだからどこに定義しても挙動は変わらん。
   /// The primary delegated transition. Will slide a non [CupertinoSheetRoute] page down.
   ///
   /// Provided to the previous route to coordinate transitions between routes.
@@ -110,10 +113,8 @@ class _CupertinoSheetTransition extends StatefulWidget {
     bool allowSnapshotting,
     Widget? child,
   ) {
-    final bool linear = Navigator.of(context).userGestureInProgress;
-
-    final Curve curve = linear ? Curves.linear : Curves.linearToEaseOut;
-    final Curve reverseCurve = linear ? Curves.linear : Curves.easeInToLinear;
+    final Curve curve = Curves.linearToEaseOut;
+    final Curve reverseCurve = Curves.easeInToLinear;
     final CurvedAnimation curvedAnimation = CurvedAnimation(
       curve: curve,
       reverseCurve: reverseCurve,
@@ -192,10 +193,7 @@ class _CupertinoSheetTransition extends StatefulWidget {
       _CupertinoSheetTransitionState();
 }
 
-class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
-  // Curve of primary page which is coming in to cover another route.
-  CurvedAnimation? _primaryPositionCurve;
-
+class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {  
   // Curve of secondary page which is becoming covered by another sheet.
   CurvedAnimation? _secondaryPositionCurve;
 
@@ -222,11 +220,6 @@ class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
   }
 
   void _setupAnimation() {
-    _primaryPositionCurve = CurvedAnimation(
-      curve: Curves.fastEaseInToSlowEaseOut,
-      reverseCurve: Curves.fastEaseInToSlowEaseOut.flipped,
-      parent: widget.primaryRouteAnimation,
-    );
     _secondaryPositionCurve = CurvedAnimation(
       curve: Curves.linearToEaseOut,
       reverseCurve: Curves.easeInToLinear,
@@ -234,10 +227,8 @@ class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
     );
   }
 
-  void _disposeCurve() {
-    _primaryPositionCurve?.dispose();
+  void _disposeCurve() {    
     _secondaryPositionCurve?.dispose();
-    _primaryPositionCurve = null;
     _secondaryPositionCurve = null;
   }
 
@@ -263,7 +254,7 @@ class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
 
     final CurvedAnimation curvedAnimation = CurvedAnimation(
       parent: animation,
-      curve: Curves.fastEaseInToSlowEaseOut,      
+      curve: Curves.fastEaseInToSlowEaseOut,
       reverseCurve: Curves.fastEaseInToSlowEaseOut.flipped,
     );
 
@@ -279,13 +270,14 @@ class _CupertinoSheetTransitionState extends State<_CupertinoSheetTransition> {
   Widget build(BuildContext context) {
     // このコードだとシートを複数枚積み上げる際に本体が上に上がっていかない
     return SizedBox(
-        child: _coverSheetPrimaryTransition(
-      context,
-      widget.primaryRouteAnimation,
-      ClipRRect(
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-        child: widget.child,
+      child: _coverSheetPrimaryTransition(
+        context,
+        widget.primaryRouteAnimation,
+        ClipRRect(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+          child: widget.child,
+        ),
       ),
-    ));
+    );
   }
 }
