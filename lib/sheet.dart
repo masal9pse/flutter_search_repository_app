@@ -17,11 +17,6 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
   /// Builds the primary contents of the sheet route.
   final WidgetBuilder builder;
 
-  // @override
-  Widget buildContent(BuildContext context) {
-    return builder(context);
-  }
-
   /// Checks if a Cupertino sheet view exists in the widget tree above the current
   /// context.
   static bool hasParentSheet(BuildContext context) {
@@ -57,8 +52,8 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
     BuildContext context,
     Animation<double> animation,
     Animation<double> secondaryAnimation,
-  ) {
-    return buildContent(context);
+  ) {    
+    return builder(context);
   }
 
   // これをコメントアウトするとアニメーションのないpush遷移になる。
