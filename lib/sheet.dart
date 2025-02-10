@@ -34,7 +34,9 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
   Color? get barrierColor => null;
 
   @override
-  bool get opaque => false; // これを消すと、遷移したあとに後ろの画面が消える。
+  bool get opaque => false; // これがfalseだと、遷移したあとに後ろの画面が消えない。
+  // bool get opaque => true; // これをtrueにすると、遷移したあとに後ろの画面が消える。
+  // opaqueを消してもエラーにならないので、親クラスでopaqueの定義がされているはず。trueで
 
   @override
   String? get barrierLabel => null;
