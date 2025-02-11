@@ -28,9 +28,7 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
 
   // これをコメントアウトするとアニメーションのないpush遷移になる。
   // 掘っていくと初期値nullが定義されていた。
-  // @override
-  // DelegatedTransitionBuilder? get delegatedTransition =>
-  //     _CupertinoSheetTransition.delegateTransition;
+  // 後ろの画面のアニメーションを担当
   @override
   DelegatedTransitionBuilder? get delegatedTransition => delegateTransition;
   
@@ -48,39 +46,26 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
       reverseCurve: Curves.easeInToLinear,
       parent: secondaryAnimation,
     );
-    final double deviceCornerRadius =
-        MediaQuery.maybeViewPaddingOf(context)?.top ?? 0;
-
-    final Animatable<Offset> kTopDownTween = Tween<Offset>(
-      begin: Offset.zero,
-      end: const Offset(0.0, 0.07),
-    );
 
     final Animation<BorderRadiusGeometry> radiusAnimation =
         curvedAnimation.drive(
       Tween<BorderRadiusGeometry>(
-        begin: BorderRadius.circular(deviceCornerRadius),
+        begin: BorderRadius.circular(0),
         end: BorderRadius.circular(12),
       ),
-    );
-    final Animation<Offset> slideAnimation =
-        curvedAnimation.drive(kTopDownTween);
-
-    const double kSheetScaleFactor = 0.0835;
-
-    final Animatable<double> kScaleTween =
-        Tween<double>(begin: 1.0, end: 1.0 - kSheetScaleFactor);
-    final Animation<double> scaleAnimation = curvedAnimation.drive(kScaleTween);
-    curvedAnimation.dispose();    
+    );    
 
     return SlideTransition(
-      position: slideAnimation,
+      position: curvedAnimation.drive(
+        Tween<Offset>(
+          begin: Offset.zero,
+          end: const Offset(0.0, 0.07),
+        ),
+      ),
       child: ScaleTransition(
-        scale: scaleAnimation,
+        scale: curvedAnimation.drive(Tween<double>(begin: 1.0, end: 1.0 - 0.0835)),
         filterQuality: FilterQuality.medium,
         alignment: Alignment.topCenter,
-        // alignment: Alignment.topLeft,
-        // alignment: Alignment.topRight,        
         child: AnimatedBuilder(
           animation: radiusAnimation,
           child: child,
