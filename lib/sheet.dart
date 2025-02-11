@@ -28,9 +28,78 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
 
   // これをコメントアウトするとアニメーションのないpush遷移になる。
   // 掘っていくと初期値nullが定義されていた。
+  // @override
+  // DelegatedTransitionBuilder? get delegatedTransition =>
+  //     _CupertinoSheetTransition.delegateTransition;
   @override
-  DelegatedTransitionBuilder? get delegatedTransition =>
-      _CupertinoSheetTransition.delegateTransition;
+  DelegatedTransitionBuilder? get delegatedTransition => delegateTransition;
+  
+  // staticメソッドだからどこに定義しても挙動は変わらん。
+  // delegateTransitionは後ろの画面を担当していそう
+  static Widget delegateTransition(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    bool allowSnapshotting,
+    Widget? child,
+  ) {
+    final CurvedAnimation curvedAnimation = CurvedAnimation(
+      curve: Curves.linearToEaseOut,
+      reverseCurve: Curves.easeInToLinear,
+      parent: secondaryAnimation,
+    );
+    final double deviceCornerRadius =
+        MediaQuery.maybeViewPaddingOf(context)?.top ?? 0;
+
+    final Animatable<Offset> kTopDownTween = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(0.0, 0.07),
+    );
+
+    final Animation<BorderRadiusGeometry> radiusAnimation =
+        curvedAnimation.drive(
+      Tween<BorderRadiusGeometry>(
+        begin: BorderRadius.circular(deviceCornerRadius),
+        end: BorderRadius.circular(12),
+      ),
+    );
+    final Animation<Offset> slideAnimation =
+        curvedAnimation.drive(kTopDownTween);
+
+    const double kSheetScaleFactor = 0.0835;
+
+    final Animatable<double> kScaleTween =
+        Tween<double>(begin: 1.0, end: 1.0 - kSheetScaleFactor);
+    final Animation<double> scaleAnimation = curvedAnimation.drive(kScaleTween);
+    curvedAnimation.dispose();
+    
+    final Widget contrastedChild = Stack(
+      children: <Widget>[
+        child!,
+      ],
+    );
+
+    return SlideTransition(
+      position: slideAnimation,
+      child: ScaleTransition(
+        scale: scaleAnimation,
+        filterQuality: FilterQuality.medium,
+        // alignment: Alignment.topCenter,
+        alignment: Alignment.topLeft,
+        // alignment: Alignment.topRight,        
+        child: AnimatedBuilder(
+          animation: radiusAnimation,
+          child: child,
+          builder: (BuildContext context, Widget? child) {
+            return ClipRRect(
+              borderRadius: radiusAnimation.value,
+              child: contrastedChild,
+            );
+          },
+        ),
+      ),
+    );
+  }
 
   @override
   Widget buildPage(
@@ -76,73 +145,6 @@ class _CupertinoSheetTransition extends StatelessWidget {
   /// The widget below this widget in the tree.
   final Widget child;
 
-  // staticメソッドだからどこに定義しても挙動は変わらん。
-  // delegateTransitionは後ろの画面
-  static Widget delegateTransition(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    bool allowSnapshotting,
-    Widget? child,
-  ) {
-    final Curve curve = Curves.linearToEaseOut;
-    final Curve reverseCurve = Curves.easeInToLinear;
-    final CurvedAnimation curvedAnimation = CurvedAnimation(
-      curve: curve,
-      reverseCurve: reverseCurve,
-      parent: secondaryAnimation,
-    );
-    final double deviceCornerRadius =
-        MediaQuery.maybeViewPaddingOf(context)?.top ?? 0;
-
-    final Animatable<Offset> kTopDownTween = Tween<Offset>(
-      begin: Offset.zero,
-      end: const Offset(0.0, 0.07),
-    );
-
-    final Animation<BorderRadiusGeometry> radiusAnimation =
-        curvedAnimation.drive(
-      Tween<BorderRadiusGeometry>(
-        begin: BorderRadius.circular(deviceCornerRadius),
-        end: BorderRadius.circular(12),
-      ),
-    );
-    final Animation<Offset> slideAnimation =
-        curvedAnimation.drive(kTopDownTween);
-
-    const double kSheetScaleFactor = 0.0835;
-
-    final Animatable<double> kScaleTween =
-        Tween<double>(begin: 1.0, end: 1.0 - kSheetScaleFactor);
-    final Animation<double> scaleAnimation = curvedAnimation.drive(kScaleTween);
-    curvedAnimation.dispose();
-    
-    final Widget contrastedChild = Stack(
-      children: <Widget>[
-        child!,
-      ],
-    );
-
-    return SlideTransition(
-      position: slideAnimation,
-      child: ScaleTransition(
-        scale: scaleAnimation,
-        filterQuality: FilterQuality.medium,
-        alignment: Alignment.topCenter,
-        child: AnimatedBuilder(
-          animation: radiusAnimation,
-          child: child,
-          builder: (BuildContext context, Widget? child) {
-            return ClipRRect(
-              borderRadius: radiusAnimation.value,
-              child: contrastedChild,
-            );
-          },
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -158,6 +160,7 @@ class _CupertinoSheetTransition extends StatelessWidget {
   }
 
   // まずここをみるか
+  // 遷移先の画面
   static Widget _coverSheetPrimaryTransition(
     BuildContext context,
     Animation<double> animation,
