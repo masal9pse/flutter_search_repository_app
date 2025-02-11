@@ -71,21 +71,15 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
     final Animatable<double> kScaleTween =
         Tween<double>(begin: 1.0, end: 1.0 - kSheetScaleFactor);
     final Animation<double> scaleAnimation = curvedAnimation.drive(kScaleTween);
-    curvedAnimation.dispose();
-    
-    final Widget contrastedChild = Stack(
-      children: <Widget>[
-        child!,
-      ],
-    );
+    curvedAnimation.dispose();    
 
     return SlideTransition(
       position: slideAnimation,
       child: ScaleTransition(
         scale: scaleAnimation,
         filterQuality: FilterQuality.medium,
-        // alignment: Alignment.topCenter,
-        alignment: Alignment.topLeft,
+        alignment: Alignment.topCenter,
+        // alignment: Alignment.topLeft,
         // alignment: Alignment.topRight,        
         child: AnimatedBuilder(
           animation: radiusAnimation,
@@ -93,7 +87,7 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
           builder: (BuildContext context, Widget? child) {
             return ClipRRect(
               borderRadius: radiusAnimation.value,
-              child: contrastedChild,
+              child: child,
             );
           },
         ),
