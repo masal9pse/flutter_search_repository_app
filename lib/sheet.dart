@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 
 class CupertinoSheetRoute<T> extends PageRoute<T> {
   /// Creates a page route that displays an iOS styled sheet.
@@ -78,6 +77,7 @@ class _CupertinoSheetTransition extends StatelessWidget {
   final Widget child;
 
   // staticメソッドだからどこに定義しても挙動は変わらん。
+  // delegateTransitionは後ろの画面
   static Widget delegateTransition(
     BuildContext context,
     Animation<double> animation,
@@ -95,12 +95,6 @@ class _CupertinoSheetTransition extends StatelessWidget {
     final double deviceCornerRadius =
         MediaQuery.maybeViewPaddingOf(context)?.top ?? 0;
 
-    final Animatable<BorderRadiusGeometry> decorationTween =
-        Tween<BorderRadiusGeometry>(
-      begin: BorderRadius.circular(deviceCornerRadius),
-      end: BorderRadius.circular(12),
-    );
-
     final Animatable<Offset> kTopDownTween = Tween<Offset>(
       begin: Offset.zero,
       end: const Offset(0.0, 0.07),
@@ -110,7 +104,12 @@ class _CupertinoSheetTransition extends StatelessWidget {
         Tween<double>(begin: 0.0, end: 0.10);
 
     final Animation<BorderRadiusGeometry> radiusAnimation =
-        curvedAnimation.drive(decorationTween);
+        curvedAnimation.drive(
+      Tween<BorderRadiusGeometry>(
+        begin: BorderRadius.circular(deviceCornerRadius),
+        end: BorderRadius.circular(12),
+      ),
+    );
     final Animation<double> opacityAnimation =
         curvedAnimation.drive(kOpacityTween);
     final Animation<Offset> slideAnimation =
@@ -120,11 +119,8 @@ class _CupertinoSheetTransition extends StatelessWidget {
 
     final Animatable<double> kScaleTween =
         Tween<double>(begin: 1.0, end: 1.0 - kSheetScaleFactor);
-    final Animation<double> scaleAnimation =
-        curvedAnimation.drive(kScaleTween);
+    final Animation<double> scaleAnimation = curvedAnimation.drive(kScaleTween);
     curvedAnimation.dispose();
-
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
 
     final Color overlayColor = const Color(0xFF000000);
 
