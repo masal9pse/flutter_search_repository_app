@@ -100,9 +100,6 @@ class _CupertinoSheetTransition extends StatelessWidget {
       end: const Offset(0.0, 0.07),
     );
 
-    final Animatable<double> kOpacityTween =
-        Tween<double>(begin: 0.0, end: 0.10);
-
     final Animation<BorderRadiusGeometry> radiusAnimation =
         curvedAnimation.drive(
       Tween<BorderRadiusGeometry>(
@@ -110,8 +107,6 @@ class _CupertinoSheetTransition extends StatelessWidget {
         end: BorderRadius.circular(12),
       ),
     );
-    final Animation<double> opacityAnimation =
-        curvedAnimation.drive(kOpacityTween);
     final Animation<Offset> slideAnimation =
         curvedAnimation.drive(kTopDownTween);
 
@@ -123,16 +118,12 @@ class _CupertinoSheetTransition extends StatelessWidget {
     curvedAnimation.dispose();
 
     final Color overlayColor = const Color(0xFF000000);
-
     final Widget contrastedChild = Stack(
       children: <Widget>[
         child!,
-        FadeTransition(
-          opacity: opacityAnimation,
-          child: ColoredBox(
-            color: overlayColor,
-            child: const SizedBox(),
-          ),
+        ColoredBox(
+          color: overlayColor,
+          child: const SizedBox(),
         ),
       ],
     );
