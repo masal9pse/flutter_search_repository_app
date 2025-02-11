@@ -28,7 +28,7 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
 
   // これをコメントアウトするとアニメーションのないpush遷移になる。
   // 掘っていくと初期値nullが定義されていた。
-  // 後ろの画面のアニメーションを担当
+  // いじった感じ、後ろの画面(遷移元)のアニメーションを担当
   @override
   DelegatedTransitionBuilder? get delegatedTransition => delegateTransition;
   
@@ -90,6 +90,7 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
   }
 
   // これをコメントアウトするとアニメーションのないpush遷移になる。
+  // おそらくこれが遷移先のモーダルのアニメーションを担当している。
   @override
   Widget buildTransitions(
     BuildContext context,
