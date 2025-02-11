@@ -116,15 +116,10 @@ class _CupertinoSheetTransition extends StatelessWidget {
         Tween<double>(begin: 1.0, end: 1.0 - kSheetScaleFactor);
     final Animation<double> scaleAnimation = curvedAnimation.drive(kScaleTween);
     curvedAnimation.dispose();
-
-    final Color overlayColor = const Color(0xFF000000);
+    
     final Widget contrastedChild = Stack(
       children: <Widget>[
         child!,
-        ColoredBox(
-          color: overlayColor,
-          child: const SizedBox(),
-        ),
       ],
     );
 
