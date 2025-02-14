@@ -59,7 +59,8 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
       position: curvedAnimation.drive(
         Tween<Offset>(
           begin: Offset.zero,
-          end: const Offset(0.0, 0.07),
+          // end: const Offset(0.0, 0.07),
+          end: const Offset(0.0, 0.1),
         ),
       ),
       child: ScaleTransition(
@@ -148,7 +149,8 @@ class _CupertinoSheetTransition extends StatelessWidget {
   ) {
     final Animatable<Offset> kBottomUpTween = Tween<Offset>(
       begin: const Offset(0.0, 1.0),
-      end: const Offset(0.0, 0.08),
+      // end: const Offset(0.0, 0.08),
+      end: const Offset(0.0, 0.2),
     );
 
     final CurvedAnimation curvedAnimation = CurvedAnimation(
