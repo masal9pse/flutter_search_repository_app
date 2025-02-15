@@ -1,5 +1,20 @@
 import 'package:flutter/cupertino.dart';
 
+// Tween that animates a sheet slightly up when it is covered by a new sheet.
+// Values found from eyeballing a simulator running iOS 18.0.
+final Animatable<Offset> _kMidUpTween = Tween<Offset>(
+  begin: Offset.zero,
+  end: const Offset(0.0, -0.005),
+);
+
+// Amount the sheet in the background scales down. Found by measuring the width
+// of the sheet in the background and comparing against the screen width on the
+// iOS simulator showing an iPhone 16 pro running iOS 18.0. The scale transition
+// will go from a default of 1.0 to 1.0 - _kSheetScaleFactor.
+const double _kSheetScaleFactor = 0.0835;
+
+final Animatable<double> _kScaleTween = Tween<double>(begin: 1.0, end: 1.0 - _kSheetScaleFactor);
+
 // sheet01.dartで実装
 class CupertinoSheetRoute<T> extends PageRoute<T> {
   /// Creates a page route that displays an iOS styled sheet.
@@ -68,6 +83,7 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
           // end: const Offset(0.0, 0.1),
         ),
       ),
+      transformHitTests: false,
       child: ScaleTransition(
         scale: curvedAnimation.drive(Tween<double>(begin: 1.0, end: 1.0 - 0.0835)),
         filterQuality: FilterQuality.medium,
@@ -81,6 +97,37 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
               child: child,
             );
           },
+        ),
+      ),
+    );
+  }
+
+  static Widget _delegatedCoverSheetSecondaryTransition(
+    Animation<double> secondaryAnimation,
+    Widget? child,
+  ) {
+    const Curve curve = Curves.linearToEaseOut;
+    const Curve reverseCurve = Curves.easeInToLinear;
+    final CurvedAnimation curvedAnimation = CurvedAnimation(
+      curve: curve,
+      reverseCurve: reverseCurve,
+      parent: secondaryAnimation,
+    );
+
+    final Animation<Offset> slideAnimation = curvedAnimation.drive(_kMidUpTween);
+    final Animation<double> scaleAnimation = curvedAnimation.drive(_kScaleTween);
+    curvedAnimation.dispose();
+
+    return SlideTransition(
+      position: slideAnimation,
+      transformHitTests: false,
+      child: ScaleTransition(
+        scale: scaleAnimation,
+        filterQuality: FilterQuality.medium,
+        alignment: Alignment.topCenter,
+        child: ClipRRect(
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+          child: child,
         ),
       ),
     );
