@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+// sheet01.dartで実装
 class CupertinoSheetRoute<T> extends PageRoute<T> {
   /// Creates a page route that displays an iOS styled sheet.
   CupertinoSheetRoute({required this.builder});
@@ -31,9 +32,7 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
   // いじった感じ、後ろの画面(遷移元)のアニメーションを担当
   @override
   DelegatedTransitionBuilder? get delegatedTransition => delegateTransition;
-  
-  // staticメソッドだからどこに定義しても挙動は変わらん。
-  // delegateTransitionは後ろの画面を担当していそう
+
   static Widget delegateTransition(
     BuildContext context,
     Animation<double> animation,
@@ -41,6 +40,12 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
     bool allowSnapshotting,
     Widget? child,
   ) {
+    //  if (CupertinoSheetRoute.hasParentSheet(context)) {
+    // if (true) {
+    //   return _delegatedCoverSheetSecondaryTransition(secondaryAnimation, child);
+    // }
+
+    // 親（後ろになる一つ前の）画面が通常の画面のとき
     final CurvedAnimation curvedAnimation = CurvedAnimation(
       curve: Curves.linearToEaseOut,
       reverseCurve: Curves.easeInToLinear,
@@ -53,14 +58,14 @@ class CupertinoSheetRoute<T> extends PageRoute<T> {
         begin: BorderRadius.circular(0),
         end: BorderRadius.circular(12),
       ),
-    );    
+    );
 
     return SlideTransition(
       position: curvedAnimation.drive(
         Tween<Offset>(
           begin: Offset.zero,
-          // end: const Offset(0.0, 0.07),
-          end: const Offset(0.0, 0.1),
+          end: const Offset(0.0, 0.07),
+          // end: const Offset(0.0, 0.1),
         ),
       ),
       child: ScaleTransition(
@@ -149,8 +154,8 @@ class _CupertinoSheetTransition extends StatelessWidget {
   ) {
     final Animatable<Offset> kBottomUpTween = Tween<Offset>(
       begin: const Offset(0.0, 1.0),
-      // end: const Offset(0.0, 0.08),
-      end: const Offset(0.0, 0.2),
+      end: const Offset(0.0, 0.08),
+      // end: const Offset(0.0, 0.2),
     );
 
     final CurvedAnimation curvedAnimation = CurvedAnimation(

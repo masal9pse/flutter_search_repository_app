@@ -26,16 +26,14 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('Sheet Example'),
-        automaticBackgroundVisibility: false,
-      ),
-      child: Center(
+    return Scaffold(      
+      // child: Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            CupertinoButton.filled(
+            // CupertinoButton.filled(
+            ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
                   CupertinoSheetRoute<void>(
@@ -65,12 +63,22 @@ class _SheetScaffold extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('CupertinoSheetRoute'),
-            CupertinoButton.filled(
+            ElevatedButton(
               onPressed: () {
                 // Navigator.of(context).maybePop();
                 Navigator.of(context).pop();
               },
               child: const Text('Go Back'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  CupertinoSheetRoute<void>(
+                    builder: (BuildContext context) => const _SheetScaffold(),
+                  ),
+                );
+              },
+              child: const Text('Open Bottom Sheet'),
             ),
           ],
         ),
