@@ -18,9 +18,11 @@ class MyWidget extends HookWidget {
         children: [
           AnimatedOpacity(
             opacity: now.value, // 0が完全に透明で、1が完全な不透明
+            curve: Curves.bounceIn,
             duration: Duration(milliseconds: 3000),
             child: AnimatedAlign(
               alignment: selected.value ? Alignment.center : Alignment.topLeft,
+              curve: Curves.bounceOut.flipped,
               // alignment: selected.value ? Alignment(0.1, 0.1) : Alignment(0.5,0.5),
               // alignment: selected.value ? Alignment(0.1, 0.1) : Alignment(0.5,0.5),
               duration: Duration(milliseconds: 300),

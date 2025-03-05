@@ -1,11 +1,11 @@
 {
-  "dart.flutterSdkPath": ".fvm/versions/3.27.1",
+  "dart.flutterSdkPath": ".fvm/versions/3.29.0",
   "search.exclude": {
     "**/.fvm": true
   },
   "files.watcherExclude": {
     "**/.fvm": true
-  },  
+  },
   "cSpell.ignoreRegExpList": [
     "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+",
     "riverpod",
@@ -17,6 +17,8 @@
     "yumemi"
   ],
   "[dart]": {
-    "editor.rulers": [80]
+    "editor.rulers": [
+      80
+    ]
   }
 }
