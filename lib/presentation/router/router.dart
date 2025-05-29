@@ -45,6 +45,7 @@ class AppRouter extends RootStackRouter {
           ],
         ),
         AutoRoute(
+        
           page: SwipeRoute.page,
           children: [
             AutoRoute(page: BooksTab.page),
