@@ -36,7 +36,8 @@ class MyCustomRenderObject extends RenderBox {
   }
 }
 
-class MyCustomSingleChildRenderObject extends LeafRenderObjectWidget {
+// class MyCustomSingleChildRenderObject extends LeafRenderObjectWidget {
+class MyCustomSingleChildRenderObject extends MultiChildRenderObjectWidget {
   const MyCustomSingleChildRenderObject({super.key});
 
   @override
