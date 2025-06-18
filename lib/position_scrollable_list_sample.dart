@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 void main() {
@@ -16,40 +17,42 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class ScrollableListPage extends StatelessWidget {
+class ScrollableListPage extends HookWidget {
   const ScrollableListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final ItemScrollController itemScrollController = ItemScrollController();
-    final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
+    final itemScrollController = useMemoized(ItemScrollController.new);
+    final itemPositionsListener = useMemoized(ItemPositionsListener.create);
+    final firstVisibleItem = useState(0);
+
+    useEffect(() {
+      void listener() {
+        final positions = itemPositionsListener.itemPositions.value;
+        if (positions.isNotEmpty) {
+          final firstIndex = positions
+              .where((position) => position.itemLeadingEdge <= 0.0)
+              .map((e) => e.index)
+              .fold<int>(999999, (prev, curr) => curr < prev ? curr : prev);
+          firstVisibleItem.value = firstIndex;
+        }
+      }
+
+      itemPositionsListener.itemPositions.addListener(listener);
+      return () => itemPositionsListener.itemPositions.removeListener(listener);
+    }, [itemPositionsListener]);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ScrollablePositionedList'),
+        title: Text('先頭: Item ${firstVisibleItem.value}'),
       ),
-      body: Column(
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              itemScrollController.scrollTo(
-                index: 50,
-                duration: const Duration(seconds: 1),
-              );
-            },
-            child: const Text('Scroll to item 50'),
-          ),
-          Expanded(
-            child: ScrollablePositionedList.builder(
-              itemCount: 100,
-              itemBuilder: (context, index) => ListTile(
-                title: Text('Item $index'),
-              ),
-              itemScrollController: itemScrollController,
-              itemPositionsListener: itemPositionsListener,
-            ),
-          ),
-        ],
+      body: ScrollablePositionedList.builder(
+        itemCount: 100,
+        itemBuilder: (context, index) => ListTile(
+          title: Text('Item $index'),
+        ),
+        itemScrollController: itemScrollController,
+        itemPositionsListener: itemPositionsListener,
       ),
     );
   }
