@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -26,18 +25,23 @@ class MyCustomRenderObject extends RenderBox {
 
   @override
   void performLayout() {
-    _textPainter.layout(); // テキストサイズを計算
-    size = Size(_textPainter.width, _textPainter.height); // 自身のサイズをテキストに合わせる
+    _textPainter.layout(); // 必須
+    size = Size(_textPainter.width, _textPainter.height);
   }
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    _textPainter.paint(context.canvas, offset); // テキストを描画
+    final canvas = context.canvas;
+
+    // 背景つけて確認
+    final paint = Paint()..color = Colors.yellowAccent;
+    canvas.drawRect(offset & size, paint);
+
+    _textPainter.paint(canvas, offset);
   }
 }
 
-// class MyCustomSingleChildRenderObject extends LeafRenderObjectWidget {
-class MyCustomSingleChildRenderObject extends MultiChildRenderObjectWidget {
+class MyCustomSingleChildRenderObject extends LeafRenderObjectWidget {
   const MyCustomSingleChildRenderObject({super.key});
 
   @override
