@@ -7,22 +7,16 @@ import 'package:flutter_engineer_codecheck/application_services/state/search_api
 import 'package:flutter_engineer_codecheck/application_services/const/enum/response_enum.dart';
 import 'package:flutter_engineer_codecheck/domain/model/app_state.dart';
 import 'package:flutter_engineer_codecheck/domain/model/search_api_model.dart';
-import 'package:flutter_engineer_codecheck/presentation/router/router.gr.dart';
 import 'package:flutter_engineer_codecheck/presentation/theme_extention.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/device_center_widget.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/texts/normal_text.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/response_detail_card.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/search_bar.dart'
     as search;
-import 'package:flutter_engineer_codecheck/presentation/view/pages/swipe_router.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/pages/api_show_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-@RoutePage()
-class HomeRouterPage extends AutoRouter {
-  const HomeRouterPage({super.key});
-}
 
 /// トップページ
 @RoutePage()
@@ -32,19 +26,11 @@ class SearchApiListPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final textEditingController = useTextEditingController();
     final searchApiListPageState = ref.watch(searchApiListPageNotifierProvider);
-    final appBarTitleStyle = Theme.of(context).extension<TextStyleExtension>()!;
+    // final appBarTitleStyle = Theme.of(context).extension<TextStyleExtension>()!;
 
     final formKey = ref.watch(formKeyProvider);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)!.topAppBarTitle,
-          style: TextStyle(
-            color: appBarTitleStyle.color,
-            fontSize: appBarTitleStyle.fontSize,
-          ),
-        ),
-      ),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Form(
           key: formKey,
@@ -55,13 +41,6 @@ class SearchApiListPage extends HookConsumerWidget {
                 padding: const EdgeInsets.only(top: 15),
                 child: Column(
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        context.navigateTo(FavoriteRoute());
-                        // context.router.push(FavoriteRoute()); // これをいいね詳細にならない
-                      },
-                      child: Text('お気に入り1'),
-                    ),
                     search.SearchBar(
                       controller: textEditingController,
                       callback: () async {
@@ -85,35 +64,6 @@ class SearchApiListPage extends HookConsumerWidget {
                       Error(exception: final error) =>
                         Text(createErrorMessage(error, context)),
                     },
-                    ElevatedButton(
-                      onPressed: () {
-                        context.navigateTo(FavoriteRoute());
-                        // context.router.push(FavoriteRoute()); // これをいいね詳細にならない
-                      },
-                      child: Text('お気に入り2'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        // context.navigateTo(DashboardRouterRoute());
-                        context.navigateTo(DashboardRouterRoute(children: [PostsRoute(id: 3)]));
-                        // context.router.push(FavoriteRoute()); // これをいいね詳細にならない
-                      },
-                      child: Text('tab'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        // context.navigateTo(DashboardRouterRoute());
-                        context.navigateTo(SwipeRoute());
-                        // context.router.push(FavoriteRoute()); // これをいいね詳細にならない
-                      },
-                      child: Text('try AutoTabsRouter.pageView'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        context.router.push(UpperDashboardRouterRoute());
-                      },
-                      child: Text('try AutoTabsRouter.tabBar'),
-                    ),
                   ],
                 ),
               ),
@@ -162,7 +112,9 @@ class _ApiResults extends ConsumerWidget {
           forksCount: forksCount,
           openIssuesCount: openIssuesCount,
           callback: () {
-            context.router.push(ApiShowRoute(name: item.name));
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return ApiShowPage();
+            }));
             // context.navigateTo(ApiShowRoute(name: item.name));
             // context.router.navigate(ApiShowRouterRoute());
           },
