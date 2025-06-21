@@ -11,7 +11,8 @@ import 'package:flutter_engineer_codecheck/presentation/theme_extention.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/device_center_widget.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/atoms/texts/normal_text.dart';
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/response_detail_card.dart';
-import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/search_bar.dart' as search;
+import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/search_bar.dart'
+    as search;
 import 'package:flutter_engineer_codecheck/presentation/view/pages/api_show_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -57,27 +58,28 @@ class SearchApiListPage extends HookConsumerWidget {
           ),
           switch (searchApiListPageState) {
             Idle() => SliverToBoxAdapter(
-                  child: DeviceCenterWidget(
-                    child: NormalText(
-                      text: ResponseEnum.notYetSearched.message,
-                    ),
+                child: DeviceCenterWidget(
+                  child: NormalText(
+                    text: ResponseEnum.notYetSearched.message,
                   ),
                 ),
+              ),
             Loading() => const SliverToBoxAdapter(
-                  child: Center(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 32),
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-                ),
-            Data(searchApiModel: final data) => _ApiResults(searchApiModel: data),
-            Error(exception: final error) => SliverToBoxAdapter(
+                child: Center(
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Text(createErrorMessage(error, context)),
+                    padding: EdgeInsets.symmetric(vertical: 32),
+                    child: CircularProgressIndicator(),
                   ),
                 ),
+              ),
+            Data(searchApiModel: final data) =>
+              _ApiResults(searchApiModel: data),
+            Error(exception: final error) => SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(createErrorMessage(error, context)),
+                ),
+              ),
           },
         ],
       ),
@@ -124,9 +126,14 @@ class _ApiResults extends ConsumerWidget {
             forksCount: forksCount,
             openIssuesCount: openIssuesCount,
             callback: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return const ApiShowPage();
-              }));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) {
+                    return const ApiShowPage();
+                  },
+                ),
+              );
             },
           );
         },
