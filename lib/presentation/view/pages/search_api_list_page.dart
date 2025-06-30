@@ -32,57 +32,71 @@ class SearchApiListPage extends HookConsumerWidget {
     return Scaffold(
       body: SafeArea(
         bottom: false,
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              leading: IconButton(onPressed: () {}, icon: Icon(Icons.search)),
-            ),
-            SliverToBoxAdapter(
-              child: Form(
-                key: formKey,
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: search.SearchBar(
-                      controller: textEditingController,
-                      callback: () async {
-                        if (formKey.currentState!.validate()) {
-                          ref
-                              .read(searchApiListPageNotifierProvider.notifier)
-                              .search(textEditingController.text);
-                        }
-                      },
+        child: NotificationListener<ScrollEndNotification>(
+          onNotification: (notification) {
+            print(notification.metrics);
+            if (notification.metrics.pixels ==
+                notification.metrics.maxScrollExtent) {
+              ref
+                  .read(searchApiListPageNotifierProvider.notifier)
+                  .search('react');
+            }
+            return true;
+          },
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                leading: IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+              ),
+              SliverToBoxAdapter(
+                child: Form(
+                  key: formKey,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 15),
+                      child: search.SearchBar(
+                        controller: textEditingController,
+                        callback: () async {
+                          if (formKey.currentState!.validate()) {
+                            ref
+                                .read(
+                                    searchApiListPageNotifierProvider.notifier)
+                                .search(textEditingController.text);
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            switch (searchApiListPageState) {
-              Idle() => SliverToBoxAdapter(
-                  child: DeviceCenterWidget(
-                    child: NormalText(
-                      text: ResponseEnum.notYetSearched.message,
+              switch (searchApiListPageState) {
+                Idle() => SliverToBoxAdapter(
+                    child: DeviceCenterWidget(
+                      child: NormalText(
+                        text: ResponseEnum.notYetSearched.message,
+                      ),
                     ),
                   ),
-                ),
-              Loading() => const SliverToBoxAdapter(
-                  child: Center(
+                Loading() => const SliverToBoxAdapter(
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 32),
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  ),
+                Data(searchApiModel: final data) =>
+                  _ApiResults(searchApiModel: data),
+                Error(exception: final error) => SliverToBoxAdapter(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 32),
-                      child: CircularProgressIndicator(),
+                      padding: const EdgeInsets.all(16),
+                      // child: Text(createErrorMessage(error, context)),
+                      child: Text('error'),
                     ),
                   ),
-                ),
-              Data(searchApiModel: final data) =>
-                _ApiResults(searchApiModel: data),
-              Error(exception: final error) => SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Text(createErrorMessage(error, context)),
-                  ),
-                ),
-            },
-          ],
+              },
+            ],
+          ),
         ),
       ),
     );
