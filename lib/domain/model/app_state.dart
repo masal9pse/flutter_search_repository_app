@@ -17,6 +17,12 @@ class Data extends AppState {
   final SearchApiModel searchApiModel;
 }
 
+// 追加ローディング
+class AddLoading extends AppState {
+  const AddLoading(this.searchApiModel);
+  final SearchApiModel searchApiModel;
+}
+
 class Error extends AppState {
   const Error(this.exception);
   final Exception exception;

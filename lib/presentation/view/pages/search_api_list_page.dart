@@ -39,7 +39,7 @@ class SearchApiListPage extends HookConsumerWidget {
                 notification.metrics.maxScrollExtent) {
               ref
                   .read(searchApiListPageNotifierProvider.notifier)
-                  .search('react');
+                  .loadMore('react');
             }
             return true;
           },
@@ -85,16 +85,26 @@ class SearchApiListPage extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                Data(searchApiModel: final data) =>
+                Data(searchApiModel: final data) ||
+                AddLoading(searchApiModel: final data) =>
                   _ApiResults(searchApiModel: data),
                 Error(exception: final error) => SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
-                      // child: Text(createErrorMessage(error, context)),
                       child: Text('error'),
                     ),
                   ),
               },
+              if (searchApiListPageState is AddLoading) ...[
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 24),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),
