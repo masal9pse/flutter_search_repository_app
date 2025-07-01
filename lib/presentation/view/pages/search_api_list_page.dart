@@ -28,11 +28,12 @@ class SearchApiListPage extends HookConsumerWidget {
     final textEditingController = useTextEditingController();
     final searchApiListPageState = ref.watch(searchApiListPageNotifierProvider);
     final formKey = ref.watch(formKeyProvider);
+    final scrollController = useScrollController();
 
     return Scaffold(
       body: SafeArea(
         bottom: false,
-        child: NotificationListener<ScrollEndNotification>(
+        child: NotificationListener<ScrollNotification>(
           onNotification: (notification) {
             print(notification.metrics);
             if (notification.metrics.pixels ==
@@ -44,6 +45,7 @@ class SearchApiListPage extends HookConsumerWidget {
             return true;
           },
           child: CustomScrollView(
+            controller: scrollController,
             slivers: [
               SliverAppBar(
                 leading: IconButton(onPressed: () {}, icon: Icon(Icons.search)),
@@ -108,6 +110,17 @@ class SearchApiListPage extends HookConsumerWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // スクロール処理は後で追加予定
+          scrollController.animateTo(
+            0,
+            duration: const Duration(milliseconds: 1000),
+            curve: Curves.easeOut,
+          );
+        },
+        child: const Icon(Icons.arrow_upward),
       ),
     );
   }
