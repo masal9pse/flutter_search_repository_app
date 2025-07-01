@@ -30,6 +30,9 @@ class SearchApiListPageNotifier extends _$SearchApiListPageNotifier {
   }
 
   Future<void> loadMore(String input) async {
+    if (state is! Data) {
+      return;
+    }
     final previous = state as Data;
     state = AddLoading(previous.searchApiModel);
     final dio = Dio();
