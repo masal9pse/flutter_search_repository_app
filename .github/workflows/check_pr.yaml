@@ -26,15 +26,15 @@ jobs:
         run: touch .env
 
       - name: 🧪 Run flutter tests
-        run: flutter test
+        run: flutter test --machine > test_report.log
+    
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: 'flutter test'
+          path: 'test_report.log'
+          reporter: 'flutter-json'
+          fail-on-error: 'false'
 
-      - name: 🧪 Show failed tests (only if test failed)
-        if: failure()
-        run: |
-            echo "Extracting failed test names..."
-            flutter test --machine > result.log || true
-            echo "::error title=Test Failure::Some test cases failed."
-            echo ""
-            echo "❌ Failed tests:"
-            grep '"name":' result.log | grep -B 1 '"result":"failure"' | grep '"name":' | sed 's/.*"name":"\(.*\)".*/- \1/'
 
