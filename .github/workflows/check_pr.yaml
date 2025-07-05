@@ -21,6 +21,9 @@ jobs:
 
       - name: 🚀 Install dependencies
         run: flutter pub get
+      
+      - name: create .env
+        run: touch .env
 
     #   - name: 🎨 Format check
     #     run: dart format --set-exit-if-changed .
