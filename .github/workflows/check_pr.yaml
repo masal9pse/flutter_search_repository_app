@@ -17,12 +17,12 @@ jobs:
       - name: 💙 Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.1'  # 任意のFlutterバージョンに変更可
+          flutter-version: '3.27.1'
 
       - name: 🚀 Install dependencies
         run: flutter pub get
-      
-      - name: create .env
+
+      - name: 📄 create .env
         run: touch .env
 
     #   - name: 🎨 Format check
@@ -31,5 +31,17 @@ jobs:
     #   - name: 🔍 Analyze
     #     run: flutter analyze
 
-      - name: 🧪 Run tests
-        run: flutter test
+      - name: 🧪 Run tests and show failures
+        run: |
+          echo "Running flutter tests..."
+          flutter test --machine > result.log || true
+          
+          if grep '"result":"failure"' result.log > /dev/null; then
+            echo "::error title=Test Failure::Some test cases failed."
+            echo ""
+            echo "❌ Failed tests:"
+            grep '"name":' result.log | grep -B 1 '"result":"failure"' | grep '"name":' | sed 's/.*"name":"\(.*\)".*/- \1/'
+            exit 1
+          else
+            echo "✅ All tests passed"
+          fi
