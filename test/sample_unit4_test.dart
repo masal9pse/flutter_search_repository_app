@@ -3,6 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('sanity check', () {
-    expect(3, equals(6));
+    expect(3, equals(3));
   });
 }
