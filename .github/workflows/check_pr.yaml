@@ -25,6 +25,7 @@ jobs:
         run: touch .env
 
       - name: 🧪 Run flutter tests
+        id: test
         run: flutter test --machine > test_report.log
 
       - name: 📄 Test Report
@@ -41,13 +42,13 @@ jobs:
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          test_outcome: ${{ steps.test.outcome }}
           script: |
             const prNumber = context.payload.pull_request.number;
             const botLogin = 'github-actions[bot]';
             const commentTag = '<!-- flutter-ci-comment -->'; // 識別タグ
 
-            const testStep = steps['🧪 Run flutter tests'];
-            const success = testStep && testStep.outcome === 'success';
+            const success = core.getInput('test_outcome') === 'success';
             const commentBody = `${commentTag}
             ${success ? `✅ All Flutter tests passed for commit \`${context.sha.slice(0, 7)}\`! 🎉` : `❌ Some Flutter tests failed for commit \`${context.sha.slice(0, 7)}\`.`}`;
 
