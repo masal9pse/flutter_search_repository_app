@@ -44,8 +44,6 @@ jobs:
           script: |
             const prNumber = context.payload.pull_request.number;
             await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
               issue_number: prNumber,
               body: `✅ All Flutter tests passed for commit \`${context.sha.slice(0, 7)}\`! 🎉`
             });
