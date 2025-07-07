@@ -14,6 +14,7 @@ import 'package:flutter_engineer_codecheck/presentation/view/components/organism
 import 'package:flutter_engineer_codecheck/presentation/view/components/organisms/search_bar.dart'
     as search;
 import 'package:flutter_engineer_codecheck/presentation/view/pages/api_show_page.dart';
+import 'package:flutter_engineer_codecheck/presentation/view/pages/my_home_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -114,10 +115,14 @@ class SearchApiListPage extends HookConsumerWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // スクロール処理は後で追加予定
-          scrollController.animateTo(
-            0,
-            duration: const Duration(milliseconds: 1000),
-            curve: Curves.easeOut,
+          // scrollController.animateTo(
+          //   0,
+          //   duration: const Duration(milliseconds: 1000),
+          //   curve: Curves.easeOut,
+          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MyHomePage()),
           );
         },
         child: const Icon(Icons.arrow_upward),

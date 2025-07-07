@@ -41,3 +41,7 @@ flutter:
   generate: true
   assets:
     - .env
+  # fonts:
+  #   - family: NotoSansJP
+  #     fonts:
+  #       - asset: assets/fonts/NotoSansJP-Regular.otf

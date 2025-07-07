@@ -9,7 +9,6 @@ jobs:
   flutter-ci:
     name: Run Flutter checks
     runs-on: ubuntu-latest
-
     steps:
       - name: 📦 Checkout code
         uses: actions/checkout@v4
@@ -21,14 +20,14 @@ jobs:
 
       - name: 🚀 Install dependencies
         run: flutter pub get
-      
-      - name: create .env
+
+      - name: 📝 Create .env file
         run: touch .env
 
       - name: 🧪 Run flutter tests
         run: flutter test --machine > test_report.log
-    
-      - name: Test Report
+
+      - name: 📄 Test Report
         uses: dorny/test-reporter@v1
         if: always()
         with:
@@ -37,4 +36,16 @@ jobs:
           reporter: 'flutter-json'
           fail-on-error: 'false'
 
-
+      - name: ✅ Comment on PR if tests pass
+        if: success() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: `✅ All Flutter tests passed for commit \`${context.sha.slice(0, 7)}\`! 🎉`
+            });
