@@ -50,7 +50,7 @@ jobs:
 
             const success = core.getInput('test_outcome') === 'success';
             const commentBody = `${commentTag}
-            ${success ? `✅ All Flutter tests passed for commit \`${context.sha.slice(0, 7)}\`! 🎉` : `❌ Some Flutter tests failed for commit \`${context.sha.slice(0, 7)}\`.`}`;
+            ${success ? `✅ All Flutter tests passed for commit \`${context.sha.slice(0, 7)}\`! 🎉` : `❌ Some1 Flutter tests failed for commit \`${context.sha.slice(0, 7)}\`.`}`;
 
             // 既存コメントを取得
             const comments = await github.paginate(
