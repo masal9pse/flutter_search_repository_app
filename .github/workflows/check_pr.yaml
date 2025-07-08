@@ -16,7 +16,7 @@ jobs:
       - name: 💙 Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.1'  # 任意のFlutterバージョンに変更可
+          flutter-version: '3.27.1'
 
       - name: 🚀 Install dependencies
         run: flutter pub get
@@ -24,65 +24,27 @@ jobs:
       - name: 📝 Create .env file
         run: touch .env
 
-      # - name: 🧪 Run flutter tests
-      #   id: test
-      #   run: flutter test --machine > test_report.log
-      
+      - name: 🧪 Run flutter tests
+        id: test
+        run: flutter test --machine > test_report.log
+
+  golden-tests:
+    name: Run Golden Tests
+    runs-on: macos-latest
+    steps:
+      - name: 📦 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 💙 Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.27.1'
+
+      - name: 🚀 Install dependencies
+        run: flutter pub get
+
+      - name: 📝 Create .env file
+        run: touch .env
+
       - name: 🔍 Run Golden Tests
-        id: golden-tests
         run: flutter test --update-goldens --tags golden
-
-      # - name: 📄 Test Report
-      #   uses: dorny/test-reporter@v1
-      #   if: always()
-      #   with:
-      #     name: 'flutter test'
-      #     path: 'test_report.log'
-      #     reporter: 'flutter-json'
-      #     fail-on-error: 'false'
-      
-      # - name: ✅ Comment on PR (update or create)
-      #   if: always() && github.event_name == 'pull_request'
-      #   uses: actions/github-script@v7
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     test_outcome: ${{ steps.test.outcome }}
-      #     script: |
-      #       const prNumber = context.payload.pull_request.number;
-      #       const botLogin = 'github-actions[bot]';
-      #       const commentTag = '<!-- flutter-ci-comment -->'; // 識別タグ
-
-      #       const success = core.getInput('test_outcome') === 'success';
-      #       const commentBody = `${commentTag}
-      #       ${success ? `✅ All Flutter tests passed for commit \`${context.sha.slice(0, 7)}\`! 🎉` : `❌ Some1 Flutter tests failed for commit \`${context.sha.slice(0, 7)}\`.`}`;
-
-      #       // 既存コメントを取得
-      #       const comments = await github.paginate(
-      #         github.rest.issues.listComments,
-      #         {
-      #           owner: context.repo.owner,
-      #           repo: context.repo.repo,
-      #           issue_number: prNumber,
-      #         }
-      #       );
-
-      #       // 自分のコメントの中からタグ付きのものを探す
-      #       const existingComment = comments.find(
-      #         (c) => c.user.login === botLogin && c.body.includes(commentTag)
-      #       );
-
-      #       if (existingComment) {
-      #         await github.rest.issues.updateComment({
-      #           owner: context.repo.owner,
-      #           repo: context.repo.repo,
-      #           comment_id: existingComment.id,
-      #           body: commentBody,
-      #         });
-      #       } else {
-      #         await github.rest.issues.createComment({
-      #           owner: context.repo.owner,
-      #           repo: context.repo.repo,
-      #           issue_number: prNumber,
-      #           body: commentBody,
-      #         });
-      #       }
