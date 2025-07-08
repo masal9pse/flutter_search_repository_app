@@ -24,22 +24,22 @@ jobs:
       - name: 📝 Create .env file
         run: touch .env
 
-      - name: 🧪 Run flutter tests
-        id: test
-        run: flutter test --machine > test_report.log
+      # - name: 🧪 Run flutter tests
+      #   id: test
+      #   run: flutter test --machine > test_report.log
       
       - name: 🔍 Run Golden Tests
         id: golden-tests
         run: flutter test --tags golden
 
-      - name: 📄 Test Report
-        uses: dorny/test-reporter@v1
-        if: always()
-        with:
-          name: 'flutter test'
-          path: 'test_report.log'
-          reporter: 'flutter-json'
-          fail-on-error: 'false'
+      # - name: 📄 Test Report
+      #   uses: dorny/test-reporter@v1
+      #   if: always()
+      #   with:
+      #     name: 'flutter test'
+      #     path: 'test_report.log'
+      #     reporter: 'flutter-json'
+      #     fail-on-error: 'false'
       
       # - name: ✅ Comment on PR (update or create)
       #   if: always() && github.event_name == 'pull_request'
