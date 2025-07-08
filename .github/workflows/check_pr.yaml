@@ -26,7 +26,7 @@ jobs:
 
       - name: 🧪 Run flutter tests
         id: test
-        run: flutter test --machine > test_report.log
+        run: flutter test --exclude-tags golden
 
   golden-tests:
     name: Run Golden Tests
