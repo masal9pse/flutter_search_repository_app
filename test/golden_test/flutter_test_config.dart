@@ -12,9 +12,7 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) async {
         enabled: false,
         // theme: ThemeData(fontFamily: 'NotoSansJP'),
       ),
-      platformGoldensConfig: const PlatformGoldensConfig(
-        // enabled: false,        
-      ),
+      platformGoldensConfig: const PlatformGoldensConfig(),
     ),
     run: testMain,
   );
