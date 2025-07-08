@@ -30,7 +30,7 @@ jobs:
       
       - name: 🔍 Run Golden Tests
         id: golden-tests
-        run: flutter test --tags golden
+        run: flutter test --update-goldens --tags golden
 
       # - name: 📄 Test Report
       #   uses: dorny/test-reporter@v1
