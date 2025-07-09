@@ -20,13 +20,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('counter_app'),
+        title: const Text('counter_app1'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text('test2'),
+            const Text('sample1'),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
