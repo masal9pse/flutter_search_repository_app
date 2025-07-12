@@ -6,45 +6,31 @@ on:
   pull_request:
 
 jobs:
-  flutter-ci:
-    name: Run Flutter checks
+  flutter_tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # ここに並列で実行したいテストの種類を定義
+        test_type: [unit-test, vrt] 
     steps:
-      - name: 📦 Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: 💙 Set up Flutter
-        uses: subosito/flutter-action@v2
+      # ▼▼▼ Flutterの環境構築（このステップは共通） ▼▼▼
+      - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.1'
-
+          flutter-version: '3.27.1' # プロジェクトに合わせたバージョンを指定
+      
       - name: 🚀 Install dependencies
         run: flutter pub get
 
       - name: 📝 Create .env file
         run: touch .env
 
-      - name: 🧪 Run flutter tests
-        id: test
-        run: flutter test --exclude-tags golden
+      # ▼▼▼ matrix の値に応じて、実行するテストを切り替える ▼▼▼
+      - name: Run Unit Tests
+        if: matrix.test_type == 'unit-test'
+        run: flutter test
 
-  golden-tests:
-    name: Run Golden Tests
-    runs-on: macos-latest
-    steps:
-      - name: 📦 Checkout code
-        uses: actions/checkout@v4
-
-      - name: 💙 Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.27.1'
-
-      - name: 🚀 Install dependencies
-        run: flutter pub get
-
-      - name: 📝 Create .env file
-        run: touch .env
-
-      - name: 🔍 Run Golden Tests
+      - name: Run VRT
+        if: matrix.test_type == 'vrt'
         run: flutter test --update-goldens --tags golden
