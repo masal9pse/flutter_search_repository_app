@@ -25,6 +25,7 @@ dependencies:
   auto_route: ^9.2.2
   app_links: ^6.3.3
   alchemist: ^0.11.0
+  very_good_analysis: ^8.0.0
 
 dev_dependencies:
   flutter_test:
