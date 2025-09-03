@@ -6,7 +6,6 @@ import 'package:flutter_engineer_codecheck/presentation/view/components/molecule
 /// 検索結果
 class ResponseDetailCard extends StatelessWidget {
   const ResponseDetailCard({
-    super.key,
     required this.url,
     required this.title,
     required this.stargazersCount,
@@ -14,6 +13,7 @@ class ResponseDetailCard extends StatelessWidget {
     required this.watchersCount,
     required this.forksCount,
     required this.openIssuesCount,
+    super.key,
     this.callback,
   });
 
@@ -27,54 +27,50 @@ class ResponseDetailCard extends StatelessWidget {
   final VoidCallback? callback;
 
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: callback,
-      child: Card(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ResponseListTile(
-              image: Image.network(
-                url,
-                errorBuilder: (_, __, ___) {
-                  return const Icon(
+  Widget build(BuildContext context) => GestureDetector(
+        onTap: callback,
+        child: Card(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ResponseListTile(
+                image: Image.network(
+                  url,
+                  errorBuilder: (_, __, ___) => const Icon(
                     Icons.error,
                     color: Colors.red,
-                  );
-                },
+                  ),
+                ),
+                title: title,
+                subtitle: subtitle,
               ),
-              title: title,
-              subtitle: subtitle,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                ResponseIconCount(
-                  icon: ResponseItemEnum.stargazersCount.icon,
-                  count: stargazersCount,
-                ),
-                const SizedBox(width: 8),
-                ResponseIconCount(
-                  icon: ResponseItemEnum.watchersCount.icon,
-                  count: watchersCount,
-                ),
-                const SizedBox(width: 8),
-                ResponseIconCount(
-                  icon: ResponseItemEnum.forksCount.icon,
-                  count: forksCount,
-                ),
-                const SizedBox(width: 8),                
-                ResponseIconCount(
-                  icon: ResponseItemEnum.openIssuesCount.icon,
-                  count: openIssuesCount,
-                ),
-                const SizedBox(width: 8),
-              ],
-            ),
-          ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  ResponseIconCount(
+                    icon: ResponseItemEnum.stargazersCount.icon,
+                    count: stargazersCount,
+                  ),
+                  const SizedBox(width: 8),
+                  ResponseIconCount(
+                    icon: ResponseItemEnum.watchersCount.icon,
+                    count: watchersCount,
+                  ),
+                  const SizedBox(width: 8),
+                  ResponseIconCount(
+                    icon: ResponseItemEnum.forksCount.icon,
+                    count: forksCount,
+                  ),
+                  const SizedBox(width: 8),
+                  ResponseIconCount(
+                    icon: ResponseItemEnum.openIssuesCount.icon,
+                    count: openIssuesCount,
+                  ),
+                  const SizedBox(width: 8),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 }

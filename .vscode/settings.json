@@ -17,6 +17,17 @@
     "yumemi"
   ],
   "[dart]": {
-    "editor.rulers": [80]
+    "editor.rulers": [80],
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit",
+      "source.addMissingImports": "explicit"
+    },
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
   }
 }
