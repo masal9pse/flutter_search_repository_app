@@ -12,7 +12,7 @@ void main() {
         children: [
           GoldenTestScenario(
             name: 'with title',
-            child: ListTile(
+            child: const ListTile(
               title: Text('ListTile.title'),
             ),
           ),

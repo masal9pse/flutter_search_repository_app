@@ -16,4 +16,8 @@ analyzer:
     close_sinks: info
 linter:
   rules:
+    close_sinks: true
+    public_member_api_docs: false
+    use_decorated_box: true
     require_trailing_commas: true
+    prefer_expression_function_bodies: true
