@@ -28,6 +28,7 @@ dependencies:
   very_good_analysis: ^8.0.0
   graphql_flutter: ^5.2.1
   graphql: ^5.2.2
+  graphql_codegen: ^1.2.4
 
 dev_dependencies:
   flutter_test:

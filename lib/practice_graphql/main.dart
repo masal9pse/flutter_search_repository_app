@@ -69,13 +69,6 @@ class AppProvider extends StatelessWidget {
 /// GraphQL Queries
 /// =============================
 
-// 動作確認用（任意）
-const String basicQuery = '''
-  query {
-    viewer { login }
-  }
-''';
-
 // リポジトリ一覧
 const String repositoriesQuery = '''
   query {
