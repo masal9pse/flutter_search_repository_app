@@ -1,0 +1,11 @@
+# build.yaml
+targets:
+  $default:
+    builders:
+      graphql_codegen:
+        options:
+          schema_mapping:
+            - schema: lib/practice_graphql/schema.graphql
+              queries_glob: lib/practice_graphql/**/*.graphql
+              # 生成物の出力先（お好みで）
+              output: lib/practice_graphql

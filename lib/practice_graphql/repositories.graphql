@@ -1,0 +1,13 @@
+query Repositories($last: Int! = 10) {
+  viewer {
+    repositories(last: $last, orderBy: {field: UPDATED_AT, direction: DESC}, privacy: PUBLIC) {
+      nodes {
+        id
+        name
+        description
+        url
+        updatedAt
+      }
+    }
+  }
+}

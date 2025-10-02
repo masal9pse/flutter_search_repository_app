@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+// 追加：graphql_codegen が生成した型を取り込む
+import 'package:flutter_engineer_codecheck/practice_graphql/repositories.graphql.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 /// 必須：GitHubトークン（少なくとも public_repo / private なら repo スコープ）
@@ -82,26 +84,13 @@ class AppProvider extends StatelessWidget {
 }
 
 /// =============================
-/// Queries（リポジトリ一覧は既存のまま）
+/// （削除）文字列クエリ & 手書きモデル
 /// =============================
-const String repositoriesQuery = '''
-  query {
-    viewer {
-      repositories(last: 10, orderBy: {field: UPDATED_AT, direction: DESC}, privacy: PUBLIC) {
-        nodes {
-          id
-          name
-          description
-          url
-          updatedAt
-        }
-      }
-    }
-  }
-''';
+// const String repositoriesQuery = ''' ... ''';  // ← 使わない
+// class Repository { ... }                        // ← 使わない
 
 /// =============================
-/// Mutations（Issue 追加 / 更新）
+/// Mutations（Issue 追加 / 更新）※そのまま
 /// =============================
 
 /// createIssue（repositoryId・title・body を投入）
@@ -131,58 +120,39 @@ const String updateMutation = r'''
 ''';
 
 /// =============================
-/// Model & Fetchers（簡易）
+/// Fetch（ここだけ型安全化）
 /// =============================
-class Repository {
-  Repository({
-    required this.id,
-    required this.name,
-    required this.url,
-    required this.updatedAt,
-    this.description,
-  });
 
-  factory Repository.fromJson(Map<String, dynamic> json) => Repository(
-        id: json['id'] as String,
-        name: json['name'] as String,
-        description: json['description'] as String?,
-        url: json['url'] as String,
-        updatedAt: json['updatedAt'] as String,
-      );
+Future<List<Query$Repositories$viewer$repositories$nodes?>?>
+    fetchRepositories() async {
+  final result = await _client.query(
+    QueryOptions(
+      document: documentNodeQueryRepositories,
+      variables: Variables$Query$Repositories(last: 10).toJson(),
+      fetchPolicy: FetchPolicy.cacheAndNetwork,
+      parserFn: Query$Repositories.fromJson,
+    ),
+  );
 
-  final String id;
-  final String name;
-  final String? description;
-  final String url;
-  final String updatedAt;
-}
-
-Future<List<Repository>?> fetchRepositories() async {
-  final response =
-      await _client.query(QueryOptions(document: gql(repositoriesQuery)));
-
-  if (response.hasException) {
-    throw response.exception!;
+  if (result.hasException) {
+    throw result.exception!;
   }
 
-  final List<dynamic>? nodes =
-      response.data?['viewer']?['repositories']?['nodes'];
-  if (nodes == null) return null;
-
-  return nodes
-      .map((dynamic item) => Repository.fromJson(item as Map<String, dynamic>))
-      .toList();
+  final data = result.parsedData; // ← 型付き (Query$Repositories)
+  return data?.viewer.repositories.nodes; // List<...?>?
 }
 
-/// Issue作成
+/// Issue作成（そのまま）
 Future<void> createIssue({
   required BuildContext context,
   required String title,
   required String body,
 }) async {
   if (repositoryId.isEmpty) {
-    _toast(context,
-        'GITHUB_REPO_ID が未設定です。--dart-define=GITHUB_REPO_ID=... を指定してください。');
+    _toast(
+      context,
+      'GITHUB_REPO_ID が未設定です。--dart-define=GITHUB_REPO_ID=... を指定してください。',
+    );
     return;
   }
   final options = MutationOptions(
@@ -202,7 +172,7 @@ Future<void> createIssue({
   _toast(context, 'Issue created 🎉');
 }
 
-/// Issue更新
+/// Issue更新（そのまま）
 Future<void> updateIssue({
   required BuildContext context,
   required String id,
@@ -231,7 +201,7 @@ void _toast(BuildContext context, String msg) {
 }
 
 /// =============================
-/// UI（既存のList + Card：右端に「編集」導線）
+/// UI（FutureBuilderとListViewを生成型に合わせて変更）
 /// =============================
 class IssueListPage extends StatelessWidget {
   const IssueListPage({super.key});
@@ -246,11 +216,14 @@ class IssueListPage extends StatelessWidget {
         if (repositoryId.isEmpty) const _RepoIdWarning(),
         Expanded(
           child: Center(
-            child: FutureBuilder<List<Repository>?>(
+            child: FutureBuilder<
+                List<Query$Repositories$viewer$repositories$nodes?>?>(
               future: fetchRepositories(),
               builder: (
                 BuildContext context,
-                AsyncSnapshot<List<Repository>?> snapshot,
+                AsyncSnapshot<
+                        List<Query$Repositories$viewer$repositories$nodes?>?>
+                    snapshot,
               ) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:
@@ -264,26 +237,26 @@ class IssueListPage extends StatelessWidget {
                         child: Text('Error: ${snapshot.error}'),
                       );
                     }
-                    final data = snapshot.data;
-                    if (data == null || data.isEmpty) {
+                    final nodes = snapshot.data;
+                    if (nodes == null || nodes.isEmpty) {
                       return const Text('No repositories');
                     }
-                    // ここではRepositoriesを表示（Issue表示は今回スコープ外）
                     return ListView.builder(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,
                         vertical: 8,
                       ),
-                      itemCount: data.length,
+                      itemCount: nodes.length,
                       itemBuilder: (context, index) {
-                        final repo = data[index];
-                        // 右端「編集」ボタンは Issue 編集用の導線サンプルとして配置
+                        final repo = nodes[index];
+                        if (repo == null) return const SizedBox.shrink();
                         return Container(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: CardItem(
                             title: repo.name,
                             message: repo.description ?? '',
                             url: repo.url,
+                            // DateTime設定していない場合はString、設定している場合はDateTime
                             updatedAt: repo.updatedAt,
                           ),
                         );
