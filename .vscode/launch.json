@@ -39,6 +39,17 @@
                 // "--dart-define=flavor=prd",
                 "--dart-define-from-file=define/prd.json",
             ]
-        }
+        },
+        {
+            "name": "flutter_engineer_codecheck (debug mode graphql)",
+            "request": "launch",
+            "type": "dart",            
+            "program": "lib/practice_graphql/main.dart",
+            "flutterMode": "debug",
+            "args": [
+                // "--dart-define=flavor=prd",
+                "--dart-define-from-file=define/graphql-env.json",                
+            ]
+        },
     ]
 }
