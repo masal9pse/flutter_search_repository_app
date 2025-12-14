@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_engineer_codecheck/l10n/app_localizations.dart';
 
 String createErrorMessage(Object error, BuildContext context) {
   final appLocalizations = AppLocalizations.of(context)!;
