@@ -11,3 +11,6 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
+
+# Android related
+app/src/main/res/mipmap*/ic_launcher*.png
