@@ -14,7 +14,7 @@ dependencies:
   hooks_riverpod: ^2.6.1
   riverpod_generator: ^2.3.5
   riverpod_annotation: ^2.3.0
-  freezed_annotation: ^2.4.1
+  freezed_annotation: ">=2.4.1 <4.0.0"
   json_annotation: ^4.8.1
   flutter_localizations:
     sdk: flutter
@@ -32,7 +32,7 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ">=3.0.1 <6.0.0"
   build_runner: ^2.4.6
-  freezed: ^2.4.5
+  freezed: ">=2.4.5 <4.0.0"
   json_serializable: ^6.7.1
   retrofit_generator: ^9.1.7
   auto_route_generator: ^9.0.0
