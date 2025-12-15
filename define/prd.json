@@ -1,0 +1,6 @@
+{
+    "flavor": "prd",
+    "appName": "search_flutter_app_prd",
+    "appPackageName": "com.example.search-flutter-app-prd",
+    "bundleId": "com.example.search-flutter-app-prd"
+}

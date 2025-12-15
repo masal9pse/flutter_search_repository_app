@@ -1,0 +1,6 @@
+{
+    "flavor": "dev",
+    "appName": "search_flutter_app_dev",
+    "appPackageName": "com.example.search-flutter-app-dev",
+    "bundleId": "com.example.search-flutter-app-dev"
+}
