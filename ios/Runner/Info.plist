@@ -11,7 +11,9 @@
 		<key>CFBundleInfoDictionaryVersion</key>
 		<string>6.0</string>
 		<key>CFBundleName</key>
-		<string>flutter_engineer_codecheck</string>
+		<string>$(appName)</string>
+		<key>CFBundleDisplayName</key>
+        <string>$(appName)</string>
 		<key>CFBundlePackageType</key>
 		<string>APPL</string>
 		<key>CFBundleShortVersionString</key>
