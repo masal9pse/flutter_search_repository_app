@@ -1,0 +1,27 @@
+default_platform(:android)
+
+platform :android do
+  desc "Build and upload to Firebase App Distribution"
+  lane :firebase do
+    # 1. 前回のビルド生成物を削除 (クリーンビルド)
+    gradle(task: "clean")
+
+    # 2. リリースビルドの実行
+    # Flutterプロジェクト内のAndroidビルドとして実行されます
+    gradle(
+      task: "assembleRelease",
+      # build_type: "Release"
+    )
+
+    # 3. Firebaseへのアップロード
+    firebase_app_distribution(
+      app: "1:698777762789:android:6ec859120194f82090cd0c",
+      # トークンは .env ファイルから読み込み
+      firebase_cli_token: ENV['FIREBASE_TOKEN'],
+      # Gradleでビルドした場合のAPKパスは通常ここです
+      apk_path: "../build/app/outputs/apk/release/app-release.apk",
+      # groups: "qa-team", # (任意) コンソールで作ったテスターグループ名
+      release_notes: "Fastlaneからのアップロードテスト"
+    )
+  end
+end
