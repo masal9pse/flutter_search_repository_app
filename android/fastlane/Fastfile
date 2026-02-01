@@ -1,27 +1,38 @@
 default_platform(:android)
 
 platform :android do
+  
+  # --- 既存の Firebase レーン ---
   desc "Build and upload to Firebase App Distribution"
   lane :firebase do
-    # 1. 前回のビルド生成物を削除 (クリーンビルド)
     gradle(task: "clean")
-
-    # 2. リリースビルドの実行
-    # Flutterプロジェクト内のAndroidビルドとして実行されます
-    gradle(
-      task: "assembleRelease",
-      # build_type: "Release"
-    )
-
-    # 3. Firebaseへのアップロード
+    gradle(task: "assembleRelease")
     firebase_app_distribution(
       app: "1:698777762789:android:6ec859120194f82090cd0c",
-      # トークンは .env ファイルから読み込み
       firebase_cli_token: ENV['FIREBASE_TOKEN'],
-      # Gradleでビルドした場合のAPKパスは通常ここです
       apk_path: "../build/app/outputs/apk/release/app-release.apk",
-      # groups: "qa-team", # (任意) コンソールで作ったテスターグループ名
       release_notes: "Fastlaneからのアップロードテスト"
+    )
+  end
+
+  # --- 新しく追加する Google Play レーン ---
+  desc "Build and upload to Google Play Store (Internal Track)"
+  lane :play_store do
+    # 1. クリーンビルド
+    gradle(task: "clean")
+
+    # 2. AAB（App Bundle）のビルド
+    # 今の Play Store は AAB が必須なので bundleRelease を使います
+    gradle(task: "bundleRelease")
+
+    # 3. Play Store へのアップロード
+    upload_to_play_store(
+      track: 'internal',               # 内部テストに送る
+      release_status: 'draft',         # まずは「下書き」で止める（安心！）
+      skip_upload_metadata: true,      # ストア情報の更新をスキップ
+      skip_upload_images: true,        # スクショの更新をスキップ
+      skip_upload_screenshots: true,   # 同上
+      aab: "../build/app/outputs/bundle/release/app-release.aab"
     )
   end
 end
