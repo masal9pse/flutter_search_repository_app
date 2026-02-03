@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           flutter pub get
-          bundle install
+          cd android && bundle install
 
       - name: Build APK
         run: flutter build apk --release --dart-define-from-file=define/prod.json
