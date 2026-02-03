@@ -2,6 +2,8 @@ name: Debug Firebase Distribution
 
 on:
   push:
+    # どのブランチへのプッシュでも実行
+  pull_request:    
 
 jobs:
   deploy-firebase:
@@ -19,7 +21,6 @@ jobs:
           flutter pub get
           bundle install
 
-      # 指定のコマンドでビルド（Firebase用にapkを指定）
       - name: Build APK
         run: flutter build apk --release --dart-define-from-file=define/prod.json
 
