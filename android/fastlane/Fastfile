@@ -5,8 +5,8 @@ platform :android do
   # --- 既存の Firebase レーン ---
   desc "Build and upload to Firebase App Distribution"
   lane :firebase do
-    gradle(task: "clean")
-    gradle(task: "assembleRelease")
+    # gradle(task: "clean")
+    # gradle(task: "assembleRelease")
     firebase_app_distribution(
       app: "1:698777762789:android:6ec859120194f82090cd0c",
       firebase_cli_token: ENV['FIREBASE_TOKEN'],
