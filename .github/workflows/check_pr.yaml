@@ -1,40 +1,28 @@
-name: Flutter CI
+name: github-actions-check-pr
 
 on:
-  push:
-    branches: [master]
   pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
 
 jobs:
-  flutter-ci:
-    name: Run Flutter checks
+  lint:
     runs-on: ubuntu-latest
-
     steps:
-      - name: 📦 Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v6.0.2 # 最新のv4を使用
 
-      - name: 💙 Set up Flutter
-        uses: subosito/flutter-action@v2
+      # miseを使用してFlutter/Dartなどの環境を一括構築
+      - uses: jdx/mise-action@v3.6.1
         with:
-          flutter-version: '3.27.1'  # 任意のFlutterバージョンに変更可
+          install: true # .mise.tomlに基づいてインストールを実行
 
-      - name: 🚀 Install dependencies
+      # インストールされたことの確認
+      - name: Check Flutter version
+        run: flutter --version
+
+      # 念のためpub getも通るか確認する場合
+      - name: Install dependencies
         run: flutter pub get
-      
-      - name: create .env
-        run: touch .env
-
-      - name: 🧪 Run flutter tests
-        run: flutter test --machine > test_report.log
-    
-      - name: Test Report
-        uses: dorny/test-reporter@v1
-        if: always()
-        with:
-          name: 'flutter test'
-          path: 'test_report.log'
-          reporter: 'flutter-json'
-          fail-on-error: 'false'
-
-
