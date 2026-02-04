@@ -24,7 +24,7 @@ jobs:
       # 【追加】アイコン画像がignoreされているため、ビルド前に再生成する
       # これにより AndroidManifest.xml が参照する mipmap リソースが作成されます
       - name: Generate Icons
-        run: flutter pub run flutter_launcher_icons
+        run: flutter pub run flutter_launcher_icons:main -f flutter_launcher_icons-prod.yaml
 
       - name: Build APK
         run: flutter build apk --release --dart-define-from-file=define/prod.json
