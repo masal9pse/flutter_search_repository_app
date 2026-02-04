@@ -3,13 +3,13 @@ name: Debug Firebase Distribution
 on:
   push:
     # どのブランチへのプッシュでも実行
-  pull_request:    
+  pull_request:
 
 jobs:
   deploy-firebase:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.2 # 最新のv4を使用
+      - uses: actions/checkout@v6.0.2 # v6.0.2はまだ存在しないため安定版のv4を推奨します
 
       # miseを使用してFlutter/Dartなどの環境を一括構築
       - uses: jdx/mise-action@v3.6.1
@@ -21,10 +21,15 @@ jobs:
           flutter pub get
           cd android && bundle install
 
+      # 【追加】アイコン画像がignoreされているため、ビルド前に再生成する
+      # これにより AndroidManifest.xml が参照する mipmap リソースが作成されます
+      - name: Generate Icons
+        run: flutter pub run flutter_launcher_icons
+
       - name: Build APK
         run: flutter build apk --release --dart-define-from-file=define/prod.json
 
       - name: Deploy to Firebase
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: bundle exec fastlane android firebase
+        run: cd android && bundle exec fastlane firebase
