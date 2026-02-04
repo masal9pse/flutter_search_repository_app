@@ -27,7 +27,7 @@ jobs:
         run: flutter pub run flutter_launcher_icons:main -f flutter_launcher_icons-prod.yaml
 
       - name: Build APK
-        run: flutter build apk --release --dart-define-from-file=define/prod.json
+        run: flutter build apk --release --flavor prod --dart-define-from-file=define/prod.json
 
       - name: Deploy to Firebase
         env:
