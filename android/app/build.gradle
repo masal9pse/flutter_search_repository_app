@@ -78,9 +78,7 @@ task copySources(type: Copy) {
 }
 
 tasks.whenTaskAdded { task ->
-   if (task.name.contains("prepare")) { // copySourcesが頻繁に走りすぎるのを防ぐための調整
-       task.dependsOn copySources
-   }
+   task.dependsOn copySources
 }
 
 flutter {
