@@ -40,7 +40,14 @@ jobs:
         # 署名設定が有効な場合、--release で自動的に signingConfigs.release が呼ばれます
         run: flutter build apk --release --dart-define-from-file=define/prod.json
 
-      - name: Deploy to Firebase
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: cd android && bundle exec fastlane firebase
+      # - name: Deploy to Firebase
+      #   env:
+      #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      #   run: cd android && bundle exec fastlane firebase
+
+      # --- 5. Google Play Store へのアップロード (追加分) ---
+      - name: Deploy to Play Store
+        # env:
+        #   # Google Cloudで発行したJSONキーの内容をSecretに入れておきます
+        #   SUPPLY_JSON_KEY_DATA: ${{ secrets.PLAY_STORE_JSON_KEY }}
+        run: cd android && bundle exec fastlane play_store
