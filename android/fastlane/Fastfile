@@ -8,7 +8,8 @@ platform :android do
     # gradle(task: "clean")
     # gradle(task: "assembleRelease")
     firebase_app_distribution(
-      app: "1:698777762789:android:6ec859120194f82090cd0c",
+      # app: "1:698777762789:android:6ec859120194f82090cd0c",
+      app: "1:698777762789:android:5bd33f0b4d9b2a6190cd0c", # 本番アプリ
       firebase_cli_token: ENV['FIREBASE_TOKEN'],
       apk_path: "../build/app/outputs/apk/release/app-release.apk",
       release_notes: "Fastlaneからのアップロードテスト"
