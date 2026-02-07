@@ -1,0 +1,16 @@
+#!/bin/bash
+
+commit_msg_file=$1
+commit_msg=$(cat "$commit_msg_file")
+
+# 非ASCII文字（日本語など）が含まれているかチェック
+if [[ "$commit_msg" =~ [^\x01-\x7E] ]]; then
+  echo "--------------------------------------------------------"
+  echo " Error: Japanese characters detected in commit message."
+  echo " Please write your commit message in English."
+  echo " Message: $commit_msg"
+  echo "--------------------------------------------------------"
+  exit 1
+fi
+
+exit 0
