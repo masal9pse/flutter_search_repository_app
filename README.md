@@ -1,3 +1,5 @@
+flutter build appbundle --release --dart-define-from-file=define/prod.json
+
 ※ readmeおよびコードも整備中です
 
 ### バージョン情報

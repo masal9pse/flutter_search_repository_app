@@ -1,5 +1,6 @@
 {
   "dart.flutterSdkPath": "~/.local/share/mise/installs/flutter/3.38.1-stable",
+  "explorer.compactFolders": false,
   "cSpell.ignoreRegExpList": [
     "[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+",
     "riverpod",
