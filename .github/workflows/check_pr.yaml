@@ -10,6 +10,19 @@ jobs:
     steps:
       - uses: actions/checkout@v6.0.2
 
+      # --- 署名ファイルの準備 ---
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
+
+      - name: Create key.properties
+        run: |
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
+          echo "storeFile=upload-keystore.jks" >> android/key.properties
+
+      # --- 環境セットアップ ---
       - uses: jdx/mise-action@v3.6.1
         with:
           install: true
@@ -20,23 +33,11 @@ jobs:
           cd android && bundle install
 
       - name: Generate Icons
-        # 設定ファイル (-f) を指定しない場合、pubspec.yaml 内の設定が使われます
         run: dart run flutter_launcher_icons
 
-      # ========================================================
-      # 【デバッグ】アイコンがどこにあるか、物理的な存在を確認する
-      # ========================================================
-      - name: Check Generated Icon Files
-        run: |
-          echo "🔎 Searching for ic_launcher.png in android/app/src..."
-          find android/app/src -name "ic_launcher.png"
-          echo "----------------------------------------"
-          echo "📁 Listing directories in src/main/res and src/prod/res (if exists):"
-          ls -R android/app/src/main/res/mipmap-* 2>/dev/null || echo "No mipmap folders in main"
-          ls -R android/app/src/prod/res/mipmap-* 2>/dev/null || echo "No mipmap folders in prod"
-      # ========================================================
-
+      # --- ビルド & デプロイ ---
       - name: Build APK
+        # 署名設定が有効な場合、--release で自動的に signingConfigs.release が呼ばれます
         run: flutter build apk --release --dart-define-from-file=define/prod.json
 
       - name: Deploy to Firebase
