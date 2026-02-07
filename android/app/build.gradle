@@ -45,6 +45,11 @@ android {
             keyPassword keystoreProperties['keyPassword']
             storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
             storePassword keystoreProperties['storePassword']
+            
+            def storePath = keystoreProperties['storeFile']
+            if (storePath) {
+                storeFile = file(storePath)
+            }
         }
     }
     // --- ここまで追加 ---
