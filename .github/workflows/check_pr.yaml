@@ -45,9 +45,10 @@ jobs:
       #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       #   run: cd android && bundle exec fastlane firebase
 
-      # --- 5. Google Play Store へのアップロード (追加分) ---
+      # --- Google Play Store へのアップロード ---
       - name: Deploy to Play Store
-        # env:
-        #   # Google Cloudで発行したJSONキーの内容をSecretに入れておきます
-        #   SUPPLY_JSON_KEY_DATA: ${{ secrets.PLAY_STORE_JSON_KEY }}
+        env:
+          # GitHub Secretsに保存したJSONキーの中身を直接環境変数に渡します
+          # これにより Appfile の json_key_file 指定がオーバーライドされます
+          SUPPLY_JSON_KEY_DATA: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
         run: cd android && bundle exec fastlane play_store
