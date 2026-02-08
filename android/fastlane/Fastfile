@@ -28,6 +28,7 @@ platform :android do
 
     # 3. Play Store へのアップロード
     upload_to_play_store(
+      json_key: File.read('google-key.json'),
       track: 'internal',               # 内部テストに送る
       release_status: 'draft',         # まずは「下書き」で止める（安心！）
       skip_upload_metadata: true,      # ストア情報の更新をスキップ
