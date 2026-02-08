@@ -48,7 +48,7 @@ jobs:
       # --- Google Play Store へのアップロード ---
       - name: Deploy to Play Store
         env:
-          # GitHub Secretsに保存したJSONキーの中身を直接環境変数に渡します
-          # これにより Appfile の json_key_file 指定がオーバーライドされます
           SUPPLY_JSON_KEY_DATA: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
-        run: cd android && bundle exec fastlane play_store
+        run: |
+          echo "$SUPPLY_JSON_KEY_DATA" > android/fastlane/google-key.json
+          cd android && bundle exec fastlane play_store
