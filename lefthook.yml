@@ -2,4 +2,4 @@
 pre-commit:
   commands:
     gitleaks:
-      run: gitleaks protect --staged --verbose
+      run: /opt/homebrew/bin/mise exec gitleaks -- gitleaks protect --staged --verbose
