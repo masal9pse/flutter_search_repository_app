@@ -1,5 +1,17 @@
-# 1. 秘密情報チェック（コミットボタンを押した直後）
+# 1. 秘密情報チェック
 pre-commit:
   commands:
     gitleaks:
       run: /opt/homebrew/bin/mise exec gitleaks -- gitleaks protect --staged --verbose
+
+# 2. コミットメッセージ・バリデーション（英語のみ許可）
+commit-msg:
+  commands:
+    english-only:
+      run: |
+        if grep -qE "[ぁ-んァ-ヶ一-龠]" {1}; then
+          echo "❌ Error: Japanese is prohibited. Please write your commit message in English."
+          exit 1
+        else
+          exit 0
+        fi
