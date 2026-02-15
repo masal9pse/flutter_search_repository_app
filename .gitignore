@@ -51,3 +51,5 @@ coverage/html/*
 # FVM Version Cache
 .fvm/
 .env
+
+memo/*

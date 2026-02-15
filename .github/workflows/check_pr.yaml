@@ -1,28 +1,54 @@
-name: github-actions-check-pr
+name: Debug Firebase Distribution
 
 on:
+  # push:
   pull_request:
-    branches:
-      - master
-  push:
-    branches:
-      - master
 
 jobs:
-  lint:
+  deploy-firebase:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.2 # 最新のv4を使用
+      - uses: actions/checkout@v6.0.2
 
-      # miseを使用してFlutter/Dartなどの環境を一括構築
+      # --- 署名ファイルの準備 ---
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
+
+      - name: Create key.properties
+        run: |
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
+          echo "storeFile=upload-keystore.jks" >> android/key.properties
+
+      # --- 環境セットアップ ---
       - uses: jdx/mise-action@v3.6.1
         with:
-          install: true # .mise.tomlに基づいてインストールを実行
+          install: true
 
-      # インストールされたことの確認
-      - name: Check Flutter version
-        run: flutter --version
-
-      # 念のためpub getも通るか確認する場合
       - name: Install dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          cd android && bundle install
+
+      - name: Generate Icons
+        run: dart run flutter_launcher_icons
+
+      # --- ビルド & デプロイ ---
+      - name: Build APK
+        # 署名設定が有効な場合、--release で自動的に signingConfigs.release が呼ばれます
+        run: flutter build apk --release --dart-define-from-file=define/prod.json
+
+      # - name: Deploy to Firebase
+      #   env:
+      #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      #   run: cd android && bundle exec fastlane firebase
+
+      # --- Google Play Store へのアップロード ---
+      - name: Deploy to Play Store
+        env:
+          SUPPLY_JSON_KEY_DATA: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+        run: |
+          echo "$SUPPLY_JSON_KEY_DATA" > android/fastlane/google-key.json
+          cd android && bundle exec fastlane play_store

@@ -1,0 +1,42 @@
+default_platform(:android)
+
+platform :android do
+  
+  # --- 既存の Firebase レーン ---
+  desc "Build and upload to Firebase App Distribution"
+  lane :firebase do
+    # gradle(task: "clean")
+    # gradle(task: "assembleRelease")
+    firebase_app_distribution(
+      # app: "1:698777762789:android:6ec859120194f82090cd0c",
+      app: "1:698777762789:android:5bd33f0b4d9b2a6190cd0c", # 本番アプリ
+      firebase_cli_token: ENV['FIREBASE_TOKEN'],
+      apk_path: "../build/app/outputs/apk/release/app-release.apk",
+      release_notes: "Fastlaneからのアップロードテスト"
+    )
+  end
+
+  # --- 新しく追加する Google Play レーン ---
+  desc "Build and upload to Google Play Store (Internal Track)"
+  lane :play_store do
+    # 1. クリーンビルド
+    gradle(task: "clean")
+
+    # 2. AAB（App Bundle）のビルド
+    # 今の Play Store は AAB が必須なので bundleRelease を使います
+    gradle(task: "bundleRelease")
+
+    # 3. Play Store へのアップロード
+    upload_to_play_store(
+      # json_key: 'fastlane/google-key.json',
+      # json_key: ENV['SUPPLY_JSON_KEY_DATA'],
+      json_key_data: ENV['SUPPLY_JSON_KEY_DATA'],
+      track: 'internal',               # 内部テストに送る
+      release_status: 'draft',         # まずは「下書き」で止める（安心！）
+      skip_upload_metadata: true,      # ストア情報の更新をスキップ
+      skip_upload_images: true,        # スクショの更新をスキップ
+      skip_upload_screenshots: true,   # 同上
+      aab: "../build/app/outputs/bundle/release/app-release.aab"
+    )
+  end
+end

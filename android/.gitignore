@@ -12,5 +12,10 @@ key.properties
 **/*.keystore
 **/*.jks
 
+fastlane/*.json
+
 # Android related
 app/src/main/res/mipmap*/ic_launcher*.png
+
+# Fastlane
+fastlane/.env
