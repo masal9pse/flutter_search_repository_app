@@ -1,7 +1,7 @@
 name: Debug Firebase Distribution
 
 on:
-  push:
+  # push:
   pull_request:
 
 jobs:
@@ -40,7 +40,15 @@ jobs:
         # 署名設定が有効な場合、--release で自動的に signingConfigs.release が呼ばれます
         run: flutter build apk --release --dart-define-from-file=define/prod.json
 
-      - name: Deploy to Firebase
+      # - name: Deploy to Firebase
+      #   env:
+      #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      #   run: cd android && bundle exec fastlane firebase
+
+      # --- Google Play Store へのアップロード ---
+      - name: Deploy to Play Store
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: cd android && bundle exec fastlane firebase
+          SUPPLY_JSON_KEY_DATA: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+        run: |
+          echo "$SUPPLY_JSON_KEY_DATA" > android/fastlane/google-key.json
+          cd android && bundle exec fastlane play_store
