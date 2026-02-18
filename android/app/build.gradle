@@ -5,10 +5,17 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+// --- ここから追加：key.propertiesの読み込み ---
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+// --- ここまで追加 ---
+
 // dart-define を入れる変数を宣言しています。
 def dartDefines = [:];
 if (project.hasProperty('dart-defines')) {
-    // カンマ区切りかつBase64でエンコードされている dart-defines をデコードして変数に格納します。
     dartDefines = dartDefines + project.property('dart-defines')
         .split(',')
         .collectEntries { entry ->
@@ -23,19 +30,34 @@ android {
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = JavaVersion.VERSION_17
     }
 
+    // --- ここから追加：SigningConfigs (buildTypesより上に書く) ---
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+            
+            def storePath = keystoreProperties['storeFile']
+            if (storePath) {
+                storeFile = file(storePath)
+            }
+        }
+    }
+    // --- ここまで追加 ---
+
     defaultConfig {
-        applicationId dartDefines.appId ?: "com.example.flutter_engineer_codecheck"
+        // applicationId dartDefines.appId ?: "com.example.flutter_engineer_codecheck"
+        applicationId dartDefines.appId ?: "com.search.flutter.app.prod"
         resValue "string", "app_name", dartDefines.appName ?: "flutter_engineer_codecheck"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -44,9 +66,13 @@ android {
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
+            // signingConfig をデバッグ用からリリース用に変更
+            signingConfig signingConfigs.release
+            
+            // ストア用ビルドでは最適化を有効にするのが一般的です
+            minifyEnabled false 
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }

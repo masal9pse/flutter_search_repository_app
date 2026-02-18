@@ -1,0 +1,54 @@
+name: Deploy to Distribution and Play Store
+
+on:
+  push:
+    branches:
+      - master
+      - 'release/*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6.0.2
+
+      # --- 署名ファイルの準備 ---
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
+
+      - name: Create key.properties
+        run: |
+          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
+          echo "storeFile=upload-keystore.jks" >> android/key.properties
+
+      # --- 環境セットアップ ---
+      - uses: jdx/mise-action@v3.6.1
+        with:
+          install: true
+
+      - name: Install dependencies
+        run: |
+          flutter pub get
+          cd android && bundle install
+
+      - name: Generate Icons
+        run: dart run flutter_launcher_icons
+
+      # --- ビルド ---
+      - name: Build APK
+        run: flutter build apk --release --dart-define-from-file=define/prod.json
+
+      # --- Firebase Distribution へのアップロード ---
+      - name: Deploy to Firebase Distribution
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: cd android && bundle exec fastlane firebase
+
+      # --- Google Play Store へのアップロード ---
+      - name: Deploy to Play Store
+        env:
+          SUPPLY_JSON_KEY_DATA: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+        run: cd android && bundle exec fastlane play_store
