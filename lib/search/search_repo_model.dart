@@ -23,6 +23,7 @@ class SearchApiModel {
 class Item {
   const Item({
     required this.owner,
+    this.id = 0,
     this.name = '',
     this.stargazersCount = 0,
     this.watchersCount = 0,
@@ -33,6 +34,8 @@ class Item {
 
   factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
 
+  @JsonKey(defaultValue: 0)
+  final int id;
   @JsonKey(defaultValue: '')
   final String name;
   @JsonKey(defaultValue: 0)

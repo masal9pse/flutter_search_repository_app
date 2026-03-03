@@ -22,16 +22,18 @@ Map<String, dynamic> _$SearchApiModelToJson(SearchApiModel instance) =>
     };
 
 Item _$ItemFromJson(Map<String, dynamic> json) => Item(
+      owner: Owner.fromJson(json['owner'] as Map<String, dynamic>),
+      id: (json['id'] as num?)?.toInt() ?? 0,
       name: json['name'] as String? ?? '',
       stargazersCount: (json['stargazers_count'] as num?)?.toInt() ?? 0,
       watchersCount: (json['watchers_count'] as num?)?.toInt() ?? 0,
       language: json['language'] as String? ?? '',
       forksCount: (json['forks_count'] as num?)?.toInt() ?? 0,
       openIssuesCount: (json['open_issues_count'] as num?)?.toInt() ?? 0,
-      owner: Owner.fromJson(json['owner'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'stargazers_count': instance.stargazersCount,
       'watchers_count': instance.watchersCount,
