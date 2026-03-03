@@ -12,7 +12,7 @@ analyzer:
     invalid_annotation_target: ignore
     invalid_use_of_protected_member: error    
     deprecated_member_use_from_same_package: info    
-    prefer_const_constructors: warning    
+    prefer_const_constructors: warning
     close_sinks: info
 linter:
   rules:
@@ -20,4 +20,4 @@ linter:
     public_member_api_docs: false
     use_decorated_box: true
     require_trailing_commas: true
-    prefer_expression_function_bodies: true
+    prefer_expression_function_bodies: false

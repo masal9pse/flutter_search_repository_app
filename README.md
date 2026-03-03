@@ -1,12 +1,10 @@
-flutter build appbundle --release --dart-define-from-file=define/prod.json
-
 ※ readmeおよびコードも整備中です
 
 ### バージョン情報
 
 ```bash
 
-$ fvm --version
+$ fvm --version // todo fvmはもう使っていない
 
 $ fvm flutter doctor
 
