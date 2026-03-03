@@ -1,64 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/providers/repo_search_provider.dart';
+import 'package:flutter_engineer_codecheck/search/search_repo_model.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import '../search/search_repo_model.dart';
-import '../providers/repo_search_provider.dart';
 
 class RepoSearchScreen extends ConsumerWidget {
   const RepoSearchScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final searchState = ref.watch(repoSearchNotifierProvider);
-    final notifier = ref.read(repoSearchNotifierProvider.notifier);
-    final controller = useTextEditingController(text: '');
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('GitHub リポジトリ検索'),
       ),
-      body: Column(
+      body: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _SearchForm(
-            controller: controller,
-            isLoading: searchState.isLoading,
-            onSearch: () {
-              final query = controller.text.trim().isEmpty ? 'Q' : controller.text;
-              notifier.search(query);
-            },
-          ),
-          const Divider(height: 1),
-          Expanded(
-            child: searchState.when(
-              data: (data) => _RepoList(data: data),
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (err, _) => _ErrorView(
-                message: err.toString(),
-                onRetry: () => notifier.search(controller.text),
-              ),
-            ),
-          ),
+          _SearchForm(),
+          Divider(height: 1),
+          Expanded(child: _SearchResult()),
         ],
       ),
     );
   }
 }
 
-class _SearchForm extends StatelessWidget {
-  const _SearchForm({
-    required this.controller,
-    required this.isLoading,
-    required this.onSearch,
-  });
+class _SearchResult extends ConsumerWidget {
+  const _SearchResult();
 
-  final TextEditingController controller;
-  final bool isLoading;
-  final VoidCallback onSearch;
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return switch (ref.watch(repoSearchNotifierProvider)) {
+      RepoSearchInitial() => const _InitialView(),
+      RepoSearchLoading() => const Center(child: CircularProgressIndicator()),
+      RepoSearchSuccess(:final data) => _RepoList(data: data),
+      RepoSearchError(:final error, :final query) =>
+        _ErrorView(message: error.toString(), query: query),
+    };
+  }
+}
+
+class _InitialView extends StatelessWidget {
+  const _InitialView();
 
   @override
   Widget build(BuildContext context) {
+    return const Center(child: Text('検索キーワードを入力して検索してください'));
+  }
+}
+
+class _SearchForm extends HookConsumerWidget {
+  const _SearchForm();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = useTextEditingController(text: '');
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
@@ -71,15 +68,23 @@ class _SearchForm extends StatelessWidget {
                 labelText: '検索キーワード',
                 hintText: '例: flutter',
                 border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               ),
-              onFieldSubmitted: (_) => onSearch(),
+              onFieldSubmitted: (_) => ref
+                  .read(repoSearchNotifierProvider.notifier)
+                  .search(controller.text),
             ),
           ),
           const SizedBox(width: 12),
           FilledButton.icon(
-            onPressed: isLoading ? null : onSearch,
-            icon: isLoading
+            onPressed:
+                ref.watch(repoSearchNotifierProvider) is RepoSearchLoading
+                    ? null
+                    : () => ref
+                        .read(repoSearchNotifierProvider.notifier)
+                        .search(controller.text),
+            icon: ref.watch(repoSearchNotifierProvider) is RepoSearchLoading
                 ? const SizedBox(
                     width: 20,
                     height: 20,
@@ -97,13 +102,13 @@ class _SearchForm extends StatelessWidget {
 class _RepoList extends StatelessWidget {
   const _RepoList({required this.data});
 
-  final SearchApiModel? data;
+  final SearchApiModel data;
 
   @override
   Widget build(BuildContext context) {
-    final items = data?.items ?? [];
+    final items = data.items;
     if (items.isEmpty) {
-      return const Center(child: Text('検索キーワードを入力して検索してください'));
+      return const Center(child: Text('検索結果がありません'));
     }
     return ListView.builder(
       itemCount: items.length,
@@ -112,14 +117,14 @@ class _RepoList extends StatelessWidget {
   }
 }
 
-class _ErrorView extends StatelessWidget {
-  const _ErrorView({required this.message, required this.onRetry});
+class _ErrorView extends ConsumerWidget {
+  const _ErrorView({required this.message, required this.query});
 
   final String message;
-  final VoidCallback onRetry;
+  final String query;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),
@@ -139,7 +144,11 @@ class _ErrorView extends StatelessWidget {
             const SizedBox(height: 8),
             Text(message, textAlign: TextAlign.center),
             const SizedBox(height: 16),
-            FilledButton(onPressed: onRetry, child: const Text('再試行')),
+            FilledButton(
+              onPressed: () =>
+                  ref.read(repoSearchNotifierProvider.notifier).search(query),
+              child: const Text('再試行'),
+            ),
           ],
         ),
       ),
