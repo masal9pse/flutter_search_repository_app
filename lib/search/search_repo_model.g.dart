@@ -1,41 +1,39 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'search_api_model.dart';
+part of 'search_repo_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SearchApiModelImpl _$$SearchApiModelImplFromJson(Map<String, dynamic> json) =>
-    _$SearchApiModelImpl(
+SearchApiModel _$SearchApiModelFromJson(Map<String, dynamic> json) =>
+    SearchApiModel(
       totalCount: (json['total_count'] as num?)?.toInt() ?? 0,
       items: (json['items'] as List<dynamic>?)
               ?.map((e) => Item.fromJson(e as Map<String, dynamic>))
               .toList() ??
-          const <Item>[],
+          [],
     );
 
-Map<String, dynamic> _$$SearchApiModelImplToJson(
-        _$SearchApiModelImpl instance) =>
+Map<String, dynamic> _$SearchApiModelToJson(SearchApiModel instance) =>
     <String, dynamic>{
       'total_count': instance.totalCount,
       'items': instance.items,
     };
 
-_$ItemImpl _$$ItemImplFromJson(Map<String, dynamic> json) => _$ItemImpl(
+Item _$ItemFromJson(Map<String, dynamic> json) => Item(
+      owner: Owner.fromJson(json['owner'] as Map<String, dynamic>),
+      id: (json['id'] as num?)?.toInt() ?? 0,
       name: json['name'] as String? ?? '',
       stargazersCount: (json['stargazers_count'] as num?)?.toInt() ?? 0,
       watchersCount: (json['watchers_count'] as num?)?.toInt() ?? 0,
       language: json['language'] as String? ?? '',
       forksCount: (json['forks_count'] as num?)?.toInt() ?? 0,
       openIssuesCount: (json['open_issues_count'] as num?)?.toInt() ?? 0,
-      owner: json['owner'] == null
-          ? const Owner()
-          : Owner.fromJson(json['owner'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$ItemImplToJson(_$ItemImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'stargazers_count': instance.stargazersCount,
       'watchers_count': instance.watchersCount,
@@ -45,11 +43,10 @@ Map<String, dynamic> _$$ItemImplToJson(_$ItemImpl instance) =>
       'owner': instance.owner,
     };
 
-_$OwnerImpl _$$OwnerImplFromJson(Map<String, dynamic> json) => _$OwnerImpl(
+Owner _$OwnerFromJson(Map<String, dynamic> json) => Owner(
       avatarUrl: json['avatar_url'] as String? ?? '',
     );
 
-Map<String, dynamic> _$$OwnerImplToJson(_$OwnerImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$OwnerToJson(Owner instance) => <String, dynamic>{
       'avatar_url': instance.avatarUrl,
     };

@@ -1,0 +1,209 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/providers/repo_search_provider.dart';
+import 'package:flutter_engineer_codecheck/screens/repo_detail_screen.dart';
+import 'package:flutter_engineer_codecheck/search/search_repo_model.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+class RepoSearchScreen extends ConsumerWidget {
+  const RepoSearchScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('GitHub リポジトリ検索'),
+      ),
+      body: const Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _SearchForm(),
+          Divider(height: 1),
+          Expanded(child: _SearchResult()),
+        ],
+      ),
+    );
+  }
+}
+
+class _SearchResult extends ConsumerWidget {
+  const _SearchResult();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return switch (ref.watch(repoSearchNotifierProvider)) {
+      RepoSearchInitial() => const _InitialView(),
+      RepoSearchLoading() => const Center(child: CircularProgressIndicator()),
+      RepoSearchSuccess(:final data) => _RepoList(data: data),
+      RepoSearchError(:final error, :final query) =>
+        _ErrorView(message: error.toString(), query: query),
+    };
+  }
+}
+
+class _InitialView extends StatelessWidget {
+  const _InitialView();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('検索キーワードを入力して検索してください'));
+  }
+}
+
+class _SearchForm extends HookConsumerWidget {
+  const _SearchForm();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = useTextEditingController(text: '');
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Expanded(
+            child: TextFormField(
+              controller: controller,
+              decoration: const InputDecoration(
+                labelText: '検索キーワード',
+                hintText: '例: flutter',
+                border: OutlineInputBorder(),
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+              ),
+              onFieldSubmitted: (_) => ref
+                  .read(repoSearchNotifierProvider.notifier)
+                  .search(controller.text),
+            ),
+          ),
+          const SizedBox(width: 12),
+          FilledButton.icon(
+            onPressed:
+                ref.watch(repoSearchNotifierProvider) is RepoSearchLoading
+                    ? null
+                    : () => ref
+                        .read(repoSearchNotifierProvider.notifier)
+                        .search(controller.text),
+            icon: ref.watch(repoSearchNotifierProvider) is RepoSearchLoading
+                ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : const Icon(Icons.search),
+            label: const Text('検索'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _RepoList extends StatelessWidget {
+  const _RepoList({required this.data});
+
+  final SearchApiModel data;
+
+  @override
+  Widget build(BuildContext context) {
+    final items = data.items;
+    if (items.isEmpty) {
+      return const Center(child: Text('検索結果がありません'));
+    }
+    return ListView.builder(
+      itemCount: items.length,
+      itemBuilder: (context, index) => _RepoListItem(item: items[index]),
+    );
+  }
+}
+
+class _ErrorView extends ConsumerWidget {
+  const _ErrorView({required this.message, required this.query});
+
+  final String message;
+  final String query;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.error_outline,
+              size: 48,
+              color: Theme.of(context).colorScheme.error,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'エラー',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 8),
+            Text(message, textAlign: TextAlign.center),
+            const SizedBox(height: 16),
+            FilledButton(
+              onPressed: () =>
+                  ref.read(repoSearchNotifierProvider.notifier).search(query),
+              child: const Text('再試行'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _RepoListItem extends StatelessWidget {
+  const _RepoListItem({required this.item});
+
+  final Item item;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundImage: item.owner.avatarUrl.isNotEmpty
+            ? NetworkImage(item.owner.avatarUrl)
+            : null,
+        child: item.owner.avatarUrl.isEmpty ? const Icon(Icons.code) : null,
+      ),
+      title: Text(
+        item.name,
+        style: const TextStyle(fontWeight: FontWeight.w600),
+      ),
+      subtitle: Row(
+        children: [
+          if (item.language.isNotEmpty) ...[
+            Icon(
+              Icons.code,
+              size: 14,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+            const SizedBox(width: 4),
+            Text(item.language),
+            const SizedBox(width: 16),
+          ],
+          Icon(
+            Icons.star,
+            size: 14,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
+          const SizedBox(width: 4),
+          Text('${item.stargazersCount}'),
+        ],
+      ),
+      isThreeLine: false,
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => RepoDetailScreen(id: item.id),
+          ),
+        );
+      },
+    );
+  }
+}
