@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/providers/repo_search_provider.dart';
 import 'package:flutter_engineer_codecheck/screens/repo_detail_screen.dart';
+import 'package:flutter_engineer_codecheck/search/github_repo_api.dart';
 import 'package:flutter_engineer_codecheck/search/search_repo_model.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -36,7 +37,7 @@ class _SearchResult extends ConsumerWidget {
       RepoSearchLoading() => const Center(child: CircularProgressIndicator()),
       RepoSearchSuccess(:final data) => _RepoList(data: data),
       RepoSearchError(:final exception, :final query) =>
-        _ErrorView(message: exception.message, query: query),
+        _ExceptionView(exception: exception, query: query),
     };
   }
 }
@@ -118,42 +119,28 @@ class _RepoList extends StatelessWidget {
   }
 }
 
-class _ErrorView extends ConsumerWidget {
-  const _ErrorView({required this.message, required this.query});
+class _ExceptionView extends ConsumerWidget {
+  const _ExceptionView({required this.exception, required this.query});
 
-  final String message;
+  final GithubRepoApiException exception;
   final String query;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+    switch (exception) {
+      case TimeoutGithubRepoApiException() ||
+            NetworkGithubRepoApiException() ||
+            CanceledGithubRepoApiException():
+        Column(
           children: [
-            Icon(
-              Icons.error_outline,
-              size: 48,
-              color: Theme.of(context).colorScheme.error,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'エラー',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 8),
-            Text(message, textAlign: TextAlign.center),
-            const SizedBox(height: 16),
-            FilledButton(
-              onPressed: () =>
-                  ref.read(repoSearchNotifierProvider.notifier).search(query),
-              child: const Text('再試行'),
-            ),
+            Text(exception.message),
+            const Text('エラーごとにwidget分けたい。'),
           ],
-        ),
-      ),
-    );
+        );
+      default:
+        const Text('aaaa');
+    }
+    return const Text('想定外');
   }
 }
 
