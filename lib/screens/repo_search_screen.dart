@@ -35,8 +35,8 @@ class _SearchResult extends ConsumerWidget {
       RepoSearchInitial() => const _InitialView(),
       RepoSearchLoading() => const Center(child: CircularProgressIndicator()),
       RepoSearchSuccess(:final data) => _RepoList(data: data),
-      RepoSearchError(:final error, :final query) =>
-        _ErrorView(message: error.toString(), query: query),
+      RepoSearchError(:final exception, :final query) =>
+        _ErrorView(message: exception.message, query: query),
     };
   }
 }

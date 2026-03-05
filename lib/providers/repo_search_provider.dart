@@ -24,14 +24,9 @@ class RepoSearchSuccess extends RepoSearchState {
 }
 
 class RepoSearchError extends RepoSearchState {
-  const RepoSearchError({
-    required this.error,
-    required this.stackTrace,
-    required this.query,
-  });
+  const RepoSearchError({required this.exception, required this.query});
 
-  final Object error;
-  final StackTrace stackTrace;
+  final GithubRepoApiException exception;
   final String query;
 }
 
@@ -42,13 +37,13 @@ class RepoSearchNotifier extends Notifier<RepoSearchState> {
   RepoSearchState build() => const RepoSearchInitial();
 
   Future<void> search(String q) async {
-    final query = q.trim().isEmpty ? 'Q' : q.trim();
-    try {
-      state = const RepoSearchLoading();
-      final data = await _api.searchRepositories(q: query);
-      state = RepoSearchSuccess(data: data, query: query);
-    } catch (e, st) {
-      state = RepoSearchError(error: e, stackTrace: st, query: query);
+    state = const RepoSearchLoading();
+    final result = await _api.searchRepositories(q: q);
+    switch (result) {
+      case Success<SearchApiModel>(:final data):
+        state = RepoSearchSuccess(data: data, query: q);
+      case Error<SearchApiModel>(:final exception):
+        state = RepoSearchError(exception: exception, query: q);
     }
   }
 }
