@@ -1,6 +1,8 @@
+import 'package:flutter_engineer_codecheck/core/result.dart';
 import 'package:flutter_engineer_codecheck/search/github_repo_api.dart';
+import 'package:flutter_engineer_codecheck/search/github_repo_api_exception.dart';
 import 'package:flutter_engineer_codecheck/search/search_repo_model.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final githubRepoApiProvider = Provider<GithubRepoApi>((ref) => GithubRepoApi());
 
@@ -17,22 +19,15 @@ class RepoSearchLoading extends RepoSearchState {
 }
 
 class RepoSearchSuccess extends RepoSearchState {
-  const RepoSearchSuccess({required this.data, required this.query});
+  const RepoSearchSuccess({required this.data});
 
   final SearchApiModel data;
-  final String query;
 }
 
 class RepoSearchError extends RepoSearchState {
-  const RepoSearchError({
-    required this.error,
-    required this.stackTrace,
-    required this.query,
-  });
+  const RepoSearchError({required this.exception});
 
-  final Object error;
-  final StackTrace stackTrace;
-  final String query;
+  final GithubRepoApiException exception;
 }
 
 class RepoSearchNotifier extends Notifier<RepoSearchState> {
@@ -42,13 +37,13 @@ class RepoSearchNotifier extends Notifier<RepoSearchState> {
   RepoSearchState build() => const RepoSearchInitial();
 
   Future<void> search(String q) async {
-    final query = q.trim().isEmpty ? 'Q' : q.trim();
-    try {
-      state = const RepoSearchLoading();
-      final data = await _api.searchRepositories(q: query);
-      state = RepoSearchSuccess(data: data, query: query);
-    } catch (e, st) {
-      state = RepoSearchError(error: e, stackTrace: st, query: query);
+    state = const RepoSearchLoading();
+    final result = await _api.searchRepositories(q: q);
+    switch (result) {
+      case Success<SearchApiModel, GithubRepoApiException>(:final data):
+        state = RepoSearchSuccess(data: data);
+      case Error<SearchApiModel, GithubRepoApiException>(:final exception):
+        state = RepoSearchError(exception: exception);
     }
   }
 }

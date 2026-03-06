@@ -17,14 +17,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.6.0"
-  analyzer_plugin:
-    dependency: transitive
-    description:
-      name: analyzer_plugin
-      sha256: a5ab7590c27b779f3d4de67f31c4109dbe13dd7339f86461a6f2a8ab2594d8ce
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.13.4"
   archive:
     dependency: transitive
     description:
@@ -193,22 +185,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
-  custom_lint_core:
-    dependency: transitive
-    description:
-      name: custom_lint_core
-      sha256: "31110af3dde9d29fb10828ca33f1dce24d2798477b167675543ce3d208dee8be"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.5"
-  custom_lint_visitor:
-    dependency: transitive
-    description:
-      name: custom_lint_visitor
-      sha256: "4a86a0d8415a91fbb8298d6ef03e9034dc8e323a599ddc4120a0e36c433983a2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0+7.7.0"
   dart_style:
     dependency: transitive
     description:
@@ -539,14 +515,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.1"
-  riverpod_analyzer_utils:
-    dependency: transitive
-    description:
-      name: riverpod_analyzer_utils
-      sha256: "837a6dc33f490706c7f4632c516bcd10804ee4d9ccc8046124ca56388715fdf3"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.9"
   riverpod_annotation:
     dependency: "direct main"
     description:
@@ -555,14 +523,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.6.1"
-  riverpod_generator:
-    dependency: "direct main"
-    description:
-      name: riverpod_generator
-      sha256: "120d3310f687f43e7011bb213b90a436f1bbc300f0e4b251a72c39bccb017a4f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.6.4"
   shelf:
     dependency: transitive
     description:
@@ -608,14 +568,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.1"
-  sprintf:
-    dependency: transitive
-    description:
-      name: sprintf
-      sha256: "1fc9ffe69d4df602376b52949af107d8f5703b77cda567c4d7d86a0693120f23"
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.0.0"
   stack_trace:
     dependency: transitive
     description:
@@ -688,14 +640,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
-  uuid:
-    dependency: transitive
-    description:
-      name: uuid
-      sha256: a5be9ef6618a7ac1e964353ef476418026db906c4facdedaa299b7a2e71690ff
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.5.1"
   vector_math:
     dependency: transitive
     description:

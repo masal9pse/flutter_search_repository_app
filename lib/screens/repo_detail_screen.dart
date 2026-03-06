@@ -3,7 +3,7 @@ import 'package:flutter_engineer_codecheck/providers/repo_search_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class RepoDetailScreen extends ConsumerWidget {
-  const RepoDetailScreen({super.key, required this.id});
+  const RepoDetailScreen({required this.id, super.key});
 
   final int id;
 
@@ -118,7 +118,7 @@ class _InfoChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      color: Theme.of(context).colorScheme.surfaceVariant,
+      color: Theme.of(context).colorScheme.surfaceContainerHighest,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         child: Row(
@@ -140,4 +140,3 @@ class _InfoChip extends StatelessWidget {
     );
   }
 }
-

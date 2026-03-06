@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
-
-import 'search_repo_model.dart';
+import 'package:flutter_engineer_codecheck/core/result.dart';
+import 'package:flutter_engineer_codecheck/search/github_repo_api_exception.dart';
+import 'package:flutter_engineer_codecheck/search/search_repo_model.dart';
 
 const _baseUrl = 'https://api.github.com';
 
@@ -10,16 +11,67 @@ class GithubRepoApi {
 
   final Dio _dio;
 
-  /// リポジトリを検索する。q が空の場合は "Q" で検索する。
-  Future<SearchApiModel> searchRepositories({String q = 'Q'}) async {
-    final query = q.trim().isEmpty ? 'Q' : q.trim();
-    final response = await _dio.get<Map<String, dynamic>>(
-      '/search/repositories',
-      queryParameters: {'q': query},
-    );
-    if (response.data == null) {
-      throw Exception('No data');
+  /// リポジトリを検索する。
+  Future<Result<SearchApiModel, GithubRepoApiException>> searchRepositories({
+    required String q,
+  }) async {
+    try {
+      final response = await _dio.get<Map<String, dynamic>>(
+        '/search/repositories',
+        queryParameters: {'q': q},
+      );
+
+      final data = response.data;
+      if (data == null) {
+        return const Error(
+          exception: InvalidResponseGithubRepoApiException(),
+        );
+      }
+
+      final decoded = SearchApiModel.fromJson(data);
+      return Success(data: decoded);
+    } on DioException catch (e) {
+      return Error(exception: _mapDioException(e));
+    } on FormatException {
+      return const Error(
+        exception: InvalidResponseGithubRepoApiException(),
+      );
+    } on Exception {
+      return const Error(
+        exception: UnknownGithubRepoApiException(),
+      );
     }
-    return SearchApiModel.fromJson(response.data!);
+  }
+
+  GithubRepoApiException _mapDioException(DioException exception) {
+    switch (exception.type) {
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
+        return const TimeoutGithubRepoApiException();
+      case DioExceptionType.connectionError:
+        return const NetworkGithubRepoApiException();
+      case DioExceptionType.cancel:
+        return const CanceledGithubRepoApiException();
+      case DioExceptionType.badCertificate:
+        return const BadCertificateGithubRepoApiException();
+      case DioExceptionType.badResponse:
+        final statusCode = exception.response?.statusCode;
+        if (statusCode == 401) {
+          return const UnauthorizedGithubRepoApiException();
+        }
+        if (statusCode == 403) {
+          return const RateLimitGithubRepoApiException();
+        }
+        if (statusCode == 404) {
+          return const NotFoundGithubRepoApiException();
+        }
+        if (statusCode != null && statusCode >= 500) {
+          return const ServerGithubRepoApiException();
+        }
+        return HttpGithubRepoApiException(statusCode: statusCode);
+      case DioExceptionType.unknown:
+        return const UnknownGithubRepoApiException();
+    }
   }
 }

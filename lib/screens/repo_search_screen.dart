@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/providers/repo_search_provider.dart';
 import 'package:flutter_engineer_codecheck/screens/repo_detail_screen.dart';
+import 'package:flutter_engineer_codecheck/search/github_repo_api_exception.dart';
 import 'package:flutter_engineer_codecheck/search/search_repo_model.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -35,8 +36,8 @@ class _SearchResult extends ConsumerWidget {
       RepoSearchInitial() => const _InitialView(),
       RepoSearchLoading() => const Center(child: CircularProgressIndicator()),
       RepoSearchSuccess(:final data) => _RepoList(data: data),
-      RepoSearchError(:final error, :final query) =>
-        _ErrorView(message: error.toString(), query: query),
+      RepoSearchError(:final exception) =>
+        _ExceptionView(exception: exception),
     };
   }
 }
@@ -118,42 +119,39 @@ class _RepoList extends StatelessWidget {
   }
 }
 
-class _ErrorView extends ConsumerWidget {
-  const _ErrorView({required this.message, required this.query});
+class _ExceptionView extends ConsumerWidget {
+  const _ExceptionView({required this.exception});
 
-  final String message;
-  final String query;
+  final GithubRepoApiException exception; 
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+    switch (exception) {
+      case NetworkGithubRepoApiException() ||
+            CanceledGithubRepoApiException() ||
+            BadCertificateGithubRepoApiException() ||
+            InvalidResponseGithubRepoApiException() ||
+            UnknownGithubRepoApiException() ||
+            ServerGithubRepoApiException() ||
+            NotFoundGithubRepoApiException() ||
+            UnauthorizedGithubRepoApiException() ||
+            RateLimitGithubRepoApiException() ||
+            HttpGithubRepoApiException():
+        Column(
           children: [
-            Icon(
-              Icons.error_outline,
-              size: 48,
-              color: Theme.of(context).colorScheme.error,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'エラー',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 8),
-            Text(message, textAlign: TextAlign.center),
-            const SizedBox(height: 16),
-            FilledButton(
-              onPressed: () =>
-                  ref.read(repoSearchNotifierProvider.notifier).search(query),
-              child: const Text('再試行'),
-            ),
+            Text(exception.message),
+            const Text('widget分けるイメージ1'),
           ],
-        ),
-      ),
-    );
+        );
+      case TimeoutGithubRepoApiException():
+        return Column(
+          children: [
+            Text(exception.message),
+            const Text('widget分けるイメージ2'),
+          ],
+        );
+    }
+    return const Text('想定外エラー');
   }
 }
 
