@@ -1,6 +1,8 @@
+import 'package:flutter_engineer_codecheck/core/result.dart';
 import 'package:flutter_engineer_codecheck/search/github_repo_api.dart';
+import 'package:flutter_engineer_codecheck/search/github_repo_api_exception.dart';
 import 'package:flutter_engineer_codecheck/search/search_repo_model.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final githubRepoApiProvider = Provider<GithubRepoApi>((ref) => GithubRepoApi());
 
@@ -40,9 +42,9 @@ class RepoSearchNotifier extends Notifier<RepoSearchState> {
     state = const RepoSearchLoading();
     final result = await _api.searchRepositories(q: q);
     switch (result) {
-      case Success<SearchApiModel>(:final data):
+      case Success<SearchApiModel, GithubRepoApiException>(:final data):
         state = RepoSearchSuccess(data: data, query: q);
-      case Error<SearchApiModel>(:final exception):
+      case Error<SearchApiModel, GithubRepoApiException>(:final exception):
         state = RepoSearchError(exception: exception, query: q);
     }
   }
