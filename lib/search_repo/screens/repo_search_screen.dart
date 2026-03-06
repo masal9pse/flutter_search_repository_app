@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/providers/repo_search_provider.dart';
-import 'package:flutter_engineer_codecheck/screens/repo_detail_screen.dart';
-import 'package:flutter_engineer_codecheck/search/github_repo_api_exception.dart';
-import 'package:flutter_engineer_codecheck/search/search_repo_model.dart';
+import 'package:flutter_engineer_codecheck/search_repo/providers/repo_search_provider.dart';
+import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api_exception.dart';
+import 'package:flutter_engineer_codecheck/search_repo/repository/search_repo_model.dart';
+import 'package:flutter_engineer_codecheck/search_repo/screens/repo_detail_screen.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -36,8 +36,7 @@ class _SearchResult extends ConsumerWidget {
       RepoSearchInitial() => const _InitialView(),
       RepoSearchLoading() => const Center(child: CircularProgressIndicator()),
       RepoSearchSuccess(:final data) => _RepoList(data: data),
-      RepoSearchError(:final exception) =>
-        _ExceptionView(exception: exception),
+      RepoSearchError(:final exception) => _ExceptionView(exception: exception),
     };
   }
 }
@@ -122,7 +121,7 @@ class _RepoList extends StatelessWidget {
 class _ExceptionView extends ConsumerWidget {
   const _ExceptionView({required this.exception});
 
-  final GithubRepoApiException exception; 
+  final GithubRepoApiException exception;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

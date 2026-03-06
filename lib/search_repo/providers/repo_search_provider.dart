@@ -1,7 +1,7 @@
 import 'package:flutter_engineer_codecheck/core/result.dart';
-import 'package:flutter_engineer_codecheck/search/github_repo_api.dart';
-import 'package:flutter_engineer_codecheck/search/github_repo_api_exception.dart';
-import 'package:flutter_engineer_codecheck/search/search_repo_model.dart';
+import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api.dart';
+import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api_exception.dart';
+import 'package:flutter_engineer_codecheck/search_repo/repository/search_repo_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final githubRepoApiProvider = Provider<GithubRepoApi>((ref) => GithubRepoApi());

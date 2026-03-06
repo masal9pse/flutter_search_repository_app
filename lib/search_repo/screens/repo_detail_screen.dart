@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/providers/repo_search_provider.dart';
+import 'package:flutter_engineer_codecheck/search_repo/providers/repo_search_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class RepoDetailScreen extends ConsumerWidget {
