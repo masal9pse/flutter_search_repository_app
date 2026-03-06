@@ -128,19 +128,31 @@ class _ExceptionView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     switch (exception) {
-      case TimeoutGithubRepoApiException() ||
-            NetworkGithubRepoApiException() ||
-            CanceledGithubRepoApiException():
+      case NetworkGithubRepoApiException() ||
+            CanceledGithubRepoApiException() ||
+            BadCertificateGithubRepoApiException() ||
+            InvalidResponseGithubRepoApiException() ||
+            UnknownGithubRepoApiException() ||
+            ServerGithubRepoApiException() ||
+            NotFoundGithubRepoApiException() ||
+            UnauthorizedGithubRepoApiException() ||
+            RateLimitGithubRepoApiException() ||
+            HttpGithubRepoApiException():
         Column(
           children: [
             Text(exception.message),
-            const Text('エラーごとにwidget分けたい。'),
+            const Text('widget分けるイメージ1'),
           ],
         );
-      default:
-        const Text('aaaa');
+      case TimeoutGithubRepoApiException():
+        return Column(
+          children: [
+            Text(exception.message),
+            const Text('widget分けるイメージ2'),
+          ],
+        );
     }
-    return const Text('想定外');
+    return const Text('想定外エラー');
   }
 }
 
