@@ -19,17 +19,15 @@ class RepoSearchLoading extends RepoSearchState {
 }
 
 class RepoSearchSuccess extends RepoSearchState {
-  const RepoSearchSuccess({required this.data, required this.query});
+  const RepoSearchSuccess({required this.data});
 
   final SearchApiModel data;
-  final String query;
 }
 
 class RepoSearchError extends RepoSearchState {
-  const RepoSearchError({required this.exception, required this.query});
+  const RepoSearchError({required this.exception});
 
   final GithubRepoApiException exception;
-  final String query;
 }
 
 class RepoSearchNotifier extends Notifier<RepoSearchState> {
@@ -43,9 +41,9 @@ class RepoSearchNotifier extends Notifier<RepoSearchState> {
     final result = await _api.searchRepositories(q: q);
     switch (result) {
       case Success<SearchApiModel, GithubRepoApiException>(:final data):
-        state = RepoSearchSuccess(data: data, query: q);
+        state = RepoSearchSuccess(data: data);
       case Error<SearchApiModel, GithubRepoApiException>(:final exception):
-        state = RepoSearchError(exception: exception, query: q);
+        state = RepoSearchError(exception: exception);
     }
   }
 }

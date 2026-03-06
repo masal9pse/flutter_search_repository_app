@@ -36,8 +36,8 @@ class _SearchResult extends ConsumerWidget {
       RepoSearchInitial() => const _InitialView(),
       RepoSearchLoading() => const Center(child: CircularProgressIndicator()),
       RepoSearchSuccess(:final data) => _RepoList(data: data),
-      RepoSearchError(:final exception, :final query) =>
-        _ExceptionView(exception: exception, query: query),
+      RepoSearchError(:final exception) =>
+        _ExceptionView(exception: exception),
     };
   }
 }
@@ -120,10 +120,9 @@ class _RepoList extends StatelessWidget {
 }
 
 class _ExceptionView extends ConsumerWidget {
-  const _ExceptionView({required this.exception, required this.query});
+  const _ExceptionView({required this.exception});
 
-  final GithubRepoApiException exception;
-  final String query;
+  final GithubRepoApiException exception; 
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
