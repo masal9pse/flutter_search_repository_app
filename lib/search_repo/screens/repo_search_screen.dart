@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/search_repo/core/l10n/github_repo_api_exception_l10n.dart';
 import 'package:flutter_engineer_codecheck/search_repo/providers/repo_search_provider.dart';
 import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api_exception.dart';
 import 'package:flutter_engineer_codecheck/search_repo/repository/search_repo_model.dart';
@@ -118,6 +119,9 @@ class _RepoList extends StatelessWidget {
   }
 }
 
+/// エラー発生時に表示するWidget
+/// 
+/// こういうのもVRTでテストしたい
 class _ExceptionView extends ConsumerWidget {
   const _ExceptionView({required this.exception});
 
@@ -136,21 +140,20 @@ class _ExceptionView extends ConsumerWidget {
             UnauthorizedGithubRepoApiException() ||
             RateLimitGithubRepoApiException() ||
             HttpGithubRepoApiException():
-        Column(
+        return Column(
           children: [
-            Text(exception.message),
+            Text(exception.localizedMessage(context)),
             const Text('widget分けるイメージ1'),
           ],
         );
       case TimeoutGithubRepoApiException():
         return Column(
           children: [
-            Text(exception.message),
+            Text(exception.localizedMessage(context)),
             const Text('widget分けるイメージ2'),
           ],
         );
     }
-    return const Text('想定外エラー');
   }
 }
 

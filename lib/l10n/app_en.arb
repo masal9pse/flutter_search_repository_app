@@ -1,0 +1,22 @@
+{
+  "@@locale": "en",
+  "errorTimeout": "Request timed out. Please try again later.",
+  "errorNetwork": "A network error occurred. Please check your connection.",
+  "errorCanceled": "The request was canceled.",
+  "errorUnauthorized": "Authentication failed. Please check your GitHub API credentials.",
+  "errorRateLimit": "GitHub API rate limit exceeded. Please try again later.",
+  "errorNotFound": "Search API not found. Please try again later.",
+  "errorServer": "A server error occurred on GitHub. Please try again later.",
+  "errorHttp": "Search failed. (status: {statusCode})",
+  "@errorHttp": {
+    "placeholders": {
+      "statusCode": {
+        "type": "int"
+      }
+    }
+  },
+  "errorBadCertificate": "Connection aborted due to an insecure certificate.",
+  "errorInvalidResponse": "Invalid response format. Please restart the app and try again.",
+  "errorUnknown": "An unknown error occurred. Please try again later.",
+  "errorUnexpected": "Unexpected error"
+}
