@@ -42,7 +42,7 @@ class RepoSearchNotifier extends Notifier<RepoSearchState> {
     switch (result) {
       case Success<SearchApiModel, GithubRepoApiException>(:final data):
         state = RepoSearchSuccess(data: data);
-      case Error<SearchApiModel, GithubRepoApiException>(:final exception):
+      case Failure<SearchApiModel, GithubRepoApiException>(:final exception):
         state = RepoSearchError(exception: exception);
     }
   }

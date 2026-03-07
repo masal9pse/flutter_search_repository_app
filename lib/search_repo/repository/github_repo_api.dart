@@ -23,7 +23,7 @@ class GithubRepoApi {
 
       final data = response.data;
       if (data == null) {
-        return const Error(
+        return const Failure(
           exception: InvalidResponseGithubRepoApiException(),
         );
       }
@@ -31,13 +31,13 @@ class GithubRepoApi {
       final decoded = SearchApiModel.fromJson(data);
       return Success(data: decoded);
     } on DioException catch (e) {
-      return Error(exception: _mapDioException(e));
+      return Failure(exception: _mapDioException(e));
     } on FormatException {
-      return const Error(
+      return const Failure(
         exception: InvalidResponseGithubRepoApiException(),
       );
     } on Exception {
-      return const Error(
+      return const Failure(
         exception: UnknownGithubRepoApiException(),
       );
     }
