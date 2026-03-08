@@ -28,27 +28,28 @@ jobs:
       - uses: jdx/mise-action@v3.6.1
         with:
           install: true
+      
+      # 一旦コメントアウト
+      # - name: Install dependencies
+      #   run: |
+      #     flutter pub get
+      #     cd android && bundle install
 
-      - name: Install dependencies
-        run: |
-          flutter pub get
-          cd android && bundle install
+      # - name: Generate Icons
+      #   run: dart run flutter_launcher_icons
 
-      - name: Generate Icons
-        run: dart run flutter_launcher_icons
+      # # --- ビルド ---
+      # - name: Build APK
+      #   run: flutter build apk --release --dart-define-from-file=define/prod.json
 
-      # --- ビルド ---
-      - name: Build APK
-        run: flutter build apk --release --dart-define-from-file=define/prod.json
+      # # --- Firebase Distribution へのアップロード ---
+      # - name: Deploy to Firebase Distribution
+      #   env:
+      #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      #   run: cd android && bundle exec fastlane firebase
 
-      # --- Firebase Distribution へのアップロード ---
-      - name: Deploy to Firebase Distribution
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: cd android && bundle exec fastlane firebase
-
-      # --- Google Play Store へのアップロード ---
-      - name: Deploy to Play Store
-        env:
-          SUPPLY_JSON_KEY_DATA: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
-        run: cd android && bundle exec fastlane play_store
+      # # --- Google Play Store へのアップロード ---
+      # - name: Deploy to Play Store
+      #   env:
+      #     SUPPLY_JSON_KEY_DATA: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+      #   run: cd android && bundle exec fastlane play_store

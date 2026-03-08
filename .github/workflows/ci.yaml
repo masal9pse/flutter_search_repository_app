@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: jdx/mise-action@v3.6.1
+        with:
+          install: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze (Lint)
+        run: flutter analyze
+
+      - name: Test
+        run: flutter test
+
+      - name: Build
+        run: flutter build web --dart-define-from-file=define/dev.json
