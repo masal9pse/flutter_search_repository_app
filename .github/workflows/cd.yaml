@@ -10,26 +10,20 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.2
+      - uses: ./.github/actions/setup
 
-      # --- 署名ファイルの準備 ---
-      - name: Decode Keystore
-        run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
-
-      - name: Create key.properties
-        run: |
-          echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/key.properties
-          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-          echo "storeFile=upload-keystore.jks" >> android/key.properties
-
-      # --- 環境セットアップ ---
-      - uses: jdx/mise-action@v3.6.1
-        with:
-          install: true
-      
       # 一旦コメントアウト
+      # --- 署名ファイルの準備 ---
+      # - name: Decode Keystore
+      #   run: |
+      #     echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
+
+      # - name: Create key.properties
+      #   run: |
+      #     echo "storePassword=${{ secrets.KEYSTORE_PASSWORD }}" > android/key.properties
+      #     echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+      #     echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
+      #     echo "storeFile=upload-keystore.jks" >> android/key.properties
       # - name: Install dependencies
       #   run: |
       #     flutter pub get

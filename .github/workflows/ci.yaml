@@ -8,11 +8,7 @@ jobs:
   lint-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: jdx/mise-action@v3.6.1
-        with:
-          install: true
+      - uses: ./.github/actions/setup
 
       - name: Install dependencies
         run: flutter pub get

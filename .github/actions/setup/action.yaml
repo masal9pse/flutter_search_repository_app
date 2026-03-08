@@ -1,0 +1,12 @@
+name: "Setup"
+
+description: "Checkout and mise environment setup"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v6.0.2
+
+    - uses: jdx/mise-action@v3.6.1
+      with:
+        install: true
