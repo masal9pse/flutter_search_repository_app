@@ -1,0 +1,30 @@
+# .cursorignore - Cursor がインデックス・検索から除外するファイル
+# .gitignore と同様の構文を使用
+
+# ビルド成果物
+/build/
+.dart_tool/
+*.iml
+
+# 依存関係・キャッシュ
+.pub-cache/
+.pub/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# カバレッジレポート
+coverage/
+
+# 環境変数（機密情報）
+.env
+.env.*
+
+# FVM
+.fvm/
+
+# 生成ファイル
+lib/generated_plugin_registrant.dart
+
+# メモ（必要に応じて）
+# memo/
