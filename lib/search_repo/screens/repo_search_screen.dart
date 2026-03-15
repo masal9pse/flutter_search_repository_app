@@ -33,11 +33,15 @@ class _SearchResult extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return switch (ref.watch(repoSearchNotifierProvider)) {
+    final searchState = ref.watch(repoSearchStateProvider);
+    final items = ref.watch(repoItemsProvider);
+
+    return switch (searchState) {
       RepoSearchInitial() => const _InitialView(),
       RepoSearchLoading() => const Center(child: CircularProgressIndicator()),
-      RepoSearchSuccess(:final data) => _RepoList(data: data),
-      RepoSearchError(:final exception) => _ExceptionView(exception: exception),
+      RepoSearchSuccess() => _RepoList(data: items),
+      RepoSearchError(:final exception) =>
+        _ExceptionView(exception: exception),
     };
   }
 }
@@ -74,19 +78,19 @@ class _SearchForm extends HookConsumerWidget {
                     EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               ),
               onFieldSubmitted: (_) => ref
-                  .read(repoSearchNotifierProvider.notifier)
+                  .read(repoSearchStateProvider.notifier)
                   .search(controller.text),
             ),
           ),
           const SizedBox(width: 12),
           FilledButton.icon(
             onPressed:
-                ref.watch(repoSearchNotifierProvider) is RepoSearchLoading
+                ref.watch(repoSearchStateProvider) is RepoSearchLoading
                     ? null
                     : () => ref
-                        .read(repoSearchNotifierProvider.notifier)
+                        .read(repoSearchStateProvider.notifier)
                         .search(controller.text),
-            icon: ref.watch(repoSearchNotifierProvider) is RepoSearchLoading
+            icon: ref.watch(repoSearchStateProvider) is RepoSearchLoading
                 ? const SizedBox(
                     width: 20,
                     height: 20,
@@ -200,7 +204,10 @@ class _RepoListItem extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (_) => RepoDetailScreen(id: item.id),
+            builder: (_) => RepoDetailScreen(
+              owner: item.owner.login,
+              repo: item.name,
+            ),
           ),
         );
       },

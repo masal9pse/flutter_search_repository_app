@@ -1,30 +1,110 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/search_repo/core/l10n/github_repo_api_exception_l10n.dart';
 import 'package:flutter_engineer_codecheck/search_repo/providers/repo_search_provider.dart';
+import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api_exception.dart';
+import 'package:flutter_engineer_codecheck/search_repo/repository/search_repo_model.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class RepoDetailScreen extends ConsumerWidget {
-  const RepoDetailScreen({required this.id, super.key});
+class RepoDetailScreen extends HookConsumerWidget {
+  const RepoDetailScreen({
+    required this.owner,
+    required this.repo,
+    super.key,
+  });
 
-  final int id;
+  final String owner;
+  final String repo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(repoSearchNotifierProvider);
-    final item = switch (state) {
-      RepoSearchSuccess(:final data) =>
-        data.items.firstWhere((e) => e.id == id),
+    final detailState =
+        ref.watch(repoDetailStateProvider((owner: owner, repo: repo)));
+
+    useEffect(
+      () {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ref
+              .read(repoDetailStateProvider((owner: owner, repo: repo)).notifier)
+              .fetch();
+        });
+        return null;
+      },
+      [],
+    );
+
+    final displayItem = switch (detailState) {
+      RepoDetailSuccess(:final data) => data,
       _ => null,
     };
 
-    if (item == null) {
-      return const Scaffold(
-        body: Center(child: Text('リポジトリ情報が見つかりませんでした')),
+    if (displayItem != null) {
+      return _Content(item: displayItem, owner: owner, repo: repo);
+    }
+    if (detailState is RepoDetailError) {
+      return _ErrorScaffold(
+        owner: owner,
+        repo: repo,
+        exception: detailState.exception,
       );
     }
+    return _LoadingScaffold(owner: owner, repo: repo);
+  }
+}
+
+class _LoadingScaffold extends StatelessWidget {
+  const _LoadingScaffold({required this.owner, required this.repo});
+
+  final String owner;
+  final String repo;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('$owner/$repo')),
+      body: const Center(child: CircularProgressIndicator()),
+    );
+  }
+}
+
+class _ErrorScaffold extends StatelessWidget {
+  const _ErrorScaffold({
+    required this.owner,
+    required this.repo,
+    required this.exception,
+  });
+
+  final String owner;
+  final String repo;
+  final GithubRepoApiException exception;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('$owner/$repo')),
+      body: Center(child: Text(exception.localizedMessage(context))),
+    );
+  }
+}
+
+class _Content extends StatelessWidget {
+  const _Content({
+    required this.item,
+    required this.owner,
+    required this.repo,
+  });
+
+  final Item item;
+  final String owner;
+  final String repo;
+
+  @override
+  Widget build(BuildContext context) {
+    final displayItem = item;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(item.name),
+        title: Text(displayItem.name),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -36,10 +116,10 @@ class RepoDetailScreen extends ConsumerWidget {
               children: [
                 CircleAvatar(
                   radius: 28,
-                  backgroundImage: item.owner.avatarUrl.isNotEmpty
-                      ? NetworkImage(item.owner.avatarUrl)
+                  backgroundImage: displayItem.owner.avatarUrl.isNotEmpty
+                      ? NetworkImage(displayItem.owner.avatarUrl)
                       : null,
-                  child: item.owner.avatarUrl.isEmpty
+                  child: displayItem.owner.avatarUrl.isEmpty
                       ? const Icon(Icons.code, size: 28)
                       : null,
                 ),
@@ -49,19 +129,19 @@ class RepoDetailScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        item.name,
+                        displayItem.name,
                         style: Theme.of(context)
                             .textTheme
                             .titleLarge
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
-                      if (item.language.isNotEmpty)
+                      if (displayItem.language.isNotEmpty)
                         Row(
                           children: [
                             const Icon(Icons.code, size: 16),
                             const SizedBox(width: 4),
-                            Text(item.language),
+                            Text(displayItem.language),
                           ],
                         ),
                     ],
@@ -77,22 +157,22 @@ class RepoDetailScreen extends ConsumerWidget {
                 _InfoChip(
                   icon: Icons.star,
                   label: 'Stars',
-                  value: item.stargazersCount,
+                  value: displayItem.stargazersCount,
                 ),
                 _InfoChip(
                   icon: Icons.remove_red_eye,
                   label: 'Watchers',
-                  value: item.watchersCount,
+                  value: displayItem.watchersCount,
                 ),
                 _InfoChip(
                   icon: Icons.call_split,
                   label: 'Forks',
-                  value: item.forksCount,
+                  value: displayItem.forksCount,
                 ),
                 _InfoChip(
                   icon: Icons.error_outline,
                   label: 'Open issues',
-                  value: item.openIssuesCount,
+                  value: displayItem.openIssuesCount,
                 ),
               ],
             ),

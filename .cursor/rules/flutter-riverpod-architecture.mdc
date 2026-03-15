@@ -1,0 +1,67 @@
+---
+description: Flutter + Riverpod による API 連携アプリのアーキテクチャパターン（本プロジェクト専用）
+globs: lib/**/*.dart
+alwaysApply: false
+---
+
+# Flutter Riverpod Architecture
+
+本プロジェクト（flutter_engineer_codecheck）で適用するアーキテクチャパターン。
+
+## 1. ディレクトリ構造
+
+```
+lib/
+├── core/           # 共通（Result型など）
+├── l10n/            # アプリ全体のローカライズ
+└── {feature}/       # 機能単位（例: search_repo）
+    ├── core/        # 機能固有の共通（l10n等）
+    ├── providers/   # Notifier + Provider 定義
+    ├── repository/  # API クライアント、モデル、例外
+    └── screens/     # 画面 Widget
+```
+
+## 2. レイヤーと責務
+
+| レイヤー | 責務 |
+|----------|------|
+| **Repository/Service** | API 呼び出し。`Result<T, E>` で返す（例外を投げない） |
+| **Provider** | API を注入、Notifier を提供 |
+| **Notifier** | 状態を保持、API を呼び、`state` を更新 |
+| **Screen** | `ref.watch` で状態を購読、`ref.read(provider.notifier)` で操作 |
+
+## 3. データフロー
+
+```
+UI → ref.read.notifier.method → Notifier → await api.method → API
+API → Result Success/Failure → Notifier → state = ... → ref.watch → UI
+```
+
+単方向: UI → Notifier → API → Notifier → UI
+
+## 4. 必須パターン
+
+### Result型
+
+API の成否を例外ではなく型で表現する。
+
+### Sealed State
+
+Notifier の状態を sealed class で定義し、`switch` で網羅的にハンドリング。
+
+### Sealed Exception
+
+API 例外を sealed で定義し、UI で分岐表示（l10n 等）が可能にする。
+
+### SSOT（データソース分離）
+
+- **データソース Provider**（repoItemsProvider）: 一覧・詳細で共有する唯一のデータ
+- **検索状態 Provider**（repoSearchStateProvider）: 検索の loading/error のみ（一覧専用）
+- **詳細状態 Provider**（repoDetailStateProvider）: 詳細取得の loading/error のみ（詳細専用）
+
+検索エラーと詳細エラーを分離し、一覧と詳細で表示が混ざらないようにする。
+
+## 5. テスト容易性
+
+- **API**: `Dio? dio` をコンストラクタで受け取り、テスト時にモックを渡す
+- **Notifier**: `ref.read(apiProvider)` で API を取得 → `ProviderScope` の `overrides` で API Provider をオーバーライド可能
