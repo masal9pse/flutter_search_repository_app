@@ -94,59 +94,27 @@ final repoSearchStateProvider =
 );
 
 // =============================================================================
-// 詳細の操作状態（詳細専用）- owner/repo ごと
+// 詳細取得（詳細専用）- owner/repo ごと
+// FutureProvider: loading / data / error の3パターン
 // =============================================================================
 
-sealed class RepoDetailState {
-  const RepoDetailState();
-}
-
-class RepoDetailInitial extends RepoDetailState {
-  const RepoDetailInitial();
-}
-
-class RepoDetailLoading extends RepoDetailState {
-  const RepoDetailLoading();
-}
-
-class RepoDetailSuccess extends RepoDetailState {
-  const RepoDetailSuccess({required this.data});
-
-  final Item data;
-}
-
-class RepoDetailError extends RepoDetailState {
-  const RepoDetailError({required this.exception});
-
-  final GithubRepoApiException exception;
-}
-
-class RepoDetailNotifier
-    extends FamilyNotifier<RepoDetailState, ({String owner, String repo})> {
-  GithubRepoApi get _api => ref.read(githubRepoApiProvider);
-  RepoItemsNotifier get _items => ref.read(repoItemsProvider.notifier);
-
-  @override
-  RepoDetailState build(({String owner, String repo}) arg) =>
-      const RepoDetailInitial();
-
-  Future<void> fetch() async {
-    state = const RepoDetailLoading();
-    final result = await _api.getRepository(
+final AutoDisposeFutureProviderFamily<Item, ({String owner, String repo})>
+    repoDetailProvider =
+    FutureProvider.autoDispose.family<Item, ({String owner, String repo})>(
+  (ref, arg) async {
+    final api = ref.read(githubRepoApiProvider);
+    final itemsNotifier = ref.read(repoItemsProvider.notifier);
+    final result = await api.getRepository(
       owner: arg.owner,
       repo: arg.repo,
     );
+
     switch (result) {
       case Success<Item, GithubRepoApiException>(:final data):
-        _items.updateItem(arg.owner, arg.repo, data);
-        state = RepoDetailSuccess(data: data);
+        itemsNotifier.updateItem(arg.owner, arg.repo, data);
+        return data;
       case Failure<Item, GithubRepoApiException>(:final exception):
-        state = RepoDetailError(exception: exception);
+        throw exception;
     }
-  }
-}
-
-final NotifierProviderFamily<RepoDetailNotifier, RepoDetailState,
-        ({String owner, String repo})> repoDetailStateProvider =
-    NotifierProvider.family<RepoDetailNotifier, RepoDetailState,
-        ({String owner, String repo})>(RepoDetailNotifier.new);
+  },
+);

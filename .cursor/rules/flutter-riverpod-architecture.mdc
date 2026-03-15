@@ -57,9 +57,17 @@ API 例外を sealed で定義し、UI で分岐表示（l10n 等）が可能に
 
 - **データソース Provider**（repoItemsProvider）: 一覧・詳細で共有する唯一のデータ
 - **検索状態 Provider**（repoSearchStateProvider）: 検索の loading/error のみ（一覧専用）
-- **詳細状態 Provider**（repoDetailStateProvider）: 詳細取得の loading/error のみ（詳細専用）
+- **詳細 Provider**（repoDetailProvider）: FutureProvider で詳細取得（詳細専用）
 
 検索エラーと詳細エラーを分離し、一覧と詳細で表示が混ざらないようにする。
+
+### FutureProvider（loading / loaded / error の3パターン）
+
+**loading・loaded・error の3パターンで十分な場合は FutureProvider を使う。**
+
+- Initial 状態が不要な「1回 fetch して表示」系は FutureProvider が適切
+- `AsyncValue.when(loading: ..., data: ..., error: ...)` で分岐
+- Notifier + sealed class（Initial/Loading/Success/Error）は冗長になりがち
 
 ## 5. テスト容易性
 

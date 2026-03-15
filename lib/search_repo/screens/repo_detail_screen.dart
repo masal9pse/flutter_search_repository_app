@@ -3,10 +3,9 @@ import 'package:flutter_engineer_codecheck/search_repo/core/l10n/github_repo_api
 import 'package:flutter_engineer_codecheck/search_repo/providers/repo_search_provider.dart';
 import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api_exception.dart';
 import 'package:flutter_engineer_codecheck/search_repo/repository/search_repo_model.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class RepoDetailScreen extends HookConsumerWidget {
+class RepoDetailScreen extends ConsumerWidget {
   const RepoDetailScreen({
     required this.owner,
     required this.repo,
@@ -18,35 +17,18 @@ class RepoDetailScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final detailState =
-        ref.watch(repoDetailStateProvider((owner: owner, repo: repo)));
+    final asyncDetail =
+        ref.watch(repoDetailProvider((owner: owner, repo: repo)));
 
-    useEffect(
-      () {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          ref
-              .read(repoDetailStateProvider((owner: owner, repo: repo)).notifier)
-              .fetch();
-        });
-        return null;
-      },
-      [],
+    return asyncDetail.when(
+      loading: () => _LoadingScaffold(owner: owner, repo: repo),
+      data: (item) => _Content(item: item, owner: owner, repo: repo),
+      error: (e, _) => _ErrorScaffold(
+        owner: owner,
+        repo: repo,
+        exception: e as GithubRepoApiException,
+      ),
     );
-
-    return switch (detailState) {
-      RepoDetailInitial() => _LoadingScaffold(owner: owner, repo: repo),
-      RepoDetailLoading() => _LoadingScaffold(owner: owner, repo: repo),
-      RepoDetailSuccess(:final data) => _Content(
-          item: data,
-          owner: owner,
-          repo: repo,
-        ),
-      RepoDetailError(:final exception) => _ErrorScaffold(
-          owner: owner,
-          repo: repo,
-          exception: exception,
-        ),
-    };
   }
 }
 
