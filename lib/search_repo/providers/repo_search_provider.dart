@@ -14,9 +14,8 @@ class RepoItemsNotifier extends Notifier<SearchApiModel> {
   @override
   SearchApiModel build() => const SearchApiModel();
 
-  void setItems(SearchApiModel data) {
-    state = data;
-  }
+  SearchApiModel get items => state;
+  set items(SearchApiModel data) => state = data;
 
   void updateItem(String owner, String repo, Item item) {
     final items = state.items;
@@ -80,7 +79,7 @@ class RepoSearchNotifier extends Notifier<RepoSearchState> {
     final result = await _api.searchRepositories(q: q);
     switch (result) {
       case Success<SearchApiModel, GithubRepoApiException>(:final data):
-        ref.read(repoItemsProvider.notifier).setItems(data);
+        ref.read(repoItemsProvider.notifier).items = data;
         state = const RepoSearchSuccess();
       case Failure<SearchApiModel, GithubRepoApiException>(:final exception):
         state = RepoSearchError(exception: exception);

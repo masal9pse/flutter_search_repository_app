@@ -4,7 +4,6 @@ import 'package:flutter_engineer_codecheck/search_repo/providers/repo_search_pro
 import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api_exception.dart';
 import 'package:flutter_engineer_codecheck/search_repo/repository/search_repo_model.dart';
 import 'package:flutter_engineer_codecheck/search_repo/screens/repo_detail_screen.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class RepoSearchScreen extends ConsumerWidget {
@@ -40,8 +39,7 @@ class _SearchResult extends ConsumerWidget {
       RepoSearchInitial() => const _InitialView(),
       RepoSearchLoading() => const Center(child: CircularProgressIndicator()),
       RepoSearchSuccess() => _RepoList(data: items),
-      RepoSearchError(:final exception) =>
-        _ExceptionView(exception: exception),
+      RepoSearchError(:final exception) => _ExceptionView(exception: exception),
     };
   }
 }
@@ -60,7 +58,7 @@ class _SearchForm extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = useTextEditingController(text: '');
+    final controller = TextEditingController(text: '');
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -84,12 +82,11 @@ class _SearchForm extends HookConsumerWidget {
           ),
           const SizedBox(width: 12),
           FilledButton.icon(
-            onPressed:
-                ref.watch(repoSearchStateProvider) is RepoSearchLoading
-                    ? null
-                    : () => ref
-                        .read(repoSearchStateProvider.notifier)
-                        .search(controller.text),
+            onPressed: ref.watch(repoSearchStateProvider) is RepoSearchLoading
+                ? null
+                : () => ref
+                    .read(repoSearchStateProvider.notifier)
+                    .search(controller.text),
             icon: ref.watch(repoSearchStateProvider) is RepoSearchLoading
                 ? const SizedBox(
                     width: 20,
@@ -124,7 +121,7 @@ class _RepoList extends StatelessWidget {
 }
 
 /// エラー発生時に表示するWidget
-/// 
+///
 /// こういうのもVRTでテストしたい
 class _ExceptionView extends ConsumerWidget {
   const _ExceptionView({required this.exception});
