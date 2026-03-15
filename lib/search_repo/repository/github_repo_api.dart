@@ -11,6 +11,38 @@ class GithubRepoApi {
 
   final Dio _dio;
 
+  /// リポジトリ詳細を取得する。
+  Future<Result<Item, GithubRepoApiException>> getRepository({
+    required String owner,
+    required String repo,
+  }) async {
+    try {
+      final response = await _dio.get<Map<String, dynamic>>(
+        '/repos/$owner/$repo',
+      );
+
+      final data = response.data;
+      if (data == null) {
+        return const Failure(
+          exception: InvalidResponseGithubRepoApiException(),
+        );
+      }
+
+      final decoded = Item.fromJson(data);
+      return Success(data: decoded);
+    } on DioException catch (e) {
+      return Failure(exception: _mapDioException(e));
+    } on FormatException {
+      return const Failure(
+        exception: InvalidResponseGithubRepoApiException(),
+      );
+    } on Exception {
+      return const Failure(
+        exception: UnknownGithubRepoApiException(),
+      );
+    }
+  }
+
   /// リポジトリを検索する。
   Future<Result<SearchApiModel, GithubRepoApiException>> searchRepositories({
     required String q,

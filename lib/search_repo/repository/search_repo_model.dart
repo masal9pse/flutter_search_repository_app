@@ -55,11 +55,14 @@ class Item {
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Owner {
   const Owner({
+    this.login = '',
     this.avatarUrl = '',
   });
 
   factory Owner.fromJson(Map<String, dynamic> json) => _$OwnerFromJson(json);
 
+  @JsonKey(defaultValue: '')
+  final String login;
   @JsonKey(defaultValue: '')
   final String avatarUrl;
   Map<String, dynamic> toJson() => _$OwnerToJson(this);

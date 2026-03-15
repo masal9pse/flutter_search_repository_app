@@ -14,6 +14,7 @@ alwaysApply: false
 
 - 状態の保持場所を明確にする（例: Provider/Riverpod の単一のソース）
 - 派生状態は元の状態から計算する
+- 詳細でAPIを叩いた場合、idが同じ一覧の項目を上書きし、一覧に戻った際の不整合を防ぐ
 - 詳細は `ssot.mdc` を参照
 
 ### 2. 単方向データフロー (Unidirectional Data Flow)
