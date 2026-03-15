@@ -33,22 +33,20 @@ class RepoDetailScreen extends HookConsumerWidget {
       [],
     );
 
-    final displayItem = switch (detailState) {
-      RepoDetailSuccess(:final data) => data,
-      _ => null,
+    return switch (detailState) {
+      RepoDetailInitial() => _LoadingScaffold(owner: owner, repo: repo),
+      RepoDetailLoading() => _LoadingScaffold(owner: owner, repo: repo),
+      RepoDetailSuccess(:final data) => _Content(
+          item: data,
+          owner: owner,
+          repo: repo,
+        ),
+      RepoDetailError(:final exception) => _ErrorScaffold(
+          owner: owner,
+          repo: repo,
+          exception: exception,
+        ),
     };
-
-    if (displayItem != null) {
-      return _Content(item: displayItem, owner: owner, repo: repo);
-    }
-    if (detailState is RepoDetailError) {
-      return _ErrorScaffold(
-        owner: owner,
-        repo: repo,
-        exception: detailState.exception,
-      );
-    }
-    return _LoadingScaffold(owner: owner, repo: repo);
   }
 }
 
