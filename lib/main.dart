@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/l10n/app_localizations.dart';
-import 'package:flutter_engineer_codecheck/search_repo/screens/repo_search_screen.dart';
+import 'package:flutter_engineer_codecheck/router/router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() {
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'GitHub Repo Search',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const RepoSearchScreen(),
+      routerConfig: router,
     );
   }
 }
