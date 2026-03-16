@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_engineer_codecheck/router/router.dart';
 import 'package:flutter_engineer_codecheck/search_repo/core/l10n/github_repo_api_exception_l10n.dart';
 import 'package:flutter_engineer_codecheck/search_repo/providers/repo_search_provider.dart';
 import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api_exception.dart';
 import 'package:flutter_engineer_codecheck/search_repo/repository/search_repo_model.dart';
-import 'package:flutter_engineer_codecheck/search_repo/screens/repo_detail_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class RepoSearchScreen extends ConsumerWidget {
@@ -198,16 +198,8 @@ class _RepoListItem extends StatelessWidget {
         ],
       ),
       isThreeLine: false,
-      onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => RepoDetailScreen(
-              owner: item.owner.login,
-              repo: item.name,
-            ),
-          ),
-        );
-      },
+      onTap: () =>
+          DetailRoute(owner: item.owner.login, repo: item.name).push(context),
     );
   }
 }
