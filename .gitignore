@@ -53,3 +53,6 @@ coverage/html/*
 .env
 
 memo/*
+
+# Claude Code settings (track project-level permissions)
+!.claude/settings.local.json
