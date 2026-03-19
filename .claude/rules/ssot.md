@@ -1,0 +1,88 @@
+---
+description: SSOT（信頼できる唯一の情報源）原則に基づく状態管理の設計
+paths: [lib/**/*.dart]
+---
+
+# Single Source of Truth (SSOT)
+
+## 定義
+
+すべてのデータが1か所でのみ作成・編集されるように構造化する。他の場所は参照のみ。プライマリが更新されれば、重複や欠落なくシステム全体に伝播する。
+
+[参考: Wikipedia - 信頼できる唯一の情報源](https://ja.wikipedia.org/wiki/%E4%BF%A1%E9%A0%BC%E3%81%A7%E3%81%8D%E3%82%8B%E5%94%AF%E4%B8%80%E3%81%AE%E6%83%85%E5%A0%B1%E6%BA%90)
+
+---
+
+## なぜ重要か：よくある要件の例
+
+> 記事一覧で未like → 詳細でlike → 一覧に戻るとlike済み
+
+SSOTを満たしていれば、**特別な工夫なく**この要件を満たせる。
+
+---
+
+## SSOTでない場合（脆い状態）
+
+1. 一覧と詳細で記事データソースが別管理（同じ記事のインスタンスが2つ存在）
+2. 詳細の記事インスタンスのlikeをtrueに変更 → 一覧側は未likeのまま
+3. 一覧の記事インスタンスにも同期が必要 → 抜け漏れでバグ、煩雑な処理、一時的な表示不整合が発生しやすい
+4. 同期完了後にやっと一覧もlike済みに
+
+---
+
+## SSOTを満たした例（Riverpod）
+
+**データソース（唯一の真実）:**
+
+```dart
+final articlesProvider = NotifierProvider<ArticlesNotifier, List<Article>>(
+  ArticlesNotifier.new,
+);
+
+class ArticlesNotifier extends Notifier<List<Article>> {
+  @override
+  List<Article> build() => List.generate(10, (index) => Article(id: '$index'));
+
+  void like(String id) {
+    final index = state.indexWhere((article) => article.id == id);
+    final article = state[index];
+    state = List.of(state)
+      ..[index] = article.copyWith(isLiked: true);
+  }
+}
+```
+
+**利用側（一覧・詳細とも同一ソースを参照）:**
+
+```dart
+// 一覧
+final articles = ref.watch(articlesProvider);
+
+// 詳細（selectで派生）
+final article = ref.watch(
+  articlesProvider.select(
+    (articles) => articles.firstWhere((article) => article.id == id),
+  ),
+);
+// 操作
+ref.read(articlesProvider.notifier).like(id);
+```
+
+一覧と詳細で表示不整合が**絶対に生じ得ない**作りになる。
+
+---
+
+## ポイント
+
+- 一覧と詳細で都合の良いデータ構造が異なる場合でも、**大元のSSOTなデータソースから派生**させる
+- 派生データは `select` 等で計算し、別の状態として保持しない
+
+---
+
+## 詳細APIで一覧を更新するパターン
+
+詳細画面でAPIを叩いて最新データを取得する場合、**idが同じ一覧の項目を見つけて上書き**する。
+
+- 詳細画面で Notifier の `fetchDetail(owner, repo)` を呼び、API取得成功時に一覧の該当項目を置き換える（詳細用Providerは不要）
+- これにより一覧に戻った際の「詳細で見た最新データ」と「一覧の表示」の不整合がなくなる
+- SSOT（一覧）を更新するので、サーバー・フロント間の不整合も防げる
