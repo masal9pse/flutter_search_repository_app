@@ -17,7 +17,11 @@ lib/
     ├── core/        # 機能固有の共通（l10n等）
     ├── providers/   # Notifier + Provider 定義
     ├── repository/  # API クライアント、モデル、例外
-    └── screens/     # 画面 Widget
+    └── views/
+        └── screens/ # 画面 Widget
+            ├── {screen}.dart      # メインのScreen Widget
+            └── part/              # part/part of で分割したプライベートWidget
+                └── _{widget}.dart
 ```
 
 ## 2. レイヤーと責務
