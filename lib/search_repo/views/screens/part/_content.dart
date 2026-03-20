@@ -1,71 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_engineer_codecheck/search_repo/core/l10n/github_repo_api_exception_l10n.dart';
-import 'package:flutter_engineer_codecheck/search_repo/providers/repo_search_provider.dart';
-import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api_exception.dart';
-import 'package:flutter_engineer_codecheck/search_repo/repository/search_repo_model.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-class RepoDetailScreen extends ConsumerWidget {
-  const RepoDetailScreen({
-    required this.owner,
-    required this.repo,
-    super.key,
-  });
-
-  final String owner;
-  final String repo;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final asyncDetail =
-        ref.watch(repoDetailProvider((owner: owner, repo: repo)));
-
-    return asyncDetail.when(
-      loading: () => _LoadingScaffold(owner: owner, repo: repo),
-      data: (item) => _Content(item: item, owner: owner, repo: repo),
-      error: (e, _) => _ErrorScaffold(
-        owner: owner,
-        repo: repo,
-        exception: e as GithubRepoApiException,
-      ),
-    );
-  }
-}
-
-class _LoadingScaffold extends StatelessWidget {
-  const _LoadingScaffold({required this.owner, required this.repo});
-
-  final String owner;
-  final String repo;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('$owner/$repo')),
-      body: const Center(child: CircularProgressIndicator()),
-    );
-  }
-}
-
-class _ErrorScaffold extends StatelessWidget {
-  const _ErrorScaffold({
-    required this.owner,
-    required this.repo,
-    required this.exception,
-  });
-
-  final String owner;
-  final String repo;
-  final GithubRepoApiException exception;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('$owner/$repo')),
-      body: Center(child: Text(exception.localizedMessage(context))),
-    );
-  }
-}
+part of '../repo_detail_screen.dart';
 
 class _Content extends StatelessWidget {
   const _Content({
@@ -155,44 +88,6 @@ class _Content extends StatelessWidget {
                   value: displayItem.openIssuesCount,
                 ),
               ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _InfoChip extends StatelessWidget {
-  const _InfoChip({
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
-
-  final IconData icon;
-  final String label;
-  final int value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      color: Theme.of(context).colorScheme.surfaceContainerHighest,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              size: 16,
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-            const SizedBox(width: 6),
-            Text(
-              '$label: $value',
-              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
         ),
