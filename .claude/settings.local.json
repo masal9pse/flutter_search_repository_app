@@ -1,8 +1,12 @@
 {
+  "model": "haiku",
   "permissions": {
     "allow": [
       "Bash(flutter pub:*)",
-      "Bash(flutter test:*)"
+      "Bash(flutter test:*)",
+      "WriteFile(*)",
+      "CreateFile(*)",
+      "DeleteFile(*)"
     ]
   }
 }
