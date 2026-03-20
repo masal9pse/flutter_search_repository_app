@@ -8,5 +8,11 @@
       "CreateFile(*)",
       "DeleteFile(*)"
     ]
+  },
+  "mcpServers": {
+    "maestro": {
+      "command": "maestro",
+      "args": ["mcp"]
+    }
   }
 }

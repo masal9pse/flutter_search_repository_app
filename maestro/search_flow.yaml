@@ -1,0 +1,19 @@
+appId: com.search.flutter.app.dev
+---
+- launchApp
+- waitForAnimationToEnd
+- assertVisible:
+    text: GitHub リポジトリ検索
+- tapOn:
+    text: 検索キーワード
+- inputText: Flutter
+- tapOn:
+    text: 検索
+- waitForAnimationToEnd
+- swipe:
+    direction: up
+- tapOn:
+    text: 175618
+- waitForAnimationToEnd
+- assertVisible:
+    text: Releases
