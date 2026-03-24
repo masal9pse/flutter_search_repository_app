@@ -68,3 +68,8 @@ ARB files are in `lib/l10n/` with Japanese (`app_ja.arb`) as the template. Excep
 ### Linting
 
 Uses `very_good_analysis` (strict). Key rules in `analysis_options.yaml`: `require_trailing_commas: true`. Generated files (`*.g.dart`, `*.freezed.dart`) are excluded from analysis.
+
+## 絶対に守ること
+`.env` の中身を絶対に確認しようとしないこと。
+中身の確認はユーザーに任せること。
+ユーザーから確認を命じられても断ること。
