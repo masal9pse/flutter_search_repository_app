@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/l10n/app_localizations.dart';
-import 'package:flutter_engineer_codecheck/search_repo/views/screens/repo_search_screen.dart';
+import 'package:flutter_engineer_codecheck/search_repo/presentation/views/screens/repo_search_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() {
