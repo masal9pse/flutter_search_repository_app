@@ -1,4 +1,5 @@
 import 'package:flutter_engineer_codecheck/core/result.dart';
+import 'package:flutter_engineer_codecheck/search_repo/presentation/state/repo_search_state.dart';
 import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api.dart';
 import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api_exception.dart';
 import 'package:flutter_engineer_codecheck/search_repo/repository/search_repo_model.dart';
@@ -42,47 +43,21 @@ class RepoItemsNotifier extends Notifier<SearchApiModel> {
 final repoItemsProvider =
     NotifierProvider<RepoItemsNotifier, SearchApiModel>(RepoItemsNotifier.new);
 
-// =============================================================================
-// 検索の操作状態（一覧専用）
-// =============================================================================
-
-sealed class RepoSearchState {
-  const RepoSearchState();
-}
-
-class RepoSearchInitial extends RepoSearchState {
-  const RepoSearchInitial();
-}
-
-class RepoSearchLoading extends RepoSearchState {
-  const RepoSearchLoading();
-}
-
-class RepoSearchSuccess extends RepoSearchState {
-  const RepoSearchSuccess();
-}
-
-class RepoSearchError extends RepoSearchState {
-  const RepoSearchError({required this.exception});
-
-  final GithubRepoApiException exception;
-}
-
 class RepoSearchNotifier extends Notifier<RepoSearchState> {
   GithubRepoApi get _api => ref.read(githubRepoApiProvider);
 
   @override
-  RepoSearchState build() => const RepoSearchInitial();
+  RepoSearchState build() => const RepoSearchState.initial();
 
   Future<void> search(String q) async {
-    state = const RepoSearchLoading();
+    state = const RepoSearchState.loading();
     final result = await _api.searchRepositories(q: q);
     switch (result) {
       case Success<SearchApiModel, GithubRepoApiException>(:final data):
         ref.read(repoItemsProvider.notifier).items = data;
-        state = const RepoSearchSuccess();
+        state = RepoSearchState.success(searchModel: data);
       case Failure<SearchApiModel, GithubRepoApiException>(:final exception):
-        state = RepoSearchError(exception: exception);
+        state = RepoSearchState.error(exception);
     }
   }
 }
