@@ -28,7 +28,7 @@ class RepoSearchScreen extends ConsumerWidget {
         children: [
           _SearchForm(),
           Divider(height: 1),
-          Expanded(child: _SearchResult()),          
+          Expanded(child: _SearchResult()),
         ],
       ),
     );

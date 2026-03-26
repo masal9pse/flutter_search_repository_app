@@ -50,12 +50,12 @@ class RepoSearchNotifier extends Notifier<RepoSearchState> {
   RepoSearchState build() => const RepoSearchState.initial();
 
   Future<void> search(String q) async {
-    state = const RepoSearchState.initial();
+    state = const RepoSearchState.loading();
     final result = await _api.searchRepositories(q: q);
     switch (result) {
       case Success<SearchApiModel, GithubRepoApiException>(:final data):
         ref.read(repoItemsProvider.notifier).items = data;
-        state = const RepoSearchState.success();
+        state = RepoSearchState.success(searchModel: data);
       case Failure<SearchApiModel, GithubRepoApiException>(:final exception):
         state = RepoSearchState.error(exception);
     }

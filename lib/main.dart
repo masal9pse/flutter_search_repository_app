@@ -11,10 +11,6 @@ void main() {
   );
 }
 
-class A {
-   
-}
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

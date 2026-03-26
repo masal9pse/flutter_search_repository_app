@@ -11,7 +11,7 @@ sealed class RepoSearchState {
 
 // 1. クラス名は公開（外から switch で使える）
 final class RepoSearchInitial extends RepoSearchState {
-  // 2. コンストラクタをプライベート化（外から RepoSearchInitial() はできない）
+  // 2. コンストラクタをプライベート化（外から RepoSearchInitial() はできないので、RepoSearchState.initial()の使用を強制できる。）
   const RepoSearchInitial._(); 
 }
 
