@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:formz/formz.dart';
 
 void main() => runApp(const MyApp());
 
@@ -37,32 +36,18 @@ class _MyFormState extends State<MyForm> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
 
-  void _onEmailChanged() {
-    setState(() {
-      _state = _state.copyWith(email: Email.dirty(_emailController.text));
-    });
-  }
-
-  void _onPasswordChanged() {
-    setState(() {
-      _state = _state.copyWith(
-        password: Password.dirty(_passwordController.text),
-      );
-    });
-  }
-
   Future<void> _onSubmit() async {
     if (!_key.currentState!.validate()) return;
 
     setState(() {
-      _state = _state.copyWith(status: FormzSubmissionStatus.inProgress);
+      _state = _state.copyWith(status: FormSubmissionStatus.inProgress);
     });
 
     try {
       await _submitForm();
-      _state = _state.copyWith(status: FormzSubmissionStatus.success);
+      _state = _state.copyWith(status: FormSubmissionStatus.success);
     } catch (_) {
-      _state = _state.copyWith(status: FormzSubmissionStatus.failure);
+      _state = _state.copyWith(status: FormSubmissionStatus.failure);
     }
 
     if (!mounted) return;
@@ -105,10 +90,8 @@ class _MyFormState extends State<MyForm> {
   void initState() {
     super.initState();
     _state = MyFormState();
-    _emailController = TextEditingController(text: _state.email.value)
-      ..addListener(_onEmailChanged);
-    _passwordController = TextEditingController(text: _state.password.value)
-      ..addListener(_onPasswordChanged);
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
   }
 
   @override
@@ -132,7 +115,7 @@ class _MyFormState extends State<MyForm> {
               labelText: 'Email',
               helperText: 'A valid email e.g. joe.doe@gmail.com',
             ),
-            validator: (value) => _state.email.validator(value ?? '')?.text(),
+            validator: _validateEmail,
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
           ),
@@ -147,8 +130,7 @@ class _MyFormState extends State<MyForm> {
               labelText: 'Password',
               errorMaxLines: 2,
             ),
-            validator: (value) =>
-                _state.password.validator(value ?? '')?.text(),
+            validator: _validatePassword,
             obscureText: true,
             textInputAction: TextInputAction.done,
           ),
@@ -167,99 +149,51 @@ class _MyFormState extends State<MyForm> {
   }
 }
 
-class MyFormState with FormzMixin {
-  MyFormState({
-    Email? email,
-    this.password = const Password.pure(),
-    this.status = FormzSubmissionStatus.initial,
-  }) : email = email ?? Email.pure();
+enum FormSubmissionStatus { initial, inProgress, success, failure }
 
-  final Email email;
-  final Password password;
-  final FormzSubmissionStatus status;
+extension on FormSubmissionStatus {
+  bool get isInProgress => this == FormSubmissionStatus.inProgress;
 
-  MyFormState copyWith({
-    Email? email,
-    Password? password,
-    FormzSubmissionStatus? status,
-  }) {
-    return MyFormState(
-      email: email ?? this.email,
-      password: password ?? this.password,
-      status: status ?? this.status,
-    );
-  }
-
-  @override
-  List<FormzInput<dynamic, dynamic>> get inputs => [email, password];
+  bool get isSuccess => this == FormSubmissionStatus.success;
 }
 
-enum EmailValidationError { invalid, empty }
+class MyFormState {
+  MyFormState({this.status = FormSubmissionStatus.initial});
 
-class Email extends FormzInput<String, EmailValidationError>
-    with FormzInputErrorCacheMixin {
-  Email.pure([super.value = '']) : super.pure();
+  final FormSubmissionStatus status;
 
-  Email.dirty([super.value = '']) : super.dirty();
-
-  static final _emailRegExp = RegExp(
-    r'^[a-zA-Z\d.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z\d-]+(?:\.[a-zA-Z\d-]+)*$',
-  );
-
-  @override
-  EmailValidationError? validator(String value) {
-    if (value.isEmpty) {
-      return EmailValidationError.empty;
-    } else if (!_emailRegExp.hasMatch(value)) {
-      return EmailValidationError.invalid;
-    }
-
-    return null;
+  MyFormState copyWith({FormSubmissionStatus? status}) {
+    return MyFormState(status: status ?? this.status);
   }
 }
 
-enum PasswordValidationError { invalid, empty }
+final _emailRegExp = RegExp(
+  r'^[a-zA-Z\d.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z\d-]+(?:\.[a-zA-Z\d-]+)*$',
+);
 
-class Password extends FormzInput<String, PasswordValidationError> {
-  const Password.pure([super.value = '']) : super.pure();
+final _passwordRegex =
+    RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
 
-  const Password.dirty([super.value = '']) : super.dirty();
-
-  static final _passwordRegex =
-      RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
-
-  @override
-  PasswordValidationError? validator(String value) {
-    if (value.isEmpty) {
-      return PasswordValidationError.empty;
-    } else if (!_passwordRegex.hasMatch(value)) {
-      return PasswordValidationError.invalid;
-    }
-
-    return null;
+String? _validateEmail(String? value) {
+  final v = value ?? '';
+  if (v.isEmpty) {
+    return 'Please enter an email';
   }
+  if (!_emailRegExp.hasMatch(v)) {
+    return 'Please ensure the email entered is valid';
+  }
+  return null;
 }
 
-extension on EmailValidationError {
-  String text() {
-    switch (this) {
-      case EmailValidationError.invalid:
-        return 'Please ensure the email entered is valid';
-      case EmailValidationError.empty:
-        return 'Please enter an email';
-    }
+String? _validatePassword(String? value) {
+  final v = value ?? '';
+  if (v.isEmpty) {
+    return 'Please enter a password';
   }
-}
-
-extension on PasswordValidationError {
-  String text() {
-    switch (this) {
-      case PasswordValidationError.invalid:
-        return '''Password must be at least 8 characters and contain at least one letter and number''';
-      case PasswordValidationError.empty:
-        return 'Please enter a password';
-    }
+  if (!_passwordRegex.hasMatch(v)) {
+    return '''Password must be at least 8 characters and contain at least one letter and number''';
   }
+  return null;
 }
 
 // import 'package:flutter/material.dart';
@@ -280,7 +214,7 @@ extension on PasswordValidationError {
 
 //   @override
 //   Widget build(BuildContext context) {
-    
+
 //     return MaterialApp(
 //       title: 'GitHub Repo Search',
 //       theme: ThemeData(
