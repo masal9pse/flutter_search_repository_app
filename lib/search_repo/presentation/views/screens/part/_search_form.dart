@@ -5,7 +5,6 @@ class _SearchForm extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final controller = TextEditingController(text: '');
     final controller = useTextEditingController(text: '');
     final isNotEmpty = useListenableSelector(
       controller,
@@ -13,11 +12,10 @@ class _SearchForm extends HookConsumerWidget {
     );
     final searchState = ref.watch(repoSearchStateProvider);
 
-    VoidCallback? onSearchPressed;
+    VoidCallback? onSearchCallBack;
     if (isNotEmpty && searchState is! RepoSearchLoading) {
-      onSearchPressed = () => ref
-          .read(repoSearchStateProvider.notifier)
-          .search(controller.text);
+      onSearchCallBack = () =>
+          ref.read(repoSearchStateProvider.notifier).search(controller.text);
     }
 
     final Widget searchIcon;
@@ -41,19 +39,17 @@ class _SearchForm extends HookConsumerWidget {
               controller: controller,
               decoration: const InputDecoration(
                 labelText: '検索キーワード',
-                hintText: '例: flutter',
+                hintText: 'flutter',
                 border: OutlineInputBorder(),
                 contentPadding:
                     EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               ),
-              onFieldSubmitted: (_) => ref
-                  .read(repoSearchStateProvider.notifier)
-                  .search(controller.text),
+              onFieldSubmitted: (_) => onSearchCallBack?.call(),
             ),
           ),
           const SizedBox(width: 12),
           FilledButton.icon(
-            onPressed: onSearchPressed,
+            onPressed: onSearchCallBack,
             icon: searchIcon,
             label: const Text('検索'),
           ),

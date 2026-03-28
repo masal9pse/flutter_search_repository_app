@@ -69,6 +69,10 @@ ARB files are in `lib/l10n/` with Japanese (`app_ja.arb`) as the template. Excep
 
 Uses `very_good_analysis` (strict). Key rules in `analysis_options.yaml`: `require_trailing_commas: true`. Generated files (`*.g.dart`, `*.freezed.dart`) are excluded from analysis.
 
+## 守ること
+- 基本的にはビルドメソッドに処理を書かないでください。
+- ２つ以上のWidgetをネストする場合は、Containerを使ってください。本プロジェクトでは、パフォーマンスよりも可読性を重要視します。ただし、動作確認で影響が出た場合は変更する可能性があります。
+
 ## 絶対に守ること
 `.env` の中身を絶対に確認しようとしないこと。
 中身の確認はユーザーに任せること。
