@@ -5,6 +5,7 @@ import 'package:flutter_engineer_codecheck/search_repo/presentation/state/repo_s
 import 'package:flutter_engineer_codecheck/search_repo/presentation/views/screens/repo_detail_screen.dart';
 import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api_exception.dart';
 import 'package:flutter_engineer_codecheck/search_repo/repository/search_repo_model.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 part 'part/_exception_view.dart';

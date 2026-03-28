@@ -5,7 +5,31 @@ class _SearchForm extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = TextEditingController(text: '');
+    // final controller = TextEditingController(text: '');
+    final controller = useTextEditingController(text: '');
+    final isNotEmpty = useListenableSelector(
+      controller,
+      () => controller.text.isNotEmpty,
+    );
+    final searchState = ref.watch(repoSearchStateProvider);
+
+    VoidCallback? onSearchPressed;
+    if (isNotEmpty && searchState is! RepoSearchLoading) {
+      onSearchPressed = () => ref
+          .read(repoSearchStateProvider.notifier)
+          .search(controller.text);
+    }
+
+    final Widget searchIcon;
+    if (searchState is RepoSearchLoading) {
+      searchIcon = const SizedBox(
+        width: 20,
+        height: 20,
+        child: CircularProgressIndicator(strokeWidth: 2),
+      );
+    } else {
+      searchIcon = const Icon(Icons.search);
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -29,18 +53,8 @@ class _SearchForm extends HookConsumerWidget {
           ),
           const SizedBox(width: 12),
           FilledButton.icon(
-            onPressed: ref.watch(repoSearchStateProvider) is RepoSearchLoading
-                ? null
-                : () => ref
-                    .read(repoSearchStateProvider.notifier)
-                    .search(controller.text),
-            icon: ref.watch(repoSearchStateProvider) is RepoSearchLoading
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  )
-                : const Icon(Icons.search),
+            onPressed: onSearchPressed,
+            icon: searchIcon,
             label: const Text('検索'),
           ),
         ],
