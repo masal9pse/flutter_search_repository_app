@@ -8,14 +8,15 @@ class _SearchForm extends HookConsumerWidget {
     final controller = useTextEditingController(text: '');
     final isNotEmpty = useListenableSelector(
       controller,
-      () => controller.text.isNotEmpty,
+      () => controller.text.trim().isNotEmpty,
     );
     final searchState = ref.watch(repoSearchStateProvider);
 
     VoidCallback? onSearchCallBack;
     if (isNotEmpty && searchState is! RepoSearchLoading) {
-      onSearchCallBack = () =>
-          ref.read(repoSearchStateProvider.notifier).search(controller.text);
+      onSearchCallBack = () => ref
+          .read(repoSearchStateProvider.notifier)
+          .search(controller.text.trim());
     }
 
     final Widget searchIcon;
