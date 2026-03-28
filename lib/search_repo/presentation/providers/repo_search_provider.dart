@@ -18,6 +18,7 @@ class RepoItemsNotifier extends Notifier<SearchApiModel> {
   SearchApiModel get items => state;
   set items(SearchApiModel data) => state = data;
 
+  /// 詳細画面から更新された場合に呼び出す
   void updateItem(String owner, String repo, Item item) {
     final items = state.items;
     final index = items.indexWhere(
@@ -33,10 +34,6 @@ class RepoItemsNotifier extends Notifier<SearchApiModel> {
       totalCount: state.totalCount,
       items: newItems,
     );
-  }
-
-  void setSingleItem(Item item) {
-    state = SearchApiModel(totalCount: 1, items: [item]);
   }
 }
 

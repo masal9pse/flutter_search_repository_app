@@ -5,6 +5,7 @@
       "Bash(flutter pub:*)",
       "Bash(flutter test:*)",
       "WriteFile(*)",
+      "editFile(*)",
       "CreateFile(*)",
       "DeleteFile(*)"
     ]

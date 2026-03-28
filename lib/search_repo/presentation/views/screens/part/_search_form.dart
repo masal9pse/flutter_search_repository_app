@@ -5,7 +5,23 @@ class _SearchForm extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = TextEditingController(text: '');
+    final controller = useTextEditingController(text: '');
+    final isNotEmpty = useListenableSelector(
+      controller,
+      () => controller.text.trim().isNotEmpty,
+    );
+    final searchState = ref.watch(repoSearchStateProvider);
+
+    final onSearchCallBack = useMemoized(
+      () {
+        if (isNotEmpty && searchState is! RepoSearchLoading) {
+          return () => ref
+              .read(repoSearchStateProvider.notifier)
+              .search(controller.text.trim());
+        }
+      },
+      [isNotEmpty, searchState],
+    );
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -17,24 +33,18 @@ class _SearchForm extends HookConsumerWidget {
               controller: controller,
               decoration: const InputDecoration(
                 labelText: '検索キーワード',
-                hintText: '例: flutter',
+                hintText: 'flutter',
                 border: OutlineInputBorder(),
                 contentPadding:
                     EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               ),
-              onFieldSubmitted: (_) => ref
-                  .read(repoSearchStateProvider.notifier)
-                  .search(controller.text),
+              onFieldSubmitted: (_) => onSearchCallBack?.call(),
             ),
           ),
           const SizedBox(width: 12),
           FilledButton.icon(
-            onPressed: ref.watch(repoSearchStateProvider) is RepoSearchLoading
-                ? null
-                : () => ref
-                    .read(repoSearchStateProvider.notifier)
-                    .search(controller.text),
-            icon: ref.watch(repoSearchStateProvider) is RepoSearchLoading
+            onPressed: onSearchCallBack,
+            icon: searchState is RepoSearchLoading
                 ? const SizedBox(
                     width: 20,
                     height: 20,
