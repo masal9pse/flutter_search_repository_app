@@ -1,6 +1,6 @@
 part of '../repo_detail_screen.dart';
 
-class _Content extends StatelessWidget {
+class _Content extends ConsumerWidget {
   const _Content({
     required this.item,
     required this.owner,
@@ -12,8 +12,13 @@ class _Content extends StatelessWidget {
   final String repo;
 
   @override
-  Widget build(BuildContext context) {
-    final displayItem = item;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ssot = ref.watch(repoItemsProvider);
+    final ssotIndex = ssot.items.indexWhere(
+      (e) => e.owner.login == owner && e.name == repo,
+    );
+    final displayItem =
+        ssotIndex >= 0 ? ssot.items[ssotIndex] : item;
 
     return Scaffold(
       appBar: AppBar(
@@ -71,6 +76,26 @@ class _Content extends StatelessWidget {
                   icon: Icons.star,
                   label: 'Stars',
                   value: displayItem.stargazersCount,
+                  onPressed: useMockGithubApi
+                      ? () {
+                          ref.read(repoItemsProvider.notifier).updateItem(
+                                owner,
+                                repo,
+                                Item(
+                                  owner: displayItem.owner,
+                                  id: displayItem.id,
+                                  name: displayItem.name,
+                                  stargazersCount:
+                                      displayItem.stargazersCount + 1,
+                                  watchersCount: displayItem.watchersCount,
+                                  language: displayItem.language,
+                                  forksCount: displayItem.forksCount,
+                                  openIssuesCount:
+                                      displayItem.openIssuesCount,
+                                ),
+                              );
+                        }
+                      : null,
                 ),
                 _InfoChip(
                   icon: Icons.remove_red_eye,

@@ -9,8 +9,8 @@ class _SearchResult extends ConsumerWidget {
     return switch (searchState) {
       RepoSearchInitial() => const _InitialView(),
       RepoSearchLoading() => const Center(child: CircularProgressIndicator()),
-      RepoSearchSuccess(searchModel: final searchModel) =>
-        _RepoList(data: searchModel),
+      RepoSearchSuccess() =>
+        _RepoList(data: ref.watch(repoItemsProvider)),
       RepoSearchError(:final exception) => _ExceptionView(exception: exception),
     };
   }

@@ -60,7 +60,7 @@ class RepoSearchNotifier extends Notifier<RepoSearchState> {
     switch (result) {
       case Success<SearchApiModel, GithubRepoApiException>(:final data):
         ref.read(repoItemsProvider.notifier).items = data;
-        state = RepoSearchState.success(searchModel: data);
+        state = const RepoSearchState.success();
       case Failure<SearchApiModel, GithubRepoApiException>(:final exception):
         state = RepoSearchState.error(exception);
     }
