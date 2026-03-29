@@ -1,0 +1,6 @@
+{
+    "flavor": "mock",
+    "appName": "search_flutter_app_mock",
+    "appId": "com.search.flutter.app.mock",
+    "useMockGithubApi": "true"
+}
