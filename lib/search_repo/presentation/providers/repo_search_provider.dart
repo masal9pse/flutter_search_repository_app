@@ -45,14 +45,14 @@ final repoItemsProvider =
 
 const _searchMinDuration = Duration(seconds: 1);
 
-class RepoSearchNotifier extends Notifier<RepoSearchState> {
+class RepoSearchNotifier extends Notifier<RepoSearchStatus> {
   GithubRepoApi get _api => ref.read(githubRepoApiProvider);
 
   @override
-  RepoSearchState build() => const RepoSearchState.initial();
+  RepoSearchStatus build() => const RepoSearchStatus.initial();
 
   Future<void> search(String q) async {
-    state = const RepoSearchState.loading();
+    state = const RepoSearchStatus.loading();
     final result = await _api.searchRepositories(q: q);
     if (useMockGithubApi) {
       await Future<void>.delayed(_searchMinDuration);
@@ -60,15 +60,15 @@ class RepoSearchNotifier extends Notifier<RepoSearchState> {
     switch (result) {
       case Success<SearchApiModel, GithubRepoApiException>(:final data):
         ref.read(repoItemsProvider.notifier).items = data;
-        state = const RepoSearchState.success();
+        state = const RepoSearchStatus.success();
       case Failure<SearchApiModel, GithubRepoApiException>(:final exception):
-        state = RepoSearchState.error(exception);
+        state = RepoSearchStatus.error(exception);
     }
   }
 }
 
 final repoSearchStateProvider =
-    NotifierProvider<RepoSearchNotifier, RepoSearchState>(
+    NotifierProvider<RepoSearchNotifier, RepoSearchStatus>(
   RepoSearchNotifier.new,
 );
 
