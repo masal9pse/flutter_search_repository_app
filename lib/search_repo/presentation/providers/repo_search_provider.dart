@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter_engineer_codecheck/core/result.dart';
 import 'package:flutter_engineer_codecheck/search_repo/presentation/state/repo_search_state.dart';
 import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api.dart';
+import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api_env.dart';
 import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api_exception.dart';
 import 'package:flutter_engineer_codecheck/search_repo/repository/search_repo_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -40,6 +43,8 @@ class RepoItemsNotifier extends Notifier<SearchApiModel> {
 final repoItemsProvider =
     NotifierProvider<RepoItemsNotifier, SearchApiModel>(RepoItemsNotifier.new);
 
+const _searchMinDuration = Duration(seconds: 1);
+
 class RepoSearchNotifier extends Notifier<RepoSearchState> {
   GithubRepoApi get _api => ref.read(githubRepoApiProvider);
 
@@ -49,6 +54,9 @@ class RepoSearchNotifier extends Notifier<RepoSearchState> {
   Future<void> search(String q) async {
     state = const RepoSearchState.loading();
     final result = await _api.searchRepositories(q: q);
+    if (useMockGithubApi) {
+      await Future<void>.delayed(_searchMinDuration);
+    }
     switch (result) {
       case Success<SearchApiModel, GithubRepoApiException>(:final data):
         ref.read(repoItemsProvider.notifier).items = data;

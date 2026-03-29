@@ -1,21 +1,33 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_engineer_codecheck/core/result.dart';
+import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api_env.dart';
 import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api_exception.dart';
+import 'package:flutter_engineer_codecheck/search_repo/repository/github_repo_api_mock_data.dart';
 import 'package:flutter_engineer_codecheck/search_repo/repository/search_repo_model.dart';
 
 const _baseUrl = 'https://api.github.com';
 
 /// GitHub Search Repositories API を呼び出すクライアント
 class GithubRepoApi {
-  GithubRepoApi({Dio? dio}) : _dio = dio ?? Dio(BaseOptions(baseUrl: _baseUrl));
+  GithubRepoApi({
+    Dio? dio,
+    bool? useMock,
+  })  : _dio = dio ?? Dio(BaseOptions(baseUrl: _baseUrl)),
+        _useMock = useMock ?? useMockGithubApi;
 
   final Dio _dio;
+  final bool _useMock;
 
   /// リポジトリ詳細を取得する。
   Future<Result<Item, GithubRepoApiException>> getRepository({
     required String owner,
     required String repo,
   }) async {
+    if (_useMock) {
+      return Success(
+        data: GithubRepoMockData.repositoryDetail(owner: owner, repo: repo),
+      );
+    }
     try {
       final response = await _dio.get<Map<String, dynamic>>(
         '/repos/$owner/$repo',
@@ -47,6 +59,9 @@ class GithubRepoApi {
   Future<Result<SearchApiModel, GithubRepoApiException>> searchRepositories({
     required String q,
   }) async {
+    if (_useMock) {
+      return const Success(data: GithubRepoMockData.searchResult);
+    }
     try {
       final response = await _dio.get<Map<String, dynamic>>(
         '/search/repositories',

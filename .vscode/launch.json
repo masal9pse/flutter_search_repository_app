@@ -13,6 +13,14 @@
             ]
         },
         {
+            "name": "flutter_engineer_codecheck mock",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--dart-define-from-file=define/mock.json",
+            ]
+        },
+        {
             "name": "flutter_engineer_codecheck stg",
             "request": "launch",
             "type": "dart",
