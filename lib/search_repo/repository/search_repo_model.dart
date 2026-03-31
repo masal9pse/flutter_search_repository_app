@@ -3,25 +3,25 @@ import 'package:json_annotation/json_annotation.dart';
 part 'search_repo_model.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class SearchApiModel {
-  const SearchApiModel({
+class RepoList {
+  const RepoList({
     this.totalCount = 0,
     this.items = const [],
   });
 
-  factory SearchApiModel.fromJson(Map<String, dynamic> json) =>
+  factory RepoList.fromJson(Map<String, dynamic> json) =>
       _$SearchApiModelFromJson(json);
 
   @JsonKey(defaultValue: 0)
   final int totalCount;
   @JsonKey(defaultValue: [])
-  final List<Item> items;
+  final List<Repo> items;
   Map<String, dynamic> toJson() => _$SearchApiModelToJson(this);
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class Item {
-  const Item({
+class Repo {
+  const Repo({
     required this.owner,
     this.id,
     this.name = '',
@@ -32,7 +32,7 @@ class Item {
     this.openIssuesCount = 0,
   });
 
-  factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
+  factory Repo.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
 
   final int? id;
   @JsonKey(defaultValue: '')

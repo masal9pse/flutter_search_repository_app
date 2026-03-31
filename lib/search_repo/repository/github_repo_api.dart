@@ -19,7 +19,7 @@ class GithubRepoApi {
   final bool _useMock;
 
   /// リポジトリ詳細を取得する。
-  Future<Result<Item, GithubRepoApiException>> getRepository({
+  Future<Result<Repo, GithubRepoApiException>> getRepository({
     required String owner,
     required String repo,
   }) async {
@@ -40,7 +40,7 @@ class GithubRepoApi {
         );
       }
 
-      final decoded = Item.fromJson(data);
+      final decoded = Repo.fromJson(data);
       return Success(data: decoded);
     } on DioException catch (e) {
       return Failure(exception: _mapDioException(e));
@@ -56,7 +56,7 @@ class GithubRepoApi {
   }
 
   /// リポジトリを検索する。
-  Future<Result<SearchApiModel, GithubRepoApiException>> searchRepositories({
+  Future<Result<RepoList, GithubRepoApiException>> searchRepositories({
     required String q,
   }) async {
     if (_useMock) {
@@ -75,7 +75,7 @@ class GithubRepoApi {
         );
       }
 
-      final decoded = SearchApiModel.fromJson(data);
+      final decoded = RepoList.fromJson(data);
       return Success(data: decoded);
     } on DioException catch (e) {
       return Failure(exception: _mapDioException(e));

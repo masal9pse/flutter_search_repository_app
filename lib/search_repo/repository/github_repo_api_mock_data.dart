@@ -2,7 +2,7 @@ import 'package:flutter_engineer_codecheck/search_repo/repository/search_repo_mo
 
 /// GitHub API 非依存の固定レスポンス（mock フレーバー専用）。
 abstract final class GithubRepoMockData {
-  static const Item _itemA = Item(
+  static const Repo _itemA = Repo(
     owner: Owner(
       login: 'flutter',
       avatarUrl: 'https://avatars.githubusercontent.com/u/14101776?v=4',
@@ -16,7 +16,7 @@ abstract final class GithubRepoMockData {
     openIssuesCount: 5000,
   );
 
-  static const Item _itemB = Item(
+  static const Repo _itemB = Repo(
     owner: Owner(
       login: 'dart-lang',
       avatarUrl: 'https://avatars.githubusercontent.com/u/1609975?v=4',
@@ -31,13 +31,13 @@ abstract final class GithubRepoMockData {
   );
 
   /// 検索 API の固定レスポンス（クエリに依存しない）。
-  static const SearchApiModel searchResult = SearchApiModel(
+  static const RepoList searchResult = RepoList(
     totalCount: 2,
     items: [_itemA, _itemB],
   );
 
   /// 詳細 API の固定レスポンス。一覧のいずれかと一致すればその項目、一致しなければ [_itemA]。
-  static Item repositoryDetail({
+  static Repo repositoryDetail({
     required String owner,
     required String repo,
   }) {

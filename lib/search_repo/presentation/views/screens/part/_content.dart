@@ -7,7 +7,7 @@ class _Content extends ConsumerWidget {
     required this.repo,
   });
 
-  final Item item;
+  final Repo item;
   final String owner;
   final String repo;
 
@@ -17,8 +17,7 @@ class _Content extends ConsumerWidget {
     final ssotIndex = ssot.items.indexWhere(
       (e) => e.owner.login == owner && e.name == repo,
     );
-    final displayItem =
-        ssotIndex >= 0 ? ssot.items[ssotIndex] : item;
+    final displayItem = ssotIndex >= 0 ? ssot.items[ssotIndex] : item;
 
     return Scaffold(
       appBar: AppBar(
@@ -81,7 +80,7 @@ class _Content extends ConsumerWidget {
                           ref.read(repoItemsProvider.notifier).updateItem(
                                 owner,
                                 repo,
-                                Item(
+                                Repo(
                                   owner: displayItem.owner,
                                   id: displayItem.id,
                                   name: displayItem.name,
@@ -90,8 +89,7 @@ class _Content extends ConsumerWidget {
                                   watchersCount: displayItem.watchersCount,
                                   language: displayItem.language,
                                   forksCount: displayItem.forksCount,
-                                  openIssuesCount:
-                                      displayItem.openIssuesCount,
+                                  openIssuesCount: displayItem.openIssuesCount,
                                 ),
                               );
                         }

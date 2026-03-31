@@ -14,26 +14,26 @@ final githubRepoApiProvider = Provider<GithubRepoApi>((ref) => GithubRepoApi());
 // データソース（SSOT）- 一覧・詳細で共有
 // =============================================================================
 
-class RepoItemsNotifier extends Notifier<SearchApiModel> {
+class RepoItemsNotifier extends Notifier<RepoList> {
   @override
-  SearchApiModel build() => const SearchApiModel();
+  RepoList build() => const RepoList();
 
-  SearchApiModel get items => state;
-  set items(SearchApiModel data) => state = data;
+  RepoList get items => state;
+  set items(RepoList data) => state = data;
 
   /// 詳細画面から更新された場合に呼び出す
-  void updateItem(String owner, String repo, Item item) {
+  void updateItem(String owner, String repo, Repo item) {
     final items = state.items;
     final index = items.indexWhere(
       (e) => e.owner.login == owner && e.name == repo,
     );
-    final newItems = List<Item>.from(items);
+    final newItems = List<Repo>.from(items);
     if (index >= 0) {
       newItems[index] = item;
     } else {
       newItems.add(item);
     }
-    state = SearchApiModel(
+    state = RepoList(
       totalCount: state.totalCount,
       items: newItems,
     );
@@ -41,7 +41,7 @@ class RepoItemsNotifier extends Notifier<SearchApiModel> {
 }
 
 final repoItemsProvider =
-    NotifierProvider<RepoItemsNotifier, SearchApiModel>(RepoItemsNotifier.new);
+    NotifierProvider<RepoItemsNotifier, RepoList>(RepoItemsNotifier.new);
 
 const _searchMinDuration = Duration(seconds: 1);
 
@@ -58,10 +58,10 @@ class RepoSearchNotifier extends Notifier<RepoSearchStatus> {
       await Future<void>.delayed(_searchMinDuration);
     }
     switch (result) {
-      case Success<SearchApiModel, GithubRepoApiException>(:final data):
+      case Success<RepoList, GithubRepoApiException>(:final data):
         ref.read(repoItemsProvider.notifier).items = data;
         state = const RepoSearchStatus.success();
-      case Failure<SearchApiModel, GithubRepoApiException>(:final exception):
+      case Failure<RepoList, GithubRepoApiException>(:final exception):
         state = RepoSearchStatus.error(exception);
     }
   }
@@ -77,9 +77,9 @@ final repoSearchStateProvider =
 // FutureProvider: loading / data / error の3パターン
 // =============================================================================
 
-final AutoDisposeFutureProviderFamily<Item, ({String owner, String repo})>
+final AutoDisposeFutureProviderFamily<Repo, ({String owner, String repo})>
     repoDetailProvider =
-    FutureProvider.autoDispose.family<Item, ({String owner, String repo})>(
+    FutureProvider.autoDispose.family<Repo, ({String owner, String repo})>(
   (ref, arg) async {
     final api = ref.read(githubRepoApiProvider);
     final itemsNotifier = ref.read(repoItemsProvider.notifier);
@@ -89,10 +89,10 @@ final AutoDisposeFutureProviderFamily<Item, ({String owner, String repo})>
     );
 
     switch (result) {
-      case Success<Item, GithubRepoApiException>(:final data):
+      case Success<Repo, GithubRepoApiException>(:final data):
         itemsNotifier.updateItem(arg.owner, arg.repo, data);
         return data;
-      case Failure<Item, GithubRepoApiException>(:final exception):
+      case Failure<Repo, GithubRepoApiException>(:final exception):
         throw exception;
     }
   },

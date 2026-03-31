@@ -3,7 +3,7 @@ part of '../repo_search_screen.dart';
 class _RepoListItem extends StatelessWidget {
   const _RepoListItem({required this.item});
 
-  final Item item;
+  final Repo item;
 
   @override
   Widget build(BuildContext context) {
