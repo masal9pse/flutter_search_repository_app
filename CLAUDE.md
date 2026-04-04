@@ -25,10 +25,6 @@ flutter pub run build_runner build --delete-conflicting-outputs
 
 # Watch mode for code generation during development
 flutter pub run build_runner watch --delete-conflicting-outputs
-
-# Build web
-flutter build web --dart-define-from-file=define/dev.json
-flutter build web --dart-define-from-file=define/prod.json
 ```
 
 ## Architecture
@@ -72,6 +68,8 @@ Uses `very_good_analysis` (strict). Key rules in `analysis_options.yaml`: `requi
 ## 守ること
 - 基本的にはビルドメソッドに処理を書かないでください。
 - ２つ以上のWidgetをネストする場合は、Containerを使ってください。本プロジェクトでは、パフォーマンスよりも可読性を重要視します。ただし、動作確認で影響が出た場合は変更する可能性があります。
+- ステートマシーンを使う場合、その画面の状態のみで使うロジックはその状態クラスに記載する。
+- 共通のロジックの場合はドメイン層に記載する。
 
 ## 絶対に守ること
 `.env` の中身を絶対に確認しようとしないこと。
