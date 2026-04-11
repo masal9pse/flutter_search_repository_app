@@ -10,13 +10,13 @@ class RepoList {
   });
 
   factory RepoList.fromJson(Map<String, dynamic> json) =>
-      _$SearchApiModelFromJson(json);
+      _$RepoListFromJson(json);
 
   @JsonKey(defaultValue: 0)
   final int totalCount;
   @JsonKey(defaultValue: [])
   final List<Repo> items;
-  Map<String, dynamic> toJson() => _$SearchApiModelToJson(this);
+  Map<String, dynamic> toJson() => _$RepoListToJson(this);
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake)
@@ -32,7 +32,7 @@ class Repo {
     this.openIssuesCount = 0,
   });
 
-  factory Repo.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
+  factory Repo.fromJson(Map<String, dynamic> json) => _$RepoFromJson(json);
 
   final int? id;
   @JsonKey(defaultValue: '')
@@ -48,7 +48,7 @@ class Repo {
   @JsonKey(defaultValue: 0)
   final int openIssuesCount;
   final Owner owner;
-  Map<String, dynamic> toJson() => _$ItemToJson(this);
+  Map<String, dynamic> toJson() => _$RepoToJson(this);
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake)

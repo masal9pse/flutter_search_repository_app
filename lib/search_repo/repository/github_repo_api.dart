@@ -23,6 +23,7 @@ class GithubRepoApi {
     required String owner,
     required String repo,
   }) async {
+    // TODO(masato): AIに適当につくってもらたけど、環境ごとにクラス差し替える
     if (_useMock) {
       return Success(
         data: GithubRepoMockData.repositoryDetail(owner: owner, repo: repo),

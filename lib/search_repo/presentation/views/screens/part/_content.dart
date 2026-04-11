@@ -13,15 +13,17 @@ class _Content extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ssot = ref.watch(repoItemsProvider);
-    final ssotIndex = ssot.items.indexWhere(
-      (e) => e.owner.login == owner && e.name == repo,
+    final item = ref.watch(
+      repoItemsProvider.select(
+        (list) => list.items.firstWhere(
+          (e) => e.owner.login == owner && e.name == repo,
+        ),
+      ),
     );
-    final displayItem = ssotIndex >= 0 ? ssot.items[ssotIndex] : item;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(displayItem.name),
+        title: Text(item.name),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -33,10 +35,10 @@ class _Content extends ConsumerWidget {
               children: [
                 CircleAvatar(
                   radius: 28,
-                  backgroundImage: displayItem.owner.avatarUrl.isNotEmpty
-                      ? NetworkImage(displayItem.owner.avatarUrl)
+                  backgroundImage: item.owner.avatarUrl.isNotEmpty
+                      ? NetworkImage(item.owner.avatarUrl)
                       : null,
-                  child: displayItem.owner.avatarUrl.isEmpty
+                  child: item.owner.avatarUrl.isEmpty
                       ? const Icon(Icons.code, size: 28)
                       : null,
                 ),
@@ -46,19 +48,19 @@ class _Content extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        displayItem.name,
+                        item.name,
                         style: Theme.of(context)
                             .textTheme
                             .titleLarge
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
-                      if (displayItem.language.isNotEmpty)
+                      if (item.language.isNotEmpty)
                         Row(
                           children: [
                             const Icon(Icons.code, size: 16),
                             const SizedBox(width: 4),
-                            Text(displayItem.language),
+                            Text(item.language),
                           ],
                         ),
                     ],
@@ -74,22 +76,21 @@ class _Content extends ConsumerWidget {
                 _InfoChip(
                   icon: Icons.star,
                   label: 'Stars',
-                  value: displayItem.stargazersCount,
+                  value: item.stargazersCount,
                   onPressed: useMockGithubApi
                       ? () {
                           ref.read(repoItemsProvider.notifier).updateItem(
                                 owner,
                                 repo,
                                 Repo(
-                                  owner: displayItem.owner,
-                                  id: displayItem.id,
-                                  name: displayItem.name,
-                                  stargazersCount:
-                                      displayItem.stargazersCount + 1,
-                                  watchersCount: displayItem.watchersCount,
-                                  language: displayItem.language,
-                                  forksCount: displayItem.forksCount,
-                                  openIssuesCount: displayItem.openIssuesCount,
+                                  owner: item.owner,
+                                  id: item.id,
+                                  name: item.name,
+                                  stargazersCount: item.stargazersCount + 1,
+                                  watchersCount: item.watchersCount,
+                                  language: item.language,
+                                  forksCount: item.forksCount,
+                                  openIssuesCount: item.openIssuesCount,
                                 ),
                               );
                         }
@@ -98,17 +99,17 @@ class _Content extends ConsumerWidget {
                 _InfoChip(
                   icon: Icons.remove_red_eye,
                   label: 'Watchers',
-                  value: displayItem.watchersCount,
+                  value: item.watchersCount,
                 ),
                 _InfoChip(
                   icon: Icons.call_split,
                   label: 'Forks',
-                  value: displayItem.forksCount,
+                  value: item.forksCount,
                 ),
                 _InfoChip(
                   icon: Icons.error_outline,
                   label: 'Open issues',
-                  value: displayItem.openIssuesCount,
+                  value: item.openIssuesCount,
                 ),
               ],
             ),

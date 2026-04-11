@@ -6,24 +6,22 @@ part of 'search_repo_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SearchApiModel _$SearchApiModelFromJson(Map<String, dynamic> json) =>
-    SearchApiModel(
+RepoList _$RepoListFromJson(Map<String, dynamic> json) => RepoList(
       totalCount: (json['total_count'] as num?)?.toInt() ?? 0,
       items: (json['items'] as List<dynamic>?)
-              ?.map((e) => Item.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => Repo.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
     );
 
-Map<String, dynamic> _$SearchApiModelToJson(SearchApiModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$RepoListToJson(RepoList instance) => <String, dynamic>{
       'total_count': instance.totalCount,
       'items': instance.items,
     };
 
-Item _$ItemFromJson(Map<String, dynamic> json) => Item(
+Repo _$RepoFromJson(Map<String, dynamic> json) => Repo(
       owner: Owner.fromJson(json['owner'] as Map<String, dynamic>),
-      id: (json['id'] as num?)?.toInt() ?? 0,
+      id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String? ?? '',
       stargazersCount: (json['stargazers_count'] as num?)?.toInt() ?? 0,
       watchersCount: (json['watchers_count'] as num?)?.toInt() ?? 0,
@@ -32,7 +30,7 @@ Item _$ItemFromJson(Map<String, dynamic> json) => Item(
       openIssuesCount: (json['open_issues_count'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
+Map<String, dynamic> _$RepoToJson(Repo instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'stargazers_count': instance.stargazersCount,
