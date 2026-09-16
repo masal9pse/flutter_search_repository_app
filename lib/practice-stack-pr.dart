@@ -17,3 +17,4 @@ class MyWidget2 extends StatelessWidget {
     return const Placeholder();
   }
 }
+// API叩いた
