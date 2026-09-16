@@ -1,12 +1,12 @@
 part of '../repo_search_screen.dart';
 
-class _RepoListItem extends StatelessWidget {
+class _RepoListItem extends ConsumerWidget {
   const _RepoListItem({required this.item});
 
   final Repo item;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: item.owner.avatarUrl.isNotEmpty
@@ -41,6 +41,7 @@ class _RepoListItem extends StatelessWidget {
       ),
       isThreeLine: false,
       onTap: () {
+        unawaited(ref.read(repoSearchStateProvider.notifier).refresh());
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) => RepoDetailScreen(
