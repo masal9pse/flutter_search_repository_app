@@ -48,10 +48,13 @@ const _searchMinDuration = Duration(seconds: 1);
 class RepoSearchNotifier extends Notifier<RepoSearchStatus> {
   GithubRepoApi get _api => ref.read(githubRepoApiProvider);
 
+  String? _lastQuery;
+
   @override
   RepoSearchStatus build() => const RepoSearchStatus.initial();
 
   Future<void> search(String q) async {
+    _lastQuery = q;
     state = const RepoSearchStatus.loading();
     final result = await _api.searchRepositories(q: q);
     if (useMockGithubApi) {
@@ -63,6 +66,22 @@ class RepoSearchNotifier extends Notifier<RepoSearchStatus> {
         state = const RepoSearchStatus.success();
       case Failure<RepoList, GithubRepoApiException>(:final exception):
         state = RepoSearchStatus.error(exception);
+    }
+  }
+
+  /// 詳細遷移時など、直前の検索クエリで一覧 API を再実行する。
+  /// 一覧画面の loading / error には遷移させない。
+  Future<void> refresh() async {
+    final q = _lastQuery;
+    if (q == null || q.isEmpty) {
+      return;
+    }
+    final result = await _api.searchRepositories(q: q);
+    switch (result) {
+      case Success<RepoList, GithubRepoApiException>(:final data):
+        ref.read(repoItemsProvider.notifier).items = data;
+      case Failure<RepoList, GithubRepoApiException>():
+        break;
     }
   }
 }

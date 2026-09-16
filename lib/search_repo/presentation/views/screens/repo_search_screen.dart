@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_engineer_codecheck/search_repo/core/l10n/github_repo_api_exception_l10n.dart';
 import 'package:flutter_engineer_codecheck/search_repo/presentation/providers/repo_search_provider.dart';
